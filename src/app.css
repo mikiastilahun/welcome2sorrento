@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@utility text-muted-foreground {
+	color: var(--muted-foreground);
+}
+
 /* Smooth scrolling */
 html {
 	scroll-behavior: smooth;

@@ -155,7 +155,7 @@
 									{data.post.author.name}
 								</h4>
 								{#if data.post.author.bio}
-									<p class="text-muted-foreground">{data.post.author.bio}</p>
+									<p class="text-gray-600">{data.post.author.bio}</p>
 								{/if}
 							</div>
 						</div>
@@ -217,7 +217,7 @@
 									<h3 class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 										{relatedPost.title}
 									</h3>
-									<p class="mb-4 flex-grow text-sm text-muted-foreground">
+									<p class="mb-4 flex-grow text-sm text-gray-600">
 										{relatedPost.excerpt}
 									</p>
 									<div class="flex items-center text-sm text-[color:var(--purple-lavender)]">
@@ -236,7 +236,7 @@
 
 <style>
 	:global(.prose) {
-		@apply text-muted-foreground;
+		@apply text-gray-600;
 	}
 
 	:global(.prose h1) {

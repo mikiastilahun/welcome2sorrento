@@ -109,7 +109,7 @@
 						></div>
 					</div>
 
-					<div class="space-y-6 text-lg leading-relaxed text-muted-foreground">
+					<div class="space-y-6 text-lg leading-relaxed text-gray-600">
 						<p>
 							Welcome2Sorrento was born from a simple love story – between two people and between
 							them and this magical corner of Italy. Created and maintained by an Italian/British
@@ -140,7 +140,7 @@
 				<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 					What Makes Us <span class="text-gradient">Different</span>
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-muted-foreground">
+				<p class="mx-auto max-w-2xl text-xl text-gray-600">
 					Authentic local expertise combined with genuine passion
 				</p>
 			</div>
@@ -155,7 +155,7 @@
 						<MapPin class="h-8 w-8 text-white" />
 					</div>
 					<h3 class="mb-3 text-center text-xl font-bold">Local Expertise</h3>
-					<p class="text-center text-sm leading-relaxed text-muted-foreground">
+					<p class="text-center text-sm leading-relaxed text-gray-600">
 						We live here year-round and know Sorrento inside out – from hidden beaches to the best
 						morning cappuccino
 					</p>
@@ -171,7 +171,7 @@
 						<Heart class="h-8 w-8 text-white" />
 					</div>
 					<h3 class="mb-3 text-center text-xl font-bold">Honest Reviews</h3>
-					<p class="text-center text-sm leading-relaxed text-muted-foreground">
+					<p class="text-center text-sm leading-relaxed text-gray-600">
 						No sponsored content or paid placements – just genuine recommendations we'd give our
 						friends
 					</p>
@@ -187,7 +187,7 @@
 						<Users class="h-8 w-8 text-white" />
 					</div>
 					<h3 class="mb-3 text-center text-xl font-bold">Personal Touch</h3>
-					<p class="text-center text-sm leading-relaxed text-muted-foreground">
+					<p class="text-center text-sm leading-relaxed text-gray-600">
 						We're real people who respond to every message and genuinely care about your experience
 					</p>
 				</div>
@@ -202,7 +202,7 @@
 						<Sparkles class="h-8 w-8 text-white" />
 					</div>
 					<h3 class="mb-3 text-center text-xl font-bold">Always Updated</h3>
-					<p class="text-center text-sm leading-relaxed text-muted-foreground">
+					<p class="text-center text-sm leading-relaxed text-gray-600">
 						Living here means we know immediately when a new restaurant opens or when things change
 					</p>
 				</div>
@@ -227,7 +227,7 @@
 					<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 						<span class="text-gradient">WhatsApp</span> Booking Service
 					</h2>
-					<p class="mx-auto max-w-2xl text-xl text-muted-foreground">
+					<p class="mx-auto max-w-2xl text-xl text-gray-600">
 						Personalized travel planning at your fingertips
 					</p>
 				</div>
@@ -262,7 +262,7 @@
 								<h3 class="mb-6 text-3xl font-bold text-[color:var(--dark)]">
 									Stress-Free Planning
 								</h3>
-								<p class="mb-8 text-lg leading-relaxed text-muted-foreground">
+								<p class="mb-8 text-lg leading-relaxed text-gray-600">
 									For a fixed, transparent fee, we'll handle every detail of your Sorrento
 									adventure. Focus on anticipating your Italian getaway while we take care of the
 									rest.
@@ -280,7 +280,7 @@
 											>
 												<CheckCircle class="h-4 w-4 text-white" />
 											</div>
-											<span class="leading-relaxed text-muted-foreground">{item}</span>
+											<span class="leading-relaxed text-gray-600">{item}</span>
 										</li>
 									{/each}
 								</ul>
@@ -324,7 +324,7 @@
 								<Star class="h-5 w-5 fill-[color:var(--turquoise)] text-[color:var(--turquoise)]" />
 							{/each}
 						</div>
-						<p class="mb-6 leading-relaxed text-muted-foreground italic">
+						<p class="mb-6 leading-relaxed text-gray-600 italic">
 							"{testimonial.text}"
 						</p>
 						<div class="flex items-center space-x-3">
@@ -338,7 +338,7 @@
 							</div>
 							<div>
 								<div class="font-semibold">{testimonial.name}</div>
-								<div class="text-sm text-muted-foreground">{testimonial.location}</div>
+								<div class="text-sm text-gray-600">{testimonial.location}</div>
 							</div>
 						</div>
 					</div>

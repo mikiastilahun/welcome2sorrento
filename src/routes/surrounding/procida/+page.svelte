@@ -70,7 +70,7 @@
 						<span class="text-sm font-medium text-[color:var(--dark)]">Hidden Gem</span>
 					</div>
 				</div>
-				<p class="text-center text-lg leading-relaxed text-muted-foreground">
+				<p class="text-center text-lg leading-relaxed text-gray-600">
 					Procida is the smallest and least touristy of the Bay of Naples islands, offering an
 					authentic glimpse of Italian island life. With its pastel-colored fishing villages, narrow
 					streets, and relaxed atmosphere, Procida feels like stepping back in time.
@@ -102,7 +102,7 @@
 										<svelte:component this={highlight.icon} class="h-8 w-8 text-white" />
 									</div>
 									<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">{highlight.title}</h3>
-									<p class="leading-relaxed text-muted-foreground">{highlight.description}</p>
+									<p class="leading-relaxed text-gray-600">{highlight.description}</p>
 								</CardContent>
 							</div>
 						</Card>
@@ -138,7 +138,7 @@
 									</div>
 									<div class="flex-grow">
 										<h3 class="mb-4 text-2xl font-bold text-[color:var(--dark)]">From Sorrento</h3>
-										<div class="space-y-4 text-muted-foreground">
+										<div class="space-y-4 text-gray-600">
 											<p>Ferry to Naples (1 hr), then ferry to Procida (40 min)</p>
 											<p>Total journey: ~2 hours | Cost: €25-35 round trip</p>
 											<p>
@@ -157,7 +157,7 @@
 											<AlertCircle class="mr-2 h-5 w-5 text-[color:var(--turquoise)]" />
 											Best For
 										</h4>
-										<p class="leading-relaxed text-muted-foreground">
+										<p class="leading-relaxed text-gray-600">
 											Travelers seeking authentic Italian atmosphere away from crowds. Perfect for
 											photography enthusiasts and those who want to experience "real" island life.
 										</p>

@@ -113,7 +113,7 @@
 									<span class="text-sm font-medium text-[color:var(--dark)]">Quick Response</span>
 								</div>
 								<CardTitle class="mb-4 text-3xl sm:text-4xl">Send Us a Message</CardTitle>
-								<p class="text-lg text-muted-foreground">
+								<p class="text-lg text-gray-600">
 									Fill out the form below and we'll get back to you within 24 hours
 								</p>
 							</CardHeader>
@@ -207,7 +207,7 @@
 										</span>
 									</Button>
 
-									<p class="text-center text-sm text-muted-foreground">
+									<p class="text-center text-sm text-gray-600">
 										We respect your privacy. Your information is secure and will never be shared.
 									</p>
 								</form>
@@ -238,7 +238,7 @@
 										<div class="mb-1 text-lg font-semibold">Email</div>
 										<a
 											href="mailto:margheroba@email.com"
-											class="text-sm text-muted-foreground transition-colors hover:text-[color:var(--purple-lavender)]"
+											class="text-sm text-gray-600 transition-colors hover:text-[color:var(--purple-lavender)]"
 										>
 											margheroba@email.com
 										</a>
@@ -255,7 +255,7 @@
 									</div>
 									<div>
 										<div class="mb-1 text-lg font-semibold">WhatsApp</div>
-										<p class="mb-1 text-sm text-muted-foreground">
+										<p class="mb-1 text-sm text-gray-600">
 											Available for booking inquiries
 										</p>
 										<a
@@ -277,7 +277,7 @@
 									</div>
 									<div>
 										<div class="mb-1 text-lg font-semibold">Location</div>
-										<p class="text-sm text-muted-foreground">Based in Sorrento, Italy</p>
+										<p class="text-sm text-gray-600">Based in Sorrento, Italy</p>
 									</div>
 								</div>
 							</div>
@@ -312,7 +312,7 @@
 						></div>
 						<div class="relative m-1 rounded-3xl bg-white p-8">
 							<h3 class="mb-4 text-2xl font-bold text-[color:var(--dark)]">Follow Us</h3>
-							<p class="mb-6 text-muted-foreground">
+							<p class="mb-6 text-gray-600">
 								Stay updated with the latest Sorrento tips and travel inspiration
 							</p>
 							<div class="flex space-x-3">
@@ -372,7 +372,7 @@
 								</div>
 								<h3 class="text-lg font-bold text-[color:var(--dark)]">{faq.question}</h3>
 							</div>
-							<p class="mb-4 ml-11 leading-relaxed text-muted-foreground">
+							<p class="mb-4 ml-11 leading-relaxed text-gray-600">
 								{faq.answer}
 							</p>
 							{#if faq.link}

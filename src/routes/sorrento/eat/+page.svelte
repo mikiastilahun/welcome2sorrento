@@ -124,7 +124,7 @@
 	<section class="mesh-gradient relative py-20">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mx-auto max-w-4xl text-center">
-				<p class="text-xl leading-relaxed text-muted-foreground">
+				<p class="text-xl leading-relaxed text-gray-600">
 					Sorrento's culinary scene blends centuries of tradition with contemporary innovation. From
 					fresh seafood caught in the Bay of Naples to pasta made by hand in family kitchens, every
 					meal tells a story of passion, quality, and authentic Italian flavor.
@@ -159,9 +159,9 @@
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			{#if filteredRestaurants.length === 0}
 				<div class="py-20 text-center">
-					<ChefHat class="mx-auto mb-4 h-16 w-16 text-muted-foreground opacity-50" />
+					<ChefHat class="mx-auto mb-4 h-16 w-16 text-gray-600 opacity-50" />
 					<h3 class="mb-2 text-2xl font-bold text-[color:var(--dark)]">No Restaurants Found</h3>
-					<p class="text-muted-foreground">
+					<p class="text-gray-600">
 						{selectedCategory === 'All'
 							? 'No restaurants have been added yet. Check back soon!'
 							: `No restaurants found in the "${formatCategory(selectedCategory)}" category.`}
@@ -219,10 +219,10 @@
 										>
 											{restaurant.name}
 										</CardTitle>
-										<div class="mb-4 text-sm font-medium text-muted-foreground">
+										<div class="mb-4 text-sm font-medium text-gray-600">
 											{restaurant.cuisine}
 										</div>
-										<p class="mb-6 text-sm leading-relaxed text-muted-foreground">
+										<p class="mb-6 text-sm leading-relaxed text-gray-600">
 											{restaurant.description}
 										</p>
 
@@ -239,7 +239,7 @@
 									</div>
 
 									<div
-										class="flex items-start space-x-2 border-t-2 border-[color:var(--off-white)] pt-4 text-sm text-muted-foreground"
+										class="flex items-start space-x-2 border-t-2 border-[color:var(--off-white)] pt-4 text-sm text-gray-600"
 									>
 										<MapPin class="mt-0.5 h-4 w-4 flex-shrink-0 text-orange-500" />
 										<span class="font-medium">{restaurant.location}</span>
@@ -292,7 +292,7 @@
 									{/if}
 								</div>
 								<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">{dish.name}</h3>
-								<p class="text-sm leading-relaxed text-muted-foreground">{dish.description}</p>
+								<p class="text-sm leading-relaxed text-gray-600">{dish.description}</p>
 							</div>
 						</div>
 					</div>
@@ -335,7 +335,7 @@
 										</div>
 										<div>
 											<h3 class="mb-2 text-lg font-bold text-[color:var(--dark)]">{tip.title}</h3>
-											<p class="text-sm leading-relaxed text-muted-foreground">{tip.description}</p>
+											<p class="text-sm leading-relaxed text-gray-600">{tip.description}</p>
 										</div>
 									</div>
 								</div>

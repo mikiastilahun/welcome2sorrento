@@ -291,7 +291,7 @@
 					<h2 class="mb-8 text-5xl font-bold text-[color:var(--dark)] sm:text-6xl">
 						Discover the <span class="text-gradient">Magic</span>
 					</h2>
-					<p class="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground sm:text-2xl">
+					<p class="mx-auto max-w-3xl text-xl leading-relaxed text-gray-600 sm:text-2xl">
 						Nestled atop dramatic cliffs overlooking the Bay of Naples, Sorrento captivates visitors
 						with its stunning coastal views, vibrant lemon groves, and warm Italian hospitality.
 					</p>
@@ -308,7 +308,7 @@
 							<Globe class="h-7 w-7 text-white" />
 						</div>
 						<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">Local Insights</h3>
-						<p class="leading-relaxed text-muted-foreground">
+						<p class="leading-relaxed text-gray-600">
 							Authentic recommendations from locals who know every hidden gem and secret spot.
 						</p>
 					</div>
@@ -322,7 +322,7 @@
 							<Camera class="h-7 w-7 text-white" />
 						</div>
 						<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">Hidden Gems</h3>
-						<p class="leading-relaxed text-muted-foreground">
+						<p class="leading-relaxed text-gray-600">
 							Discover breathtaking locations and experiences that most tourists never find.
 						</p>
 					</div>
@@ -336,7 +336,7 @@
 							<Star class="h-7 w-7 text-white" />
 						</div>
 						<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">Expert Curation</h3>
-						<p class="leading-relaxed text-muted-foreground">
+						<p class="leading-relaxed text-gray-600">
 							Carefully selected experiences to ensure your trip is absolutely unforgettable.
 						</p>
 					</div>
@@ -352,7 +352,7 @@
 				<h2 class="mb-6 text-5xl font-bold text-[color:var(--dark)] sm:text-6xl">
 					Plan Your <span class="text-gradient">Perfect Visit</span>
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-muted-foreground">
+				<p class="mx-auto max-w-2xl text-xl text-gray-600">
 					Everything you need to make the most of your Sorrento adventure
 				</p>
 			</div>
@@ -402,7 +402,7 @@
 											<h3 class="mb-4 text-4xl font-bold text-[color:var(--dark)] lg:text-5xl">
 												{section.title}
 											</h3>
-											<p class="mb-8 text-lg leading-relaxed text-muted-foreground">
+											<p class="mb-8 text-lg leading-relaxed text-gray-600">
 												{section.description}
 											</p>
 											<div
@@ -435,7 +435,7 @@
 				<h2 class="mb-6 text-5xl font-bold text-[color:var(--dark)] sm:text-6xl">
 					Explore <span class="text-gradient-2">Nearby Wonders</span>
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-muted-foreground">
+				<p class="mx-auto max-w-2xl text-xl text-gray-600">
 					Venture beyond to discover world-renowned destinations
 				</p>
 			</div>
@@ -689,7 +689,7 @@
 							<h2 class="mb-4 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 								Stay <span class="text-gradient">Connected</span>
 							</h2>
-							<p class="mx-auto max-w-xl text-lg text-muted-foreground">
+							<p class="mx-auto max-w-xl text-lg text-gray-600">
 								Get exclusive travel tips, insider guides, and special offers delivered to your
 								inbox
 							</p>
@@ -712,7 +712,7 @@
 							</Button>
 						</form>
 
-						<p class="mt-6 text-center text-sm text-muted-foreground">
+						<p class="mt-6 text-center text-sm text-gray-600">
 							Join 10,000+ travelers. Unsubscribe anytime.
 						</p>
 					</div>

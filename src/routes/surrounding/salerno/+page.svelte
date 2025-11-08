@@ -78,7 +78,7 @@
 						<span class="text-sm font-medium text-[color:var(--dark)]">Hidden Treasure</span>
 					</div>
 				</div>
-				<p class="text-center text-lg leading-relaxed text-muted-foreground">
+				<p class="text-center text-lg leading-relaxed text-gray-600">
 					Salerno is an elegant port city often overlooked by tourists, offering authentic Italian
 					urban life, a beautiful waterfront promenade, medieval historic center, and easy access to
 					the ancient Greek temples of Paestum.
@@ -110,7 +110,7 @@
 										<svelte:component this={sight.icon} class="h-8 w-8 text-white" />
 									</div>
 									<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">{sight.title}</h3>
-									<p class="leading-relaxed text-muted-foreground">{sight.description}</p>
+									<p class="leading-relaxed text-gray-600">{sight.description}</p>
 								</CardContent>
 							</div>
 						</Card>
@@ -156,7 +156,7 @@
 														<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 															Train from Sorrento
 														</div>
-														<div class="space-y-1 text-sm text-muted-foreground">
+														<div class="space-y-1 text-sm text-gray-600">
 															<div>Circumvesuviana to Naples, then regional train to Salerno</div>
 															<div>Duration: 2-2.5 hours | Cost: €8-12</div>
 														</div>
@@ -173,7 +173,7 @@
 														<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 															SITA Bus
 														</div>
-														<div class="space-y-1 text-sm text-muted-foreground">
+														<div class="space-y-1 text-sm text-gray-600">
 															<div>Along Amalfi Coast via Positano & Amalfi</div>
 															<div>Duration: 2-3 hours (scenic) | Cost: €10-15</div>
 														</div>
@@ -193,7 +193,7 @@
 											<AlertCircle class="mr-2 h-5 w-5 text-[color:var(--turquoise)]" />
 											Best For
 										</h4>
-										<p class="leading-relaxed text-muted-foreground">
+										<p class="leading-relaxed text-gray-600">
 											Day trip combining with Amalfi Coast or Paestum. Less touristy alternative to
 											coastal towns with authentic city atmosphere and excellent shopping.
 										</p>

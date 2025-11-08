@@ -196,7 +196,7 @@
 	<section class="mesh-gradient relative py-20">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mx-auto max-w-4xl text-center">
-				<p class="text-xl leading-relaxed text-muted-foreground">
+				<p class="text-xl leading-relaxed text-gray-600">
 					From exploring ancient ruins to sailing crystal-clear waters, cooking authentic Italian
 					cuisine to hiking coastal trails through fragrant lemon groves, Sorrento offers
 					experiences that create memories to last a lifetime. Discover activities perfect for every
@@ -273,7 +273,7 @@
 									>
 										{activity.name}
 									</CardTitle>
-									<p class="mb-6 text-sm leading-relaxed text-muted-foreground">
+									<p class="mb-6 text-sm leading-relaxed text-gray-600">
 										{activity.description}
 									</p>
 
@@ -300,7 +300,7 @@
 								<div
 									class="flex items-center justify-between border-t-2 border-[color:var(--off-white)] pt-4"
 								>
-									<span class="text-sm text-muted-foreground"
+									<span class="text-sm text-gray-600"
 										>Best for: <span class="font-medium text-foreground">{activity.bestFor}</span
 										></span
 									>
@@ -350,7 +350,7 @@
 									{/if}
 								</div>
 								<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">{interest.title}</h3>
-								<p class="text-sm leading-relaxed text-muted-foreground">{interest.description}</p>
+								<p class="text-sm leading-relaxed text-gray-600">{interest.description}</p>
 							</div>
 						</div>
 					</div>

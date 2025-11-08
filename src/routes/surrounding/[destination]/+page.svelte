@@ -106,7 +106,7 @@
 					</div>
 				</div>
 
-				<div class="prose prose-lg mx-auto max-w-none text-muted-foreground">
+				<div class="prose prose-lg mx-auto max-w-none text-gray-600">
 					{#if destination.description}
 						<PortableTextRenderer value={destination.description} />
 					{/if}
@@ -123,7 +123,7 @@
 					<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 						How to Get There
 					</h2>
-					<p class="mx-auto max-w-3xl text-xl text-muted-foreground">
+					<p class="mx-auto max-w-3xl text-xl text-gray-600">
 						From Sorrento to {destination.name}
 					</p>
 				</div>
@@ -144,19 +144,19 @@
 									<h3 class="mb-2 text-2xl font-bold capitalize text-[color:var(--dark)]">
 										{option.type}
 									</h3>
-									<p class="mb-4 flex-grow text-muted-foreground">
+									<p class="mb-4 flex-grow text-gray-600">
 										{option.description}
 									</p>
 									<div class="space-y-3 border-t-2 border-[color:var(--off-white)] pt-4">
 										<div class="flex items-center justify-between">
-											<span class="text-sm text-muted-foreground">Duration</span>
+											<span class="text-sm text-gray-600">Duration</span>
 											<span class="flex items-center space-x-1 font-semibold text-green-600">
 												<Clock class="h-4 w-4" />
 												<span>{option.duration}</span>
 											</span>
 										</div>
 										<div class="flex items-center justify-between">
-											<span class="text-sm text-muted-foreground">Cost</span>
+											<span class="text-sm text-gray-600">Cost</span>
 											<span class="font-semibold text-[color:var(--dark)]">{option.cost}</span>
 										</div>
 									</div>
@@ -177,7 +177,7 @@
 					<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 						Must-See Attractions
 					</h2>
-					<p class="mx-auto max-w-3xl text-xl text-muted-foreground">
+					<p class="mx-auto max-w-3xl text-xl text-gray-600">
 						The highlights you can't miss in {destination.name}
 					</p>
 				</div>
@@ -204,7 +204,7 @@
 									<h3 class="mb-2 text-2xl font-bold text-[color:var(--dark)]">
 										{attraction.name}
 									</h3>
-									<p class="text-muted-foreground">{attraction.description}</p>
+									<p class="text-gray-600">{attraction.description}</p>
 								</CardContent>
 							</Card>
 						</div>
@@ -222,7 +222,7 @@
 					<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 						Visitor Tips
 					</h2>
-					<p class="mx-auto max-w-3xl text-xl text-muted-foreground">
+					<p class="mx-auto max-w-3xl text-xl text-gray-600">
 						Insider advice for your visit to {destination.name}
 					</p>
 				</div>
@@ -239,7 +239,7 @@
 								<AlertCircle class="h-6 w-6 text-white" />
 							</div>
 							<div class="flex-grow">
-								<p class="text-lg text-muted-foreground">
+								<p class="text-lg text-gray-600">
 									{tip}
 								</p>
 							</div>

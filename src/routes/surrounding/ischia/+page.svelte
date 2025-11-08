@@ -70,7 +70,7 @@
 						<span class="text-sm font-medium text-[color:var(--dark)]">Wellness Paradise</span>
 					</div>
 				</div>
-				<p class="text-center text-lg leading-relaxed text-muted-foreground">
+				<p class="text-center text-lg leading-relaxed text-gray-600">
 					Ischia is a volcanic island renowned for its natural thermal springs, beautiful beaches,
 					and lush landscapes. Larger and less crowded than Capri, it offers a perfect blend of
 					relaxation, natural beauty, and authentic Italian culture.
@@ -106,7 +106,7 @@
 									<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">
 										{experience.title}
 									</h3>
-									<p class="leading-relaxed text-muted-foreground">{experience.description}</p>
+									<p class="leading-relaxed text-gray-600">{experience.description}</p>
 								</CardContent>
 							</div>
 						</Card>
@@ -140,7 +140,7 @@
 									</div>
 									<div class="flex-grow">
 										<h3 class="mb-4 text-2xl font-bold text-[color:var(--dark)]">From Sorrento</h3>
-										<div class="space-y-4 text-muted-foreground">
+										<div class="space-y-4 text-gray-600">
 											<p>Ferry to Naples (1 hr), then ferry to Ischia (50 min)</p>
 											<p>Total journey: ~2 hours | Cost: €30-40 round trip</p>
 											<p>Summer season may have direct ferries - check schedules</p>
@@ -159,7 +159,7 @@
 										</h4>
 										<ul class="space-y-3">
 											{#each ['Book thermal park tickets online for better prices', 'Bring swimwear and towel for thermal experiences', 'Consider overnight stay to fully explore the island', 'Rent a scooter to explore beaches and villages'] as tip}
-												<li class="flex items-start space-x-3 text-sm text-muted-foreground">
+												<li class="flex items-start space-x-3 text-sm text-gray-600">
 													<div
 														class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[color:var(--turquoise)] to-[color:var(--purple-lavender)]"
 													></div>

@@ -84,7 +84,7 @@
 					</div>
 				</div>
 
-				<div class="space-y-6 text-lg leading-relaxed text-muted-foreground">
+				<div class="space-y-6 text-lg leading-relaxed text-gray-600">
 					<p>
 						Capri has captivated visitors for millennia with its dramatic cliffs, azure waters, and
 						sophisticated Mediterranean charm. This legendary island, once the retreat of Roman
@@ -108,7 +108,7 @@
 				<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 					Things to <span class="text-gradient">See & Do</span>
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-muted-foreground">Discover the magic of Capri</p>
+				<p class="mx-auto max-w-2xl text-xl text-gray-600">Discover the magic of Capri</p>
 			</div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -129,11 +129,11 @@
 							</div>
 							<CardContent class="flex flex-grow flex-col p-6">
 								<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">{attraction.name}</h3>
-								<p class="mb-4 flex-grow text-sm leading-relaxed text-muted-foreground">
+								<p class="mb-4 flex-grow text-sm leading-relaxed text-gray-600">
 									{attraction.description}
 								</p>
 								<div
-									class="flex items-center bg-gradient-to-r text-sm text-muted-foreground {attraction.gradient} bg-clip-text font-medium text-transparent"
+									class="flex items-center bg-gradient-to-r text-sm text-gray-600 {attraction.gradient} bg-clip-text font-medium text-transparent"
 								>
 									<svelte:component
 										this={attraction.icon}
@@ -183,16 +183,16 @@
 												</p>
 											</div>
 											<div class="mb-2 flex items-center space-x-2 md:mb-0">
-												<Euro class="h-5 w-5 text-muted-foreground" />
-												<span class="text-lg font-semibold text-muted-foreground"
+												<Euro class="h-5 w-5 text-gray-600" />
+												<span class="text-lg font-semibold text-gray-600"
 													>{restaurant.price}</span
 												>
 											</div>
 										</div>
-										<p class="mb-4 leading-relaxed text-muted-foreground">
+										<p class="mb-4 leading-relaxed text-gray-600">
 											{restaurant.description}
 										</p>
-										<div class="flex items-center text-sm text-muted-foreground">
+										<div class="flex items-center text-sm text-gray-600">
 											<Utensils class="mr-2 h-4 w-4 opacity-70" />
 											<span>{restaurant.cuisine}</span>
 										</div>
@@ -231,7 +231,7 @@
 									</div>
 									<div class="flex-grow">
 										<h3 class="mb-4 text-2xl font-bold text-[color:var(--dark)]">From Sorrento</h3>
-										<p class="mb-6 text-muted-foreground">
+										<p class="mb-6 text-gray-600">
 											Regular ferry and hydrofoil services run throughout the day from Marina
 											Piccola port in Sorrento.
 										</p>
@@ -242,7 +242,7 @@
 												<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 													Ferry (Slow Boat)
 												</div>
-												<div class="space-y-1 text-sm text-muted-foreground">
+												<div class="space-y-1 text-sm text-gray-600">
 													<div>Duration: 40 minutes</div>
 													<div>Cost: €15-20 one way</div>
 												</div>
@@ -253,7 +253,7 @@
 												<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 													Hydrofoil (Fast)
 												</div>
-												<div class="space-y-1 text-sm text-muted-foreground">
+												<div class="space-y-1 text-sm text-gray-600">
 													<div>Duration: 20 minutes</div>
 													<div>Cost: €20-25 one way</div>
 												</div>
@@ -273,7 +273,7 @@
 										</h4>
 										<ul class="space-y-3">
 											{#each ['Book tickets in advance during peak season (June-September)', 'First ferry of the day (usually 7:30am) offers fewer crowds and best Blue Grotto conditions', 'Return ferries fill up - book your return when you arrive or risk waiting hours', 'Consider a round-island boat tour from Sorrento for a different perspective'] as tip}
-												<li class="flex items-start space-x-3 text-sm text-muted-foreground">
+												<li class="flex items-start space-x-3 text-sm text-gray-600">
 													<div
 														class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[color:var(--turquoise)] to-[color:var(--purple-lavender)]"
 													></div>
@@ -323,7 +323,7 @@
 								>
 									<CardContent class="p-8">
 										<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">{tip.title}</h3>
-										<p class="leading-relaxed text-muted-foreground">{tip.description}</p>
+										<p class="leading-relaxed text-gray-600">{tip.description}</p>
 									</CardContent>
 								</Card>
 							</div>

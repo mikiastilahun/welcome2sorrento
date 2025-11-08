@@ -82,7 +82,7 @@
 						<span class="text-sm font-medium text-[color:var(--dark)]">Historic City</span>
 					</div>
 				</div>
-				<p class="text-center text-lg leading-relaxed text-muted-foreground">
+				<p class="text-center text-lg leading-relaxed text-gray-600">
 					Naples pulses with energy, history, and authentic Italian culture. As the birthplace of
 					pizza and gateway to Pompeii and Mount Vesuvius, this vibrant city offers rich history,
 					stunning art, and unforgettable culinary experiences.
@@ -98,7 +98,7 @@
 				<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 					Top <span class="text-gradient-2">Attractions</span>
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-muted-foreground">Discover Naples' treasures</p>
+				<p class="mx-auto max-w-2xl text-xl text-gray-600">Discover Naples' treasures</p>
 			</div>
 
 			<div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
@@ -120,10 +120,10 @@
 									<h3 class="mb-3 text-2xl font-bold text-[color:var(--dark)]">
 										{attraction.title}
 									</h3>
-									<p class="mb-4 leading-relaxed text-muted-foreground">
+									<p class="mb-4 leading-relaxed text-gray-600">
 										{attraction.description}
 									</p>
-									<div class="flex items-center text-sm text-muted-foreground">
+									<div class="flex items-center text-sm text-gray-600">
 										<Clock class="mr-2 h-4 w-4 opacity-70" />
 										<span>{attraction.duration}</span>
 									</div>
@@ -171,7 +171,7 @@
 														<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 															Circumvesuviana Train
 														</div>
-														<div class="space-y-1 text-sm text-muted-foreground">
+														<div class="space-y-1 text-sm text-gray-600">
 															<div>Duration: 1 hour | Cost: €4-5 one way</div>
 															<div>Frequent departures, most economical option</div>
 														</div>
@@ -188,7 +188,7 @@
 														<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 															Private Transfer
 														</div>
-														<div class="space-y-1 text-sm text-muted-foreground">
+														<div class="space-y-1 text-sm text-gray-600">
 															<div>Duration: 50 min | Cost: €80-120</div>
 															<div>Direct, comfortable, door-to-door</div>
 														</div>
@@ -210,7 +210,7 @@
 										</h4>
 										<ul class="space-y-3">
 											{#each ['Watch your belongings in crowded areas', 'Book Pompeii tickets online to skip lines', 'Combine with Vesuvius for full day trip', 'Try authentic pizza at Da Michele or Sorbillo'] as tip}
-												<li class="flex items-start space-x-3 text-sm text-muted-foreground">
+												<li class="flex items-start space-x-3 text-sm text-gray-600">
 													<div
 														class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[color:var(--turquoise)] to-[color:var(--purple-lavender)]"
 													></div>

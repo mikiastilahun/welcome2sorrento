@@ -101,7 +101,7 @@
 									<Icon class="h-7 w-7 text-white" />
 								</div>
 								<div class="text-gradient mb-2 text-4xl font-bold">{stat.value}</div>
-								<div class="text-sm font-medium text-muted-foreground">{stat.label}</div>
+								<div class="text-sm font-medium text-gray-600">{stat.label}</div>
 							</div>
 						</div>
 					</div>
@@ -138,7 +138,7 @@
 						></div>
 					</div>
 
-					<div class="space-y-6 text-lg leading-relaxed text-muted-foreground">
+					<div class="space-y-6 text-lg leading-relaxed text-gray-600">
 						<p>
 							Perched on clifftops overlooking the Bay of Naples with Mount Vesuvius in the
 							distance, Sorrento is a town that captivates all who visit. Known for its dramatic
@@ -164,7 +164,7 @@
 				<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 					Plan Your <span class="text-gradient">Perfect Visit</span>
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-muted-foreground">
+				<p class="mx-auto max-w-2xl text-xl text-gray-600">
 					Everything you need for an unforgettable Sorrento experience
 				</p>
 			</div>
@@ -197,7 +197,7 @@
 									</div>
 								</div>
 								<CardContent class="flex flex-grow flex-col p-8">
-									<p class="mb-6 flex-grow leading-relaxed text-muted-foreground">
+									<p class="mb-6 flex-grow leading-relaxed text-gray-600">
 										{section.description}
 									</p>
 									<div class="mb-6 space-y-3">
@@ -261,7 +261,7 @@
 											</div>
 											<div>
 												<h3 class="mb-2 text-lg font-bold text-[color:var(--dark)]">{tip.title}</h3>
-												<p class="text-sm leading-relaxed text-muted-foreground">
+												<p class="text-sm leading-relaxed text-gray-600">
 													{tip.description}
 												</p>
 											</div>

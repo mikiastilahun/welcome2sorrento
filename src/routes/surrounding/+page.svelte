@@ -169,7 +169,7 @@
 					<h2 class="mb-8 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 						Your <span class="text-gradient-2">Perfect Base</span>
 					</h2>
-					<p class="text-xl leading-relaxed text-muted-foreground">
+					<p class="text-xl leading-relaxed text-gray-600">
 						Sorrento's prime location makes it the perfect base for exploring some of Italy's most
 						iconic destinations. From legendary islands to dramatic coastal drives, ancient ruins to
 						vibrant cities, each destination offers unique experiences and unforgettable memories.
@@ -250,7 +250,7 @@
 												</p>
 											</div>
 
-											<p class="mb-8 text-lg leading-relaxed text-muted-foreground">
+											<p class="mb-8 text-lg leading-relaxed text-gray-600">
 												{destination.description}
 											</p>
 
@@ -282,12 +282,12 @@
 													<div class="flex items-center space-x-2 text-sm">
 														<MapPin class="h-4 w-4 text-[color:var(--turquoise)]" />
 														<span class="font-semibold">Distance:</span>
-														<span class="text-muted-foreground">{destination.distance}</span>
+														<span class="text-gray-600">{destination.distance}</span>
 													</div>
 													<div class="flex items-center space-x-2 text-sm">
 														<Clock class="h-4 w-4 text-[color:var(--purple-lavender)]" />
 														<span class="font-semibold">Travel Time:</span>
-														<span class="text-muted-foreground">{destination.travelTime}</span>
+														<span class="text-gray-600">{destination.travelTime}</span>
 													</div>
 												</div>
 
@@ -321,7 +321,7 @@
 					<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 						Getting <span class="text-gradient-2">Around</span>
 					</h2>
-					<p class="text-xl text-muted-foreground">
+					<p class="text-xl text-gray-600">
 						Multiple transportation options to explore the region
 					</p>
 				</div>
@@ -344,7 +344,7 @@
 									<h3 class="mb-4 text-2xl font-bold text-[color:var(--dark)]">
 										{transport.title}
 									</h3>
-									<p class="leading-relaxed text-muted-foreground">
+									<p class="leading-relaxed text-gray-600">
 										{transport.description}
 									</p>
 								</div>

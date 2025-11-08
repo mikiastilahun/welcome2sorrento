@@ -115,7 +115,7 @@
 	<section class="mesh-gradient relative py-20">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mx-auto max-w-4xl text-center">
-				<p class="text-xl leading-relaxed text-muted-foreground">
+				<p class="text-xl leading-relaxed text-gray-600">
 					Sorrento offers accommodations to suit every style and budget. Whether you seek five-star
 					luxury with infinity pools and Michelin-starred restaurants, intimate boutique hotels with
 					personalized service, or charming B&Bs where you'll feel like part of the family, you'll
@@ -151,9 +151,9 @@
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			{#if filteredAccommodations.length === 0}
 				<div class="py-20 text-center">
-					<Home class="mx-auto mb-4 h-16 w-16 text-muted-foreground opacity-50" />
+					<Home class="mx-auto mb-4 h-16 w-16 text-gray-600 opacity-50" />
 					<h3 class="mb-2 text-2xl font-bold text-[color:var(--dark)]">No Accommodations Found</h3>
-					<p class="text-muted-foreground">
+					<p class="text-gray-600">
 						{selectedType === 'All'
 							? 'No accommodations have been added yet. Check back soon!'
 							: `No accommodations found in the "${formatType(selectedType)}" category.`}
@@ -213,7 +213,7 @@
 									>
 										{accommodation.name}
 									</CardTitle>
-									<p class="mb-6 text-sm leading-relaxed text-muted-foreground">
+									<p class="mb-6 text-sm leading-relaxed text-gray-600">
 										{accommodation.description}
 									</p>
 
@@ -230,7 +230,7 @@
 								</div>
 
 								<div
-									class="flex items-start space-x-2 border-t-2 border-[color:var(--off-white)] pt-4 text-sm text-muted-foreground"
+									class="flex items-start space-x-2 border-t-2 border-[color:var(--off-white)] pt-4 text-sm text-gray-600"
 								>
 									<MapPin class="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-500" />
 									<span class="font-medium">{accommodation.location}</span>
@@ -281,7 +281,7 @@
 									</div>
 									<h3 class="text-xl font-bold text-[color:var(--dark)]">{area.title}</h3>
 								</div>
-								<p class="mb-4 text-sm leading-relaxed text-muted-foreground">
+								<p class="mb-4 text-sm leading-relaxed text-gray-600">
 									{area.description}
 								</p>
 								<Badge class="bg-gradient-to-r {area.gradient} border-0 text-white"
@@ -314,7 +314,7 @@
 									class="relative h-full rounded-3xl border-2 border-[color:var(--off-white)] bg-white p-8 transition-all duration-300 hover:border-blue-500"
 								>
 									<h3 class="mb-2 text-lg font-bold text-[color:var(--dark)]">{tip.title}</h3>
-									<p class="text-sm leading-relaxed text-muted-foreground">{tip.description}</p>
+									<p class="text-sm leading-relaxed text-gray-600">{tip.description}</p>
 								</div>
 							</div>
 						</div>

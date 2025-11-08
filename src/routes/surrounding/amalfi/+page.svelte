@@ -82,7 +82,7 @@
 						<span class="text-sm font-medium text-[color:var(--dark)]">UNESCO World Heritage</span>
 					</div>
 				</div>
-				<p class="text-center text-lg leading-relaxed text-muted-foreground">
+				<p class="text-center text-lg leading-relaxed text-gray-600">
 					The Amalfi Coast is one of the world's most breathtaking coastal drives, featuring
 					picturesque villages perched on dramatic cliffs overlooking the turquoise Mediterranean.
 					This UNESCO World Heritage site captivates with its colorful towns, lemon groves, and
@@ -99,7 +99,7 @@
 				<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 					Must-Visit <span class="text-gradient-2">Towns</span>
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-muted-foreground">
+				<p class="mx-auto max-w-2xl text-xl text-gray-600">
 					Discover the colorful villages of the coast
 				</p>
 			</div>
@@ -129,7 +129,7 @@
 								</div>
 							</div>
 							<CardContent class="flex-grow p-6">
-								<p class="leading-relaxed text-muted-foreground">
+								<p class="leading-relaxed text-gray-600">
 									{town.description}
 								</p>
 							</CardContent>
@@ -175,7 +175,7 @@
 														<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 															SITA Bus
 														</div>
-														<div class="text-sm leading-relaxed text-muted-foreground">
+														<div class="text-sm leading-relaxed text-gray-600">
 															Scenic coastal route via SS163. Duration: 1-1.5 hours to Amalfi, 2
 															hours to Salerno. €10-15 round trip.
 														</div>
@@ -192,7 +192,7 @@
 														<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 															Ferry (Summer)
 														</div>
-														<div class="text-sm leading-relaxed text-muted-foreground">
+														<div class="text-sm leading-relaxed text-gray-600">
 															Coastal ferry to Positano & Amalfi. Duration: 30-70 min. €15-25 one
 															way. Most scenic option!
 														</div>
@@ -209,7 +209,7 @@
 														<div class="mb-2 text-lg font-bold text-[color:var(--dark)]">
 															Private Driver
 														</div>
-														<div class="text-sm leading-relaxed text-muted-foreground">
+														<div class="text-sm leading-relaxed text-gray-600">
 															Stress-free with photo stops. €150-300 for full day. Recommended for
 															groups.
 														</div>
@@ -231,7 +231,7 @@
 										</h4>
 										<ul class="space-y-3">
 											{#each ['Book bus tickets online in advance during summer', 'Best light for photos: morning for western-facing towns', 'Allow full day - the winding roads take time', 'Ferry option provides stunning coastal views'] as tip}
-												<li class="flex items-start space-x-3 text-sm text-muted-foreground">
+												<li class="flex items-start space-x-3 text-sm text-gray-600">
 													<div
 														class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[color:var(--turquoise)] to-[color:var(--purple-lavender)]"
 													></div>

@@ -39,7 +39,7 @@
 				<span class="text-gradient">Oops!</span>
 			{/if}
 		</h1>
-		<p class="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
+		<p class="mx-auto mb-12 max-w-2xl text-xl text-gray-600">
 			{#if $page.status === 404}
 				The page you're looking for seems to have wandered off to explore Capri. Let's get you back
 				on track!
@@ -73,7 +73,7 @@
 									<Home class="h-7 w-7 text-white" />
 								</div>
 								<div class="mb-2 text-lg font-bold">Homepage</div>
-								<div class="text-sm text-muted-foreground">Start from the beginning</div>
+								<div class="text-sm text-gray-600">Start from the beginning</div>
 							</div>
 						</a>
 
@@ -87,7 +87,7 @@
 									<MapPin class="h-7 w-7 text-white" />
 								</div>
 								<div class="mb-2 text-lg font-bold">Sorrento Guide</div>
-								<div class="text-sm text-muted-foreground">Eat, Stay & Do</div>
+								<div class="text-sm text-gray-600">Eat, Stay & Do</div>
 							</div>
 						</a>
 
@@ -101,7 +101,7 @@
 									<MapPin class="h-7 w-7 text-white" />
 								</div>
 								<div class="mb-2 text-lg font-bold">Surrounding Area</div>
-								<div class="text-sm text-muted-foreground">Capri, Amalfi & more</div>
+								<div class="text-sm text-gray-600">Capri, Amalfi & more</div>
 							</div>
 						</a>
 
@@ -115,7 +115,7 @@
 									<Search class="h-7 w-7 text-white" />
 								</div>
 								<div class="mb-2 text-lg font-bold">Blog</div>
-								<div class="text-sm text-muted-foreground">Travel tips & guides</div>
+								<div class="text-sm text-gray-600">Travel tips & guides</div>
 							</div>
 						</a>
 					</div>
@@ -145,7 +145,7 @@
 		</div>
 
 		<!-- Decorative Element -->
-		<div class="mt-12 text-muted-foreground">
+		<div class="mt-12 text-gray-600">
 			<p>Lost? We're here to help you navigate Sorrento – both online and in real life!</p>
 		</div>
 	</div>

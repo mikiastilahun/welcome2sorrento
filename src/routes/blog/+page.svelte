@@ -185,11 +185,11 @@
 										>
 											{featuredPost.title}
 										</h2>
-										<p class="mb-6 text-lg leading-relaxed text-muted-foreground">
+										<p class="mb-6 text-lg leading-relaxed text-gray-600">
 											{featuredPost.excerpt}
 										</p>
 										<div
-											class="mb-8 flex flex-wrap items-center gap-4 border-b-2 border-[color:var(--off-white)] pb-8 text-sm text-muted-foreground"
+											class="mb-8 flex flex-wrap items-center gap-4 border-b-2 border-[color:var(--off-white)] pb-8 text-sm text-gray-600"
 										>
 											<div class="flex items-center space-x-2">
 												<div
@@ -240,9 +240,9 @@
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			{#if filteredPosts.length === 0}
 				<div class="py-20 text-center">
-					<BookOpen class="mx-auto mb-4 h-16 w-16 text-muted-foreground opacity-50" />
+					<BookOpen class="mx-auto mb-4 h-16 w-16 text-gray-600 opacity-50" />
 					<h3 class="mb-2 text-2xl font-bold text-[color:var(--dark)]">No Posts Found</h3>
-					<p class="text-muted-foreground">
+					<p class="text-gray-600">
 						{selectedCategory === 'All'
 							? 'No blog posts have been published yet. Check back soon!'
 							: `No posts found in the "${formatCategory(selectedCategory)}" category.`}
@@ -286,11 +286,11 @@
 										>
 											{post.title}
 										</h3>
-										<p class="mb-6 flex-grow text-sm leading-relaxed text-muted-foreground">
+										<p class="mb-6 flex-grow text-sm leading-relaxed text-gray-600">
 											{post.excerpt}
 										</p>
 										<div
-											class="flex flex-wrap items-center gap-3 border-t-2 border-[color:var(--off-white)] pt-4 text-xs text-muted-foreground"
+											class="flex flex-wrap items-center gap-3 border-t-2 border-[color:var(--off-white)] pt-4 text-xs text-gray-600"
 										>
 											<div class="flex items-center space-x-2">
 												<div

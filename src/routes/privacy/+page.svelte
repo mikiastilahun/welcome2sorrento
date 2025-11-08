@@ -42,7 +42,7 @@
 			<h1 class="mb-4 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
 				Privacy <span class="text-gradient">Policy</span>
 			</h1>
-			<p class="text-lg text-muted-foreground">Your privacy is important to us</p>
+			<p class="text-lg text-gray-600">Your privacy is important to us</p>
 		</div>
 	</div>
 </section>
@@ -58,12 +58,12 @@
 			></div>
 			<div class="relative p-8 sm:p-12">
 				<div class="prose prose-lg max-w-none">
-					<p class="mb-8 text-sm text-muted-foreground">
+					<p class="mb-8 text-sm text-gray-600">
 						<strong>Last Updated:</strong> November 2024
 					</p>
 
 					<h2 class="mt-12 mb-6 text-3xl font-bold text-[color:var(--dark)]">Introduction</h2>
-					<p class="mb-6 leading-relaxed text-muted-foreground">
+					<p class="mb-6 leading-relaxed text-gray-600">
 						Welcome2Sorrento ("we," "our," or "us") respects your privacy and is committed to
 						protecting your personal information. This Privacy Policy explains how we collect, use,
 						and safeguard your data when you use our website and services.
@@ -72,10 +72,10 @@
 					<h2 class="mt-12 mb-6 text-3xl font-bold text-[color:var(--dark)]">
 						Information We Collect
 					</h2>
-					<p class="mb-4 leading-relaxed text-muted-foreground">
+					<p class="mb-4 leading-relaxed text-gray-600">
 						We collect information that you provide directly to us, including:
 					</p>
-					<ul class="mb-6 ml-6 list-disc space-y-2 leading-relaxed text-muted-foreground">
+					<ul class="mb-6 ml-6 list-disc space-y-2 leading-relaxed text-gray-600">
 						<li>Name and contact information (email, phone number)</li>
 						<li>Travel dates and preferences</li>
 						<li>Booking requests and itinerary information</li>
@@ -85,10 +85,10 @@
 					<h2 class="mt-12 mb-6 text-3xl font-bold text-[color:var(--dark)]">
 						How We Use Your Information
 					</h2>
-					<p class="mb-4 leading-relaxed text-muted-foreground">
+					<p class="mb-4 leading-relaxed text-gray-600">
 						We use the information we collect to:
 					</p>
-					<ul class="mb-6 ml-6 list-disc space-y-2 leading-relaxed text-muted-foreground">
+					<ul class="mb-6 ml-6 list-disc space-y-2 leading-relaxed text-gray-600">
 						<li>Provide our booking and planning services</li>
 						<li>Communicate with you about your travel plans</li>
 						<li>Send newsletters and travel tips (with your consent)</li>
@@ -99,18 +99,18 @@
 					<h2 class="mt-12 mb-6 text-3xl font-bold text-[color:var(--dark)]">
 						Information Sharing
 					</h2>
-					<p class="mb-4 leading-relaxed text-muted-foreground">
+					<p class="mb-4 leading-relaxed text-gray-600">
 						We do not sell your personal information. We may share your information with:
 					</p>
-					<ul class="mb-6 ml-6 list-disc space-y-2 leading-relaxed text-muted-foreground">
+					<ul class="mb-6 ml-6 list-disc space-y-2 leading-relaxed text-gray-600">
 						<li>Hotels, restaurants, and tour operators to fulfill your bookings</li>
 						<li>Service providers who assist in our operations</li>
 						<li>Legal authorities when required by law</li>
 					</ul>
 
 					<h2 class="mt-12 mb-6 text-3xl font-bold text-[color:var(--dark)]">Your Rights</h2>
-					<p class="mb-4 leading-relaxed text-muted-foreground">You have the right to:</p>
-					<ul class="mb-6 ml-6 list-disc space-y-2 leading-relaxed text-muted-foreground">
+					<p class="mb-4 leading-relaxed text-gray-600">You have the right to:</p>
+					<ul class="mb-6 ml-6 list-disc space-y-2 leading-relaxed text-gray-600">
 						<li>Access your personal information</li>
 						<li>Request corrections or deletions</li>
 						<li>Opt-out of marketing communications</li>
@@ -118,7 +118,7 @@
 					</ul>
 
 					<h2 class="mt-12 mb-6 text-3xl font-bold text-[color:var(--dark)]">Contact Us</h2>
-					<p class="leading-relaxed text-muted-foreground">
+					<p class="leading-relaxed text-gray-600">
 						If you have questions about this Privacy Policy, please contact us at
 						<a
 							href="mailto:margheroba@email.com"

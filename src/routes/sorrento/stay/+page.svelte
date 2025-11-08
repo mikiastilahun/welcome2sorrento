@@ -6,6 +6,16 @@
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import { Star, MapPin, Wifi, Coffee, Waves, Heart, Home, Sparkles, Award } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import { urlFor } from '$lib/sanity/image';
+	import type { Accommodation } from '$lib/sanity/queries';
+
+	interface Props {
+		data: {
+			accommodations: Accommodation[];
+		};
+	}
+
+	let { data }: Props = $props();
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -25,93 +35,41 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
-	const accommodations = [
-		{
-			name: 'Grand Hotel Excelsior Vittoria',
-			category: 'Luxury Hotel',
-			priceRange: '€€€€',
-			rating: 4.9,
-			image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80',
-			description:
-				'Iconic 5-star hotel with panoramic views, lush gardens, and Michelin-starred dining.',
-			amenities: ['Pool', 'Spa', 'Restaurant', 'Sea View'],
-			location: 'Piazza Tasso',
-			gradient: 'from-purple-500 to-indigo-600'
-		},
-		{
-			name: 'Bellevue Syrene',
-			category: 'Luxury Hotel',
-			priceRange: '€€€€',
-			rating: 4.8,
-			image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
-			description: 'Elegant clifftop hotel with private beach access and breathtaking bay views.',
-			amenities: ['Private Beach', 'Spa', 'Pool', 'Fine Dining'],
-			location: 'Piazza della Vittoria',
-			gradient: 'from-blue-500 to-cyan-500'
-		},
-		{
-			name: 'Hotel Maison La Minervetta',
-			category: 'Boutique Hotel',
-			priceRange: '€€€',
-			rating: 4.8,
-			image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80',
-			description:
-				'Intimate boutique hotel carved into the cliffside with stunning contemporary design.',
-			amenities: ['Sea View', 'Breakfast Included', 'Rooftop Terrace', 'WiFi'],
-			location: 'Via Capo',
-			gradient: 'from-teal-500 to-emerald-500'
-		},
-		{
-			name: 'Casa Astarita B&B',
-			category: 'Bed & Breakfast',
-			priceRange: '€€',
-			rating: 4.7,
-			image: 'https://images.unsplash.com/photo-1590490277693-c3b266b5d916?w=800&q=80',
-			description:
-				'Charming B&B in historic palazzo with personalized service and homemade breakfast.',
-			amenities: ['Free Breakfast', 'Central Location', 'Family-Run', 'Garden'],
-			location: 'Corso Italia',
-			gradient: 'from-pink-500 to-rose-500'
-		},
-		{
-			name: 'Villa Bohème Luxury Apartments',
-			category: 'Apartment',
-			priceRange: '€€€',
-			rating: 4.9,
-			image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',
-			description: 'Stylish apartments with fully equipped kitchens, perfect for longer stays.',
-			amenities: ['Kitchen', 'Terrace', 'WiFi', 'Central Location'],
-			location: 'Via Fuorimura',
-			gradient: 'from-amber-500 to-orange-500'
-		},
-		{
-			name: 'Il Nido Hotel Sorrento',
-			category: 'Mid-Range Hotel',
-			priceRange: '€€',
-			rating: 4.6,
-			image: 'https://images.unsplash.com/photo-1455587734955-081b22074882?w=800&q=80',
-			description: 'Comfortable hotel with rooftop pool and easy access to town center.',
-			amenities: ['Rooftop Pool', 'Restaurant', 'Bar', 'WiFi'],
-			location: 'Via Degli Aranci',
-			gradient: 'from-green-500 to-teal-500'
-		}
-	];
+	// Get unique types from accommodations
+	const allTypes = $derived(
+		Array.from(new Set(data.accommodations.map((a) => a.type))).sort()
+	);
+	const types = $derived(['All', ...allTypes]);
 
-	const categories = [
-		'All',
-		'Luxury Hotel',
-		'Boutique Hotel',
-		'Mid-Range Hotel',
-		'Bed & Breakfast',
-		'Apartment'
-	];
-	let selectedCategory = $state('All');
+	let selectedType = $state('All');
 
 	const filteredAccommodations = $derived(
-		selectedCategory === 'All'
-			? accommodations
-			: accommodations.filter((a) => a.category === selectedCategory)
+		selectedType === 'All'
+			? data.accommodations
+			: data.accommodations.filter((a) => a.type === selectedType)
 	);
+
+	// Helper to get gradient based on type
+	function getTypeGradient(type: string): string {
+		const gradients: Record<string, string> = {
+			'luxury-hotel': 'from-purple-500 to-indigo-600',
+			'boutique-hotel': 'from-blue-500 to-cyan-500',
+			'bnb': 'from-green-500 to-teal-500',
+			'private-villa': 'from-orange-500 to-red-500',
+			'resort': 'from-pink-500 to-purple-500'
+		};
+		return gradients[type] || 'from-gray-500 to-gray-600';
+	}
+
+	// Helper to format type name
+	function formatType(type: string): string {
+		if (type === 'bnb') return 'B&B';
+		return type
+			.split('-')
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ');
+	}
+
 </script>
 
 <svelte:head>
@@ -173,15 +131,15 @@
 	>
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex flex-wrap justify-center gap-3">
-				{#each categories as category}
+				{#each types as type}
 					<Button
-						variant={selectedCategory === category ? 'default' : 'outline'}
-						onclick={() => (selectedCategory = category)}
-						class={selectedCategory === category
+						variant={selectedType === type ? 'default' : 'outline'}
+						onclick={() => (selectedType = type)}
+						class={selectedType === type
 							? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white transition-all duration-300 hover:shadow-lg'
 							: 'border-2 transition-all duration-300 hover:border-blue-500 hover:text-blue-500'}
 					>
-						{category}
+						{type === 'All' ? type : formatType(type)}
 					</Button>
 				{/each}
 			</div>
@@ -191,18 +149,32 @@
 	<!-- Accommodations Grid -->
 	<section class="relative bg-white py-32">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-				{#each filteredAccommodations as accommodation, index}
+			{#if filteredAccommodations.length === 0}
+				<div class="py-20 text-center">
+					<Home class="mx-auto mb-4 h-16 w-16 text-muted-foreground opacity-50" />
+					<h3 class="mb-2 text-2xl font-bold text-[color:var(--dark)]">No Accommodations Found</h3>
+					<p class="text-muted-foreground">
+						{selectedType === 'All'
+							? 'No accommodations have been added yet. Check back soon!'
+							: `No accommodations found in the "${formatType(selectedType)}" category.`}
+					</p>
+				</div>
+			{:else}
+				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+					{#each filteredAccommodations as accommodation, index}
+						{@const gradient = getTypeGradient(accommodation.type)}
 					<div class="scroll-reveal h-full" style="transition-delay: {index * 0.1}s">
 						<Card
 							class="group flex h-full flex-col overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-blue-500 hover:shadow-2xl"
 						>
 							<div class="relative h-72 overflow-hidden">
-								<img
-									src={accommodation.image}
-									alt={accommodation.name}
-									class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-								/>
+								{#if accommodation.mainImage}
+									<img
+										src={urlFor(accommodation.mainImage).width(800).height(600).url()}
+										alt={accommodation.name}
+										class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+									/>
+								{/if}
 								<div
 									class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/80 via-[color:var(--dark)]/20 to-transparent"
 								></div>
@@ -212,14 +184,14 @@
 									<Badge
 										class="border-0 bg-white/90 font-semibold text-[color:var(--dark)] shadow-lg backdrop-blur-sm"
 									>
-										{accommodation.category}
+										{formatType(accommodation.type)}
 									</Badge>
 								</div>
 
 								<!-- Price Badge -->
 								<div class="absolute top-4 left-4">
 									<Badge
-										class="bg-gradient-to-r {accommodation.gradient} border-0 font-semibold text-white shadow-lg"
+										class="bg-gradient-to-r {gradient} border-0 font-semibold text-white shadow-lg"
 									>
 										{accommodation.priceRange}
 									</Badge>
@@ -237,7 +209,7 @@
 							<CardContent class="flex flex-grow flex-col p-6">
 								<div class="flex-grow">
 									<CardTitle
-										class="mb-3 text-2xl group-hover:bg-gradient-to-r group-hover:text-transparent group-hover:{accommodation.gradient} transition-all duration-500 group-hover:bg-clip-text"
+										class="mb-3 text-2xl group-hover:bg-gradient-to-r group-hover:text-transparent group-hover:{gradient} transition-all duration-500 group-hover:bg-clip-text"
 									>
 										{accommodation.name}
 									</CardTitle>
@@ -246,7 +218,7 @@
 									</p>
 
 									<div class="mb-6 flex flex-wrap gap-2">
-										{#each accommodation.amenities as amenity}
+										{#each accommodation.highlights as amenity}
 											<Badge
 												variant="outline"
 												class="border-blue-500 text-xs text-blue-500 transition-colors hover:bg-blue-50"
@@ -268,6 +240,7 @@
 					</div>
 				{/each}
 			</div>
+		{/if}
 		</div>
 	</section>
 

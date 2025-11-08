@@ -6,6 +6,16 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import { Calendar, User, ArrowRight, BookOpen, Sparkles } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import { urlFor } from '$lib/sanity/image';
+	import type { BlogPost } from '$lib/sanity/queries';
+
+	interface Props {
+		data: {
+			posts: BlogPost[];
+		};
+	}
+
+	let { data }: Props = $props();
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -25,96 +35,39 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
-	const blogPosts = [
-		{
-			id: 1,
-			title: "The Ultimate Guide to Sorrento's Lemon Groves",
-			excerpt:
-				"Discover the history, culture, and best places to experience Sorrento's famous lemons and limoncello production.",
-			image: 'https://images.unsplash.com/photo-1590502593747-42a996133562?w=800&q=80',
-			category: 'Local Culture',
-			author: 'Maria Romano',
-			date: '2024-10-15',
-			readTime: '8 min read',
-			gradient: 'from-yellow-500 to-orange-500'
-		},
-		{
-			id: 2,
-			title: 'Best Beach Clubs in Sorrento: A Complete Guide',
-			excerpt:
-				'From Marina Grande to exclusive lidos, find the perfect beach club for your Mediterranean escape.',
-			image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
-			category: 'Beaches',
-			author: 'Marco Esposito',
-			date: '2024-10-10',
-			readTime: '6 min read',
-			gradient: 'from-blue-500 to-cyan-500'
-		},
-		{
-			id: 3,
-			title: 'Hidden Gems: Secret Spots Only Locals Know',
-			excerpt:
-				"Venture beyond the tourist trail to discover Sorrento's best-kept secrets, from hidden beaches to local trattorias.",
-			image: 'https://images.unsplash.com/photo-1533777324565-a040eb52facd?w=800&q=80',
-			category: 'Travel Tips',
-			author: 'Maria Romano',
-			date: '2024-10-05',
-			readTime: '10 min read',
-			gradient: 'from-purple-500 to-pink-500'
-		},
-		{
-			id: 4,
-			title: 'Amalfi Coast Day Trip: Perfect Itinerary from Sorrento',
-			excerpt:
-				'Make the most of your Amalfi Coast adventure with our expertly crafted day-trip itinerary.',
-			image: 'https://images.unsplash.com/photo-1534113414509-0bd4d0ff02a9?w=800&q=80',
-			category: 'Day Trips',
-			author: 'Luca Conti',
-			date: '2024-09-28',
-			readTime: '12 min read',
-			gradient: 'from-green-500 to-teal-500'
-		},
-		{
-			id: 5,
-			title: 'Authentic Sorrentine Recipes to Try at Home',
-			excerpt:
-				'Bring the flavors of Sorrento to your kitchen with these traditional recipes from local nonnas.',
-			image: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800&q=80',
-			category: 'Food & Drink',
-			author: 'Nonna Lucia',
-			date: '2024-09-20',
-			readTime: '7 min read',
-			gradient: 'from-red-500 to-orange-500'
-		},
-		{
-			id: 6,
-			title: 'Visiting Pompeii and Vesuvius: Essential Tips',
-			excerpt:
-				'Everything you need to know for a successful day exploring ancient Pompeii and hiking Mount Vesuvius.',
-			image: 'https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=800&q=80',
-			category: 'Day Trips',
-			author: 'Marco Esposito',
-			date: '2024-09-15',
-			readTime: '9 min read',
-			gradient: 'from-indigo-500 to-purple-500'
-		}
-	];
-
-	const categories = [
-		'All',
-		'Local Culture',
-		'Beaches',
-		'Travel Tips',
-		'Day Trips',
-		'Food & Drink'
-	];
+	// Get unique categories from posts
+	const allCategories = $derived(
+		Array.from(new Set(data.posts.map((p) => p.category))).sort()
+	);
+	const categories = $derived(['All', ...allCategories]);
+	
 	let selectedCategory = $state('All');
 
 	const filteredPosts = $derived(
 		selectedCategory === 'All'
-			? blogPosts
-			: blogPosts.filter((p) => p.category === selectedCategory)
+			? data.posts
+			: data.posts.filter((p) => p.category === selectedCategory)
 	);
+
+	// Helper to get gradient based on category
+	function getCategoryGradient(category: string): string {
+		const gradients: Record<string, string> = {
+			'local-culture': 'from-yellow-500 to-orange-500',
+			'beaches': 'from-blue-500 to-cyan-500',
+			'travel-tips': 'from-purple-500 to-pink-500',
+			'day-trips': 'from-green-500 to-teal-500',
+			'food-drink': 'from-red-500 to-orange-500'
+		};
+		return gradients[category] || 'from-indigo-500 to-purple-500';
+	}
+
+	// Helper to format category name
+	function formatCategory(category: string): string {
+		return category
+			.split('-')
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ');
+	}
 </script>
 
 <svelte:head>
@@ -184,7 +137,9 @@
 	</section>
 
 	<!-- Featured Post -->
-	{#if selectedCategory === 'All'}
+	{#if selectedCategory === 'All' && filteredPosts.length > 0}
+		{@const featuredPost = filteredPosts[0]}
+		{@const gradient = getCategoryGradient(featuredPost.category)}
 		<section class="mesh-gradient relative py-32">
 			<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div class="scroll-reveal mx-auto max-w-6xl">
@@ -195,76 +150,73 @@
 						<span class="text-sm font-bold">Featured Post</span>
 					</div>
 
-					<a href="/blog/{blogPosts[0].id}" class="group block">
+					<a href="/blog/{featuredPost.slug.current}" class="group block">
 						<div class="relative overflow-hidden rounded-3xl">
 							<div
-								class="absolute inset-0 bg-gradient-to-r {blogPosts[0]
-									.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-20"
+								class="absolute inset-0 bg-gradient-to-r {gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-20"
 							></div>
 							<div
 								class="relative overflow-hidden rounded-3xl border-2 border-transparent bg-white shadow-xl transition-all duration-500 group-hover:border-[color:var(--purple-lavender)] group-hover:shadow-2xl"
 							>
 								<div class="grid grid-cols-1 lg:grid-cols-2">
 									<div class="relative h-96 overflow-hidden lg:h-[500px]">
-										<img
-											src={blogPosts[0].image}
-											alt={blogPosts[0].title}
-											class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-										/>
+										{#if featuredPost.mainImage}
+											<img
+												src={urlFor(featuredPost.mainImage).width(800).height(500).url()}
+												alt={featuredPost.title}
+												class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+											/>
+										{/if}
 										<div
 											class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/80 to-transparent"
 										></div>
 										<div class="absolute top-6 left-6">
 											<Badge
-												class="bg-gradient-to-r {blogPosts[0]
-													.gradient} border-0 px-4 py-1.5 text-sm text-white shadow-lg"
+												class="bg-gradient-to-r {gradient} border-0 px-4 py-1.5 text-sm text-white shadow-lg"
 											>
-												{blogPosts[0].category}
+												{formatCategory(featuredPost.category)}
 											</Badge>
 										</div>
 									</div>
 
 									<CardContent class="flex flex-col justify-center p-8 lg:p-12">
 										<h2
-											class="mb-6 text-3xl font-bold text-[color:var(--dark)] group-hover:bg-gradient-to-r group-hover:text-transparent sm:text-4xl lg:text-5xl group-hover:{blogPosts[0]
-												.gradient} transition-all duration-500 group-hover:bg-clip-text"
+											class="mb-6 text-3xl font-bold text-[color:var(--dark)] group-hover:bg-gradient-to-r group-hover:text-transparent sm:text-4xl lg:text-5xl group-hover:{gradient} transition-all duration-500 group-hover:bg-clip-text"
 										>
-											{blogPosts[0].title}
+											{featuredPost.title}
 										</h2>
 										<p class="mb-6 text-lg leading-relaxed text-muted-foreground">
-											{blogPosts[0].excerpt}
+											{featuredPost.excerpt}
 										</p>
 										<div
 											class="mb-8 flex flex-wrap items-center gap-4 border-b-2 border-[color:var(--off-white)] pb-8 text-sm text-muted-foreground"
 										>
 											<div class="flex items-center space-x-2">
 												<div
-													class="h-8 w-8 rounded-lg bg-gradient-to-br {blogPosts[0]
-														.gradient} flex items-center justify-center text-xs font-bold text-white"
+													class="h-8 w-8 rounded-lg bg-gradient-to-br {gradient} flex items-center justify-center text-xs font-bold text-white"
 												>
-													{blogPosts[0].author
+													{featuredPost.author
 														.split(' ')
 														.map((n) => n[0])
 														.join('')}
 												</div>
-												<span class="font-medium">{blogPosts[0].author}</span>
+												<span class="font-medium">{featuredPost.author}</span>
 											</div>
 											<div class="flex items-center space-x-2">
 												<Calendar class="h-4 w-4" />
 												<span
-													>{new Date(blogPosts[0].date).toLocaleDateString('en-US', {
+													>{new Date(featuredPost.publishedAt).toLocaleDateString('en-US', {
 														month: 'long',
 														day: 'numeric',
 														year: 'numeric'
 													})}</span
 												>
 											</div>
-											<span>{blogPosts[0].readTime}</span>
+											<span>{featuredPost.readTime}</span>
 										</div>
 										<Button
 											size="lg"
-											class="w-fit bg-gradient-to-r {blogPosts[0]
-												.gradient} text-white transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-[color:var(--purple-lavender)]/50"
+											class="w-fit bg-gradient-to-r {gradient} text-white transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-[color:var(--purple-lavender)]/50"
 										>
 											<span class="flex items-center space-x-2">
 												<span>Read Full Article</span>
@@ -286,73 +238,88 @@
 	<!-- Blog Grid -->
 	<section class="relative bg-white py-32">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-				{#each filteredPosts.slice(selectedCategory === 'All' ? 1 : 0) as post, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<a href="/blog/{post.id}" class="group block h-full">
-							<Card
-								class="flex h-full flex-col overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-[color:var(--purple-lavender)] hover:shadow-2xl"
-							>
-								<div class="relative h-64 overflow-hidden">
-									<img
-										src={post.image}
-										alt={post.title}
-										class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-									/>
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/60 to-transparent"
-									></div>
-									<div class="absolute top-4 left-4">
-										<Badge class="bg-gradient-to-r {post.gradient} border-0 text-white shadow-lg">
-											{post.category}
-										</Badge>
+			{#if filteredPosts.length === 0}
+				<div class="py-20 text-center">
+					<BookOpen class="mx-auto mb-4 h-16 w-16 text-muted-foreground opacity-50" />
+					<h3 class="mb-2 text-2xl font-bold text-[color:var(--dark)]">No Posts Found</h3>
+					<p class="text-muted-foreground">
+						{selectedCategory === 'All'
+							? 'No blog posts have been published yet. Check back soon!'
+							: `No posts found in the "${formatCategory(selectedCategory)}" category.`}
+					</p>
+				</div>
+			{:else}
+				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+					{#each filteredPosts.slice(selectedCategory === 'All' ? 1 : 0) as post, index}
+						{@const gradient = getCategoryGradient(post.category)}
+						<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+							<a href="/blog/{post.slug.current}" class="group block h-full">
+								<Card
+									class="flex h-full flex-col overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-[color:var(--purple-lavender)] hover:shadow-2xl"
+								>
+									<div class="relative h-64 overflow-hidden">
+										{#if post.mainImage}
+											<img
+												src={urlFor(post.mainImage).width(600).height(400).url()}
+												alt={post.title}
+												class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+											/>
+										{/if}
+										<div
+											class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/60 to-transparent"
+										></div>
+										<div class="absolute top-4 left-4">
+											<Badge class="bg-gradient-to-r {gradient} border-0 text-white shadow-lg">
+												{formatCategory(post.category)}
+											</Badge>
+										</div>
+										<div
+											class="glass absolute right-4 bottom-4 rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-white"
+										>
+											{post.readTime}
+										</div>
 									</div>
-									<div
-										class="glass absolute right-4 bottom-4 rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-white"
-									>
-										{post.readTime}
-									</div>
-								</div>
 
-								<CardContent class="flex flex-grow flex-col p-6">
-									<h3
-										class="mb-3 text-xl font-bold text-[color:var(--dark)] group-hover:bg-gradient-to-r group-hover:text-transparent group-hover:{post.gradient} transition-all duration-500 group-hover:bg-clip-text"
-									>
-										{post.title}
-									</h3>
-									<p class="mb-6 flex-grow text-sm leading-relaxed text-muted-foreground">
-										{post.excerpt}
-									</p>
-									<div
-										class="flex flex-wrap items-center gap-3 border-t-2 border-[color:var(--off-white)] pt-4 text-xs text-muted-foreground"
-									>
-										<div class="flex items-center space-x-2">
-											<div
-												class="h-6 w-6 rounded-lg bg-gradient-to-br {post.gradient} flex items-center justify-center text-[10px] font-bold text-white"
-											>
-												{post.author
-													.split(' ')
-													.map((n) => n[0])
-													.join('')}
+									<CardContent class="flex flex-grow flex-col p-6">
+										<h3
+											class="mb-3 text-xl font-bold text-[color:var(--dark)] group-hover:bg-gradient-to-r group-hover:text-transparent group-hover:{gradient} transition-all duration-500 group-hover:bg-clip-text"
+										>
+											{post.title}
+										</h3>
+										<p class="mb-6 flex-grow text-sm leading-relaxed text-muted-foreground">
+											{post.excerpt}
+										</p>
+										<div
+											class="flex flex-wrap items-center gap-3 border-t-2 border-[color:var(--off-white)] pt-4 text-xs text-muted-foreground"
+										>
+											<div class="flex items-center space-x-2">
+												<div
+													class="h-6 w-6 rounded-lg bg-gradient-to-br {gradient} flex items-center justify-center text-[10px] font-bold text-white"
+												>
+													{post.author
+														.split(' ')
+														.map((n) => n[0])
+														.join('')}
+												</div>
+												<span class="font-medium">{post.author}</span>
 											</div>
-											<span class="font-medium">{post.author}</span>
+											<div class="flex items-center space-x-1">
+												<Calendar class="h-3 w-3" />
+												<span
+													>{new Date(post.publishedAt).toLocaleDateString('en-US', {
+														month: 'short',
+														day: 'numeric'
+													})}</span
+												>
+											</div>
 										</div>
-										<div class="flex items-center space-x-1">
-											<Calendar class="h-3 w-3" />
-											<span
-												>{new Date(post.date).toLocaleDateString('en-US', {
-													month: 'short',
-													day: 'numeric'
-												})}</span
-											>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
-						</a>
-					</div>
-				{/each}
-			</div>
+									</CardContent>
+								</Card>
+							</a>
+						</div>
+					{/each}
+				</div>
+			{/if}
 		</div>
 	</section>
 

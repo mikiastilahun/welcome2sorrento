@@ -17,6 +17,16 @@
 		Clock
 	} from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import { urlFor } from '$lib/sanity/image';
+	import type { Restaurant } from '$lib/sanity/queries';
+
+	interface Props {
+		data: {
+			restaurants: Restaurant[];
+		};
+	}
+
+	let { data }: Props = $props();
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -36,93 +46,39 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
-	const restaurants = [
-		{
-			name: 'Il Buco',
-			category: 'Fine Dining',
-			cuisine: 'Mediterranean',
-			priceRange: '€€€€',
-			rating: 4.8,
-			image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
-			description:
-				'Michelin-starred restaurant in a 16th-century wine cellar offering innovative Mediterranean cuisine.',
-			highlights: ['Michelin Star', 'Wine Cellar', 'Tasting Menu'],
-			location: 'Via Rampa Marina Piccola',
-			gradient: 'from-amber-500 to-orange-600'
-		},
-		{
-			name: "L'Antica Trattoria",
-			category: 'Traditional',
-			cuisine: 'Sorrentine',
-			priceRange: '€€',
-			rating: 4.7,
-			image: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800&q=80',
-			description:
-				'Family-run trattoria serving authentic Sorrentine dishes with locally sourced ingredients.',
-			highlights: ['Family-Run', 'Local Specialties', 'Garden Seating'],
-			location: 'Via Padre Reginaldo Giuliani',
-			gradient: 'from-red-500 to-pink-600'
-		},
-		{
-			name: 'Ristorante Bagni Delfino',
-			category: 'Seafood',
-			cuisine: 'Seafood',
-			priceRange: '€€€',
-			rating: 4.9,
-			image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80',
-			description:
-				'Beachfront restaurant specializing in fresh catch of the day with stunning bay views.',
-			highlights: ['Beach Location', 'Fresh Seafood', 'Sea Views'],
-			location: 'Marina Grande',
-			gradient: 'from-blue-500 to-cyan-500'
-		},
-		{
-			name: 'Da Emilia',
-			category: 'Casual Dining',
-			cuisine: 'Italian',
-			priceRange: '€€',
-			rating: 4.6,
-			image: 'https://images.unsplash.com/photo-1533777324565-a040eb52facd?w=800&q=80',
-			description:
-				'Charming restaurant known for homemade pasta and traditional Italian hospitality.',
-			highlights: ['Homemade Pasta', 'Friendly Service', 'Local Favorite'],
-			location: 'Via Marina Grande',
-			gradient: 'from-green-500 to-emerald-600'
-		},
-		{
-			name: 'Pizzeria da Franco',
-			category: 'Pizzeria',
-			cuisine: 'Pizza',
-			priceRange: '€',
-			rating: 4.5,
-			image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80',
-			description: 'Authentic Neapolitan pizza with wood-fired oven and creative toppings.',
-			highlights: ['Wood-Fired', 'Authentic', 'Quick Service'],
-			location: 'Corso Italia',
-			gradient: 'from-orange-500 to-red-500'
-		},
-		{
-			name: 'Terrazza Bosquet',
-			category: 'Fine Dining',
-			cuisine: 'Creative Italian',
-			priceRange: '€€€€',
-			rating: 4.9,
-			image: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=800&q=80',
-			description: 'Elegant rooftop dining with panoramic views and innovative cuisine.',
-			highlights: ['Michelin Star', 'Panoramic Views', 'Creative Menu'],
-			location: 'Grand Hotel Excelsior Vittoria',
-			gradient: 'from-purple-500 to-indigo-600'
-		}
-	];
+	// Get unique categories from restaurants
+	const allCategories = $derived(
+		Array.from(new Set(data.restaurants.map((r) => r.category))).sort()
+	);
+	const categories = $derived(['All', ...allCategories]);
 
-	const categories = ['All', 'Fine Dining', 'Traditional', 'Seafood', 'Casual Dining', 'Pizzeria'];
 	let selectedCategory = $state('All');
 
 	const filteredRestaurants = $derived(
 		selectedCategory === 'All'
-			? restaurants
-			: restaurants.filter((r) => r.category === selectedCategory)
+			? data.restaurants
+			: data.restaurants.filter((r) => r.category === selectedCategory)
 	);
+
+	// Helper to get gradient based on category
+	function getCategoryGradient(category: string): string {
+		const gradients: Record<string, string> = {
+			'fine-dining': 'from-amber-500 to-orange-600',
+			'traditional': 'from-red-500 to-pink-600',
+			'seafood': 'from-blue-500 to-cyan-500',
+			'casual-dining': 'from-green-500 to-emerald-600',
+			'pizzeria': 'from-orange-500 to-red-500'
+		};
+		return gradients[category] || 'from-purple-500 to-indigo-600';
+	}
+
+	// Helper to format category name
+	function formatCategory(category: string): string {
+		return category
+			.split('-')
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ');
+	}
 </script>
 
 <svelte:head>
@@ -191,7 +147,7 @@
 							? 'bg-gradient-to-r from-orange-500 to-red-500 text-white transition-all duration-300 hover:shadow-lg'
 							: 'border-2 transition-all duration-300 hover:border-orange-500 hover:text-orange-500'}
 					>
-						{category}
+						{category === 'All' ? category : formatCategory(category)}
 					</Button>
 				{/each}
 			</div>
@@ -201,84 +157,99 @@
 	<!-- Restaurants Grid -->
 	<section class="relative bg-white py-32">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-				{#each filteredRestaurants as restaurant, index}
-					<div class="scroll-reveal h-full" style="transition-delay: {index * 0.1}s">
-						<Card
-							class="group flex h-full flex-col overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-orange-500 hover:shadow-2xl"
-						>
-							<div class="relative h-72 overflow-hidden">
-								<img
-									src={restaurant.image}
-									alt={restaurant.name}
-									class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-								/>
-								<div
-									class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/80 via-[color:var(--dark)]/20 to-transparent"
-								></div>
+			{#if filteredRestaurants.length === 0}
+				<div class="py-20 text-center">
+					<ChefHat class="mx-auto mb-4 h-16 w-16 text-muted-foreground opacity-50" />
+					<h3 class="mb-2 text-2xl font-bold text-[color:var(--dark)]">No Restaurants Found</h3>
+					<p class="text-muted-foreground">
+						{selectedCategory === 'All'
+							? 'No restaurants have been added yet. Check back soon!'
+							: `No restaurants found in the "${formatCategory(selectedCategory)}" category.`}
+					</p>
+				</div>
+			{:else}
+				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+					{#each filteredRestaurants as restaurant, index}
+						{@const gradient = getCategoryGradient(restaurant.category)}
+						<div class="scroll-reveal h-full" style="transition-delay: {index * 0.1}s">
+							<Card
+								class="group flex h-full flex-col overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-orange-500 hover:shadow-2xl"
+							>
+								<div class="relative h-72 overflow-hidden">
+									{#if restaurant.mainImage}
+										<img
+											src={urlFor(restaurant.mainImage).width(800).height(600).url()}
+											alt={restaurant.name}
+											class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+										/>
+									{/if}
+									<div
+										class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/80 via-[color:var(--dark)]/20 to-transparent"
+									></div>
 
-								<!-- Category Badge -->
-								<div class="absolute top-4 right-4">
-									<Badge
-										class="border-0 bg-white/90 font-semibold text-[color:var(--dark)] shadow-lg backdrop-blur-sm"
-									>
-										{restaurant.category}
-									</Badge>
-								</div>
-
-								<!-- Rating -->
-								<div
-									class="glass absolute bottom-4 left-4 flex items-center space-x-1 rounded-xl border border-white/20 px-3 py-2"
-								>
-									<Star class="h-5 w-5 fill-yellow-400 text-yellow-400" />
-									<span class="text-lg font-bold text-white">{restaurant.rating}</span>
-								</div>
-
-								<!-- Price Range -->
-								<div
-									class="glass absolute right-4 bottom-4 rounded-xl border border-white/20 px-3 py-2"
-								>
-									<span class="font-semibold text-white">{restaurant.priceRange}</span>
-								</div>
-							</div>
-
-							<CardContent class="flex flex-grow flex-col p-6">
-								<div class="flex-grow">
-									<CardTitle
-										class="mb-2 text-2xl group-hover:bg-gradient-to-r group-hover:text-transparent group-hover:{restaurant.gradient} transition-all duration-500 group-hover:bg-clip-text"
-									>
-										{restaurant.name}
-									</CardTitle>
-									<div class="mb-4 text-sm font-medium text-muted-foreground">
-										{restaurant.cuisine}
+									<!-- Category Badge -->
+									<div class="absolute top-4 right-4">
+										<Badge
+											class="border-0 bg-white/90 font-semibold text-[color:var(--dark)] shadow-lg backdrop-blur-sm"
+										>
+											{formatCategory(restaurant.category)}
+										</Badge>
 									</div>
-									<p class="mb-6 text-sm leading-relaxed text-muted-foreground">
-										{restaurant.description}
-									</p>
 
-									<div class="mb-6 flex flex-wrap gap-2">
-										{#each restaurant.highlights as highlight}
-											<Badge
-												variant="outline"
-												class="border-orange-500 text-xs text-orange-500 transition-colors hover:bg-orange-50"
-											>
-												{highlight}
-											</Badge>
-										{/each}
+									<!-- Rating -->
+									<div
+										class="glass absolute bottom-4 left-4 flex items-center space-x-1 rounded-xl border border-white/20 px-3 py-2"
+									>
+										<Star class="h-5 w-5 fill-yellow-400 text-yellow-400" />
+										<span class="text-lg font-bold text-white">{restaurant.rating}</span>
+									</div>
+
+									<!-- Price Range -->
+									<div
+										class="glass absolute right-4 bottom-4 rounded-xl border border-white/20 px-3 py-2"
+									>
+										<span class="font-semibold text-white">{restaurant.priceRange}</span>
 									</div>
 								</div>
 
-								<div
-									class="flex items-start space-x-2 border-t-2 border-[color:var(--off-white)] pt-4 text-sm text-muted-foreground"
-								>
-									<MapPin class="mt-0.5 h-4 w-4 flex-shrink-0 text-orange-500" />
-									<span class="font-medium">{restaurant.location}</span>
-								</div>
-							</CardContent>
-						</Card>
-					</div>
-				{/each}
-			</div>
+								<CardContent class="flex flex-grow flex-col p-6">
+									<div class="flex-grow">
+										<CardTitle
+											class="mb-2 text-2xl group-hover:bg-gradient-to-r group-hover:text-transparent group-hover:{gradient} transition-all duration-500 group-hover:bg-clip-text"
+										>
+											{restaurant.name}
+										</CardTitle>
+										<div class="mb-4 text-sm font-medium text-muted-foreground">
+											{restaurant.cuisine}
+										</div>
+										<p class="mb-6 text-sm leading-relaxed text-muted-foreground">
+											{restaurant.description}
+										</p>
+
+										<div class="mb-6 flex flex-wrap gap-2">
+											{#each restaurant.highlights as highlight}
+												<Badge
+													variant="outline"
+													class="border-orange-500 text-xs text-orange-500 transition-colors hover:bg-orange-50"
+												>
+													{highlight}
+												</Badge>
+											{/each}
+										</div>
+									</div>
+
+									<div
+										class="flex items-start space-x-2 border-t-2 border-[color:var(--off-white)] pt-4 text-sm text-muted-foreground"
+									>
+										<MapPin class="mt-0.5 h-4 w-4 flex-shrink-0 text-orange-500" />
+										<span class="font-medium">{restaurant.location}</span>
+									</div>
+								</CardContent>
+							</Card>
+						</div>
+					{/each}
+				</div>
+			{/if}
 		</div>
 	</section>
 

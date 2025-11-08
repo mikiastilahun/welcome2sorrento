@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { urlFor } from '$lib/sanity/image';
+	import type { BlogPost, Destination, Testimonial, LocalSpecialty } from '$lib/sanity/queries';
 	import SEO from '$lib/components/SEO.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
@@ -23,6 +25,17 @@
 		Sun
 	} from '@lucide/svelte';
 	import { onMount } from 'svelte';
+
+	interface Props {
+		data: {
+			featuredPosts: BlogPost[];
+			featuredDestinations: Destination[];
+			testimonials: Testimonial[];
+			localSpecialties: LocalSpecialty[];
+		};
+	}
+
+	let { data }: Props = $props();
 
 	let email = $state('');
 	let mouseX = $state(0);
@@ -428,53 +441,104 @@
 			</div>
 
 			<div class="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each destinations as destination, index}
-					{@const Icon = destination.icon}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<a
-							href={destination.link}
-							class="group relative block h-96 overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-						>
-							<img
-								src={destination.image}
-								alt={destination.name}
-								class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-							/>
-							<div
-								class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/90 via-[color:var(--dark)]/50 to-transparent"
-							></div>
-
-							<!-- Floating Icon -->
-							<div
-								class="glass absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/20"
+				{#if data.featuredDestinations.length === 0}
+					{#each destinations as destination, index}
+						{@const Icon = destination.icon}
+						<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+							<a
+								href={destination.link}
+								class="group relative block h-96 overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
 							>
-								<Icon class="h-6 w-6 text-white" />
-							</div>
-
-							<!-- Content -->
-							<div class="absolute right-0 bottom-0 left-0 p-8">
-								<h3
-									class="mb-2 text-3xl font-bold text-white transition-transform duration-300 group-hover:translate-x-2"
-								>
-									{destination.name}
-								</h3>
-								<p
-									class="mb-4 text-white/80 transition-transform duration-300 group-hover:translate-x-2"
-									style="transition-delay: 0.05s"
-								>
-									{destination.description}
-								</p>
+								<img
+									src={destination.image}
+									alt={destination.name}
+									class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+								/>
 								<div
-									class="flex items-center font-medium text-[color:var(--turquoise)] transition-transform duration-300 group-hover:translate-x-2"
-									style="transition-delay: 0.1s"
+									class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/90 via-[color:var(--dark)]/50 to-transparent"
+								></div>
+
+								<!-- Floating Icon -->
+								<div
+									class="glass absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/20"
 								>
-									<span>Discover More</span>
-									<ArrowRight class="ml-2 h-4 w-4" />
+									<Icon class="h-6 w-6 text-white" />
 								</div>
-							</div>
-						</a>
-					</div>
-				{/each}
+
+								<!-- Content -->
+								<div class="absolute right-0 bottom-0 left-0 p-8">
+									<h3
+										class="mb-2 text-3xl font-bold text-white transition-transform duration-300 group-hover:translate-x-2"
+									>
+										{destination.name}
+									</h3>
+									<p
+										class="mb-4 text-white/80 transition-transform duration-300 group-hover:translate-x-2"
+										style="transition-delay: 0.05s"
+									>
+										{destination.description}
+									</p>
+									<div
+										class="flex items-center font-medium text-[color:var(--turquoise)] transition-transform duration-300 group-hover:translate-x-2"
+										style="transition-delay: 0.1s"
+									>
+										<span>Discover More</span>
+										<ArrowRight class="ml-2 h-4 w-4" />
+									</div>
+								</div>
+							</a>
+						</div>
+					{/each}
+				{:else}
+					{#each data.featuredDestinations as destination, index}
+						<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+							<a
+								href="/surrounding/{destination.slug.current}"
+								class="group relative block h-96 overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+							>
+								{#if destination.mainImage}
+									<img
+										src={urlFor(destination.mainImage).width(600).height(400).url()}
+										alt={destination.name}
+										class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+									/>
+								{/if}
+								<div
+									class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/90 via-[color:var(--dark)]/50 to-transparent"
+								></div>
+
+								<!-- Floating Icon -->
+								<div
+									class="glass absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/20"
+								>
+									<MapPin class="h-6 w-6 text-white" />
+								</div>
+
+								<!-- Content -->
+								<div class="absolute right-0 bottom-0 left-0 p-8">
+									<h3
+										class="mb-2 text-3xl font-bold text-white transition-transform duration-300 group-hover:translate-x-2"
+									>
+										{destination.name}
+									</h3>
+									<p
+										class="mb-4 text-white/80 transition-transform duration-300 group-hover:translate-x-2"
+										style="transition-delay: 0.05s"
+									>
+										{destination.excerpt || destination.tagline || ''}
+									</p>
+									<div
+										class="flex items-center font-medium text-[color:var(--turquoise)] transition-transform duration-300 group-hover:translate-x-2"
+										style="transition-delay: 0.1s"
+									>
+										<span>Discover More</span>
+										<ArrowRight class="ml-2 h-4 w-4" />
+									</div>
+								</div>
+							</a>
+						</div>
+					{/each}
+				{/if}
 			</div>
 
 			<div class="scroll-reveal text-center">
@@ -494,55 +558,117 @@
 	</section>
 
 	<!-- Testimonial Section with Gradient -->
-	<section class="relative overflow-hidden py-32">
-		<div
-			class="animate-gradient absolute inset-0 bg-gradient-to-br from-[color:var(--purple-lavender)] via-[color:var(--deep-purple)] to-[color:var(--dark)]"
-		></div>
+	{#if data.testimonials.length > 0}
+		{@const testimonial = data.testimonials[0]}
+		<section class="relative overflow-hidden py-32">
+			<div
+				class="animate-gradient absolute inset-0 bg-gradient-to-br from-[color:var(--purple-lavender)] via-[color:var(--deep-purple)] to-[color:var(--dark)]"
+			></div>
 
-		<div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="scroll-reveal mx-auto max-w-4xl text-center text-white">
-				<div
-					class="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md"
-				>
-					<svg
-						class="h-10 w-10 text-[color:var(--turquoise)]"
-						fill="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
-						/>
-					</svg>
-				</div>
-
-				<blockquote
-					class="heading-serif mb-8 text-2xl leading-relaxed font-light sm:text-3xl lg:text-4xl"
-				>
-					"Welcome2Sorrento made our trip absolutely unforgettable. The local recommendations and
-					insider tips helped us discover places we never would have found on our own."
-				</blockquote>
-
-				<div class="flex items-center justify-center space-x-4">
+			<div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="scroll-reveal mx-auto max-w-4xl text-center text-white">
 					<div
-						class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--light-turquoise)] text-xl font-bold text-[color:var(--dark)] shadow-xl"
+						class="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md"
 					>
-						SP
+						<svg
+							class="h-10 w-10 text-[color:var(--turquoise)]"
+							fill="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+							/>
+						</svg>
 					</div>
-					<div class="text-left">
-						<p class="text-lg font-semibold">Sarah Parker</p>
-						<p class="text-white/70">London, UK</p>
-					</div>
-				</div>
 
-				<!-- Rating Stars -->
-				<div class="mt-8 flex items-center justify-center space-x-1">
-					{#each Array(5) as _, i}
-						<Star class="h-6 w-6 fill-[color:var(--turquoise)] text-[color:var(--turquoise)]" />
-					{/each}
+					<blockquote
+						class="heading-serif mb-8 text-2xl leading-relaxed font-light sm:text-3xl lg:text-4xl"
+					>
+						"{testimonial.text}"
+					</blockquote>
+
+					<div class="flex items-center justify-center space-x-4">
+						{#if testimonial.photo}
+							<img
+								src={urlFor(testimonial.photo).width(64).height(64).url()}
+								alt={testimonial.name}
+								class="h-16 w-16 rounded-2xl object-cover shadow-xl"
+							/>
+						{:else}
+							<div
+								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--light-turquoise)] text-xl font-bold text-[color:var(--dark)] shadow-xl"
+							>
+								{testimonial.name.charAt(0)}
+							</div>
+						{/if}
+						<div class="text-left">
+							<p class="text-lg font-semibold">{testimonial.name}</p>
+							<p class="text-white/70">{testimonial.location}</p>
+						</div>
+					</div>
+
+					<!-- Rating Stars -->
+					{#if testimonial.rating}
+						<div class="mt-8 flex items-center justify-center space-x-1">
+							{#each Array(testimonial.rating) as _, i}
+								<Star class="h-6 w-6 fill-[color:var(--turquoise)] text-[color:var(--turquoise)]" />
+							{/each}
+						</div>
+					{/if}
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	{:else}
+		<section class="relative overflow-hidden py-32">
+			<div
+				class="animate-gradient absolute inset-0 bg-gradient-to-br from-[color:var(--purple-lavender)] via-[color:var(--deep-purple)] to-[color:var(--dark)]"
+			></div>
+
+			<div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="scroll-reveal mx-auto max-w-4xl text-center text-white">
+					<div
+						class="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md"
+					>
+						<svg
+							class="h-10 w-10 text-[color:var(--turquoise)]"
+							fill="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+							/>
+						</svg>
+					</div>
+
+					<blockquote
+						class="heading-serif mb-8 text-2xl leading-relaxed font-light sm:text-3xl lg:text-4xl"
+					>
+						"Welcome2Sorrento made our trip absolutely unforgettable. The local recommendations and
+						insider tips helped us discover places we never would have found on our own."
+					</blockquote>
+
+					<div class="flex items-center justify-center space-x-4">
+						<div
+							class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--light-turquoise)] text-xl font-bold text-[color:var(--dark)] shadow-xl"
+						>
+							SP
+						</div>
+						<div class="text-left">
+							<p class="text-lg font-semibold">Sarah Parker</p>
+							<p class="text-white/70">London, UK</p>
+						</div>
+					</div>
+
+					<!-- Rating Stars -->
+					<div class="mt-8 flex items-center justify-center space-x-1">
+						{#each Array(5) as _, i}
+							<Star class="h-6 w-6 fill-[color:var(--turquoise)] text-[color:var(--turquoise)]" />
+						{/each}
+					</div>
+				</div>
+			</div>
+		</section>
+	{/if}
 
 	<!-- Newsletter Section with Modern Card -->
 	<section id="newsletter" class="relative bg-white py-32">

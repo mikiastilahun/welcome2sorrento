@@ -1,4 +1,5 @@
 <script lang="ts">
+	import SEO from '$lib/components/SEO.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
@@ -127,6 +128,13 @@
 		email = '';
 	}
 </script>
+
+<SEO
+	title="Welcome2Sorrento - Your Ultimate Guide to Sorrento & Amalfi Coast"
+	description="Discover the magic of Sorrento and the breathtaking Amalfi Coast. Find the best restaurants, hotels, activities, and hidden gems. Expert travel guide by locals."
+	keywords="Sorrento travel guide, Amalfi Coast, Italy tourism, Sorrento restaurants, Sorrento hotels, things to do Sorrento, Capri day trips, Naples to Sorrento"
+	type="website"
+/>
 
 <svelte:head>
 	<title>Welcome2Sorrento - Your Ultimate Guide to the Jewel of the Amalfi Coast</title>

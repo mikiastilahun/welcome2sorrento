@@ -1,3 +1,23 @@
-# allow crawling everything by default
+# Welcome2Sorrento - Robots.txt
+# Allow all crawlers to access all content
+
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /api/
+Disallow: /_app/
+
+# Sitemaps
+Sitemap: https://sorrento-fpdc5m6on-mikias-tilahun-abebes-projects.vercel.app/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1
+
+# Specific bot configurations
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

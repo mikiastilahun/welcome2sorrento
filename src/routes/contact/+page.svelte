@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { ContactPage } from '$lib/sanity/queries';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
@@ -21,6 +22,46 @@
 		CheckCircle
 	} from '@lucide/svelte';
 	import { onMount } from 'svelte';
+
+	interface Props {
+		data: {
+			contactPage: ContactPage | null;
+		};
+	}
+
+	let { data }: Props = $props();
+
+	// Default content for fallback
+	const defaultContent = {
+		title: 'Get in Touch',
+		subtitle: "We're here to help plan your perfect Sorrento experience",
+		contactInfo: {
+			email: 'margheroba@email.com',
+			phone: '+39 123 456 789',
+			whatsapp: '+39 123 456 789',
+			address: 'Based in Sorrento, Italy'
+		},
+		faqs: [
+			{
+				question: "What's included in the booking service?",
+				answer: 'We handle restaurant reservations, accommodation booking, tour arrangements, transportation, and provide real-time support during your trip.'
+			},
+			{
+				question: 'How much does the service cost?',
+				answer: 'We charge a fixed, transparent fee based on the complexity of your needs. Contact us for a personalized quote.'
+			},
+			{
+				question: 'How far in advance should I book?',
+				answer: 'For peak season (June-August), we recommend 2-3 months. For other times, 3-4 weeks is usually sufficient.'
+			},
+			{
+				question: 'Do you only help with Sorrento?',
+				answer: 'We cover Sorrento and the entire surrounding area including Capri, the Amalfi Coast, Naples, Pompeii, and more.'
+			}
+		]
+	};
+
+	const contactData = data.contactPage || defaultContent;
 
 	let formData = $state({
 		name: '',
@@ -56,10 +97,10 @@
 </script>
 
 <svelte:head>
-	<title>Contact Us - Get in Touch | Welcome2Sorrento</title>
+	<title>{contactData.seo?.metaTitle || 'Contact Us - Get in Touch | Welcome2Sorrento'}</title>
 	<meta
 		name="description"
-		content="Contact Welcome2Sorrento for travel planning, booking assistance, or any questions about Sorrento and the Amalfi Coast."
+		content={contactData.seo?.metaDescription || 'Contact Welcome2Sorrento for travel planning, booking assistance, or any questions about Sorrento and the Amalfi Coast.'}
 	/>
 </svelte:head>
 
@@ -85,10 +126,10 @@
 					<MessageCircle class="h-10 w-10 text-white" />
 				</div>
 				<h1 class="mb-6 text-5xl font-bold sm:text-6xl lg:text-7xl">
-					Get in <span class="text-gradient">Touch</span>
+					{@html contactData.title || 'Get in <span class="text-gradient">Touch</span>'}
 				</h1>
 				<p class="heading-serif mx-auto max-w-3xl text-xl font-light text-white/90 sm:text-2xl">
-					We're here to help plan your perfect Sorrento experience
+					{contactData.subtitle || "We're here to help plan your perfect Sorrento experience"}
 				</p>
 			</div>
 		</div>
@@ -226,60 +267,66 @@
 						<div class="relative m-1 rounded-3xl bg-white p-8">
 							<h3 class="mb-6 text-2xl font-bold text-[color:var(--dark)]">Contact Information</h3>
 							<div class="space-y-6">
-								<div
-									class="group flex cursor-pointer items-start space-x-4 rounded-2xl p-4 transition-colors duration-300 hover:bg-[color:var(--off-white)]"
-								>
+								{#if contactData.contactInfo?.email}
 									<div
-										class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] transition-transform group-hover:scale-110"
+										class="group flex cursor-pointer items-start space-x-4 rounded-2xl p-4 transition-colors duration-300 hover:bg-[color:var(--off-white)]"
 									>
-										<Mail class="h-6 w-6 text-white" />
-									</div>
-									<div>
-										<div class="mb-1 text-lg font-semibold">Email</div>
-										<a
-											href="mailto:margheroba@email.com"
-											class="text-sm text-gray-600 transition-colors hover:text-[color:var(--purple-lavender)]"
+										<div
+											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] transition-transform group-hover:scale-110"
 										>
-											margheroba@email.com
-										</a>
+											<Mail class="h-6 w-6 text-white" />
+										</div>
+										<div>
+											<div class="mb-1 text-lg font-semibold">Email</div>
+											<a
+												href="mailto:{contactData.contactInfo.email}"
+												class="text-sm text-gray-600 transition-colors hover:text-[color:var(--purple-lavender)]"
+											>
+												{contactData.contactInfo.email}
+											</a>
+										</div>
 									</div>
-								</div>
+								{/if}
 
-								<div
-									class="group flex cursor-pointer items-start space-x-4 rounded-2xl p-4 transition-colors duration-300 hover:bg-[color:var(--off-white)]"
-								>
+								{#if contactData.contactInfo?.phone || contactData.contactInfo?.whatsapp}
 									<div
-										class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--light-turquoise)] transition-transform group-hover:scale-110"
+										class="group flex cursor-pointer items-start space-x-4 rounded-2xl p-4 transition-colors duration-300 hover:bg-[color:var(--off-white)]"
 									>
-										<Phone class="h-6 w-6 text-white" />
-									</div>
-									<div>
-										<div class="mb-1 text-lg font-semibold">WhatsApp</div>
-										<p class="mb-1 text-sm text-gray-600">
-											Available for booking inquiries
-										</p>
-										<a
-											href="tel:+39123456789"
-											class="text-sm font-medium text-[color:var(--turquoise)] hover:underline"
+										<div
+											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--light-turquoise)] transition-transform group-hover:scale-110"
 										>
-											+39 123 456 789
-										</a>
+											<Phone class="h-6 w-6 text-white" />
+										</div>
+										<div>
+											<div class="mb-1 text-lg font-semibold">WhatsApp</div>
+											<p class="mb-1 text-sm text-gray-600">
+												Available for booking inquiries
+											</p>
+											<a
+												href="tel:{contactData.contactInfo.whatsapp || contactData.contactInfo.phone}"
+												class="text-sm font-medium text-[color:var(--turquoise)] hover:underline"
+											>
+												{contactData.contactInfo.whatsapp || contactData.contactInfo.phone}
+											</a>
+										</div>
 									</div>
-								</div>
+								{/if}
 
-								<div
-									class="group flex items-start space-x-4 rounded-2xl p-4 transition-colors duration-300 hover:bg-[color:var(--off-white)]"
-								>
+								{#if contactData.contactInfo?.address}
 									<div
-										class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[color:var(--deep-purple)] to-[color:var(--purple-lavender)] transition-transform group-hover:scale-110"
+										class="group flex items-start space-x-4 rounded-2xl p-4 transition-colors duration-300 hover:bg-[color:var(--off-white)]"
 									>
-										<MapPin class="h-6 w-6 text-white" />
+										<div
+											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[color:var(--deep-purple)] to-[color:var(--purple-lavender)] transition-transform group-hover:scale-110"
+										>
+											<MapPin class="h-6 w-6 text-white" />
+										</div>
+										<div>
+											<div class="mb-1 text-lg font-semibold">Location</div>
+											<p class="text-sm text-gray-600">{contactData.contactInfo.address}</p>
+										</div>
 									</div>
-									<div>
-										<div class="mb-1 text-lg font-semibold">Location</div>
-										<p class="text-sm text-gray-600">Based in Sorrento, Italy</p>
-									</div>
-								</div>
+								{/if}
 							</div>
 						</div>
 					</div>
@@ -306,37 +353,51 @@
 					</div>
 
 					<!-- Social Media -->
-					<div class="relative overflow-hidden rounded-3xl">
-						<div
-							class="animate-gradient absolute inset-0 bg-gradient-to-r from-[color:var(--turquoise)] to-[color:var(--purple-lavender)]"
-						></div>
-						<div class="relative m-1 rounded-3xl bg-white p-8">
-							<h3 class="mb-4 text-2xl font-bold text-[color:var(--dark)]">Follow Us</h3>
-							<p class="mb-6 text-gray-600">
-								Stay updated with the latest Sorrento tips and travel inspiration
-							</p>
-							<div class="flex space-x-3">
-								<a
-									href="#"
-									class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
-								>
-									<Facebook class="h-6 w-6" />
-								</a>
-								<a
-									href="#"
-									class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--light-turquoise)] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
-								>
-									<Instagram class="h-6 w-6" />
-								</a>
-								<a
-									href="#"
-									class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--deep-purple)] to-[color:var(--purple-lavender)] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
-								>
-									<Twitter class="h-6 w-6" />
-								</a>
+					{#if contactData.socialMedia}
+						<div class="relative overflow-hidden rounded-3xl">
+							<div
+								class="animate-gradient absolute inset-0 bg-gradient-to-r from-[color:var(--turquoise)] to-[color:var(--purple-lavender)]"
+							></div>
+							<div class="relative m-1 rounded-3xl bg-white p-8">
+								<h3 class="mb-4 text-2xl font-bold text-[color:var(--dark)]">Follow Us</h3>
+								<p class="mb-6 text-gray-600">
+									Stay updated with the latest Sorrento tips and travel inspiration
+								</p>
+								<div class="flex space-x-3">
+									{#if contactData.socialMedia.facebook}
+										<a
+											href={contactData.socialMedia.facebook}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
+										>
+											<Facebook class="h-6 w-6" />
+										</a>
+									{/if}
+									{#if contactData.socialMedia.instagram}
+										<a
+											href={contactData.socialMedia.instagram}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--light-turquoise)] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
+										>
+											<Instagram class="h-6 w-6" />
+										</a>
+									{/if}
+									{#if contactData.socialMedia.twitter}
+										<a
+											href={contactData.socialMedia.twitter}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--deep-purple)] to-[color:var(--purple-lavender)] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
+										>
+											<Twitter class="h-6 w-6" />
+										</a>
+									{/if}
+								</div>
 							</div>
 						</div>
-					</div>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -359,7 +420,7 @@
 				</div>
 
 				<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-					{#each [{ question: "What's included in the booking service?", answer: 'We handle restaurant reservations, accommodation booking, tour arrangements, transportation, and provide real-time support during your trip.', link: '/about#services', linkText: 'Learn more' }, { question: 'How much does the service cost?', answer: 'We charge a fixed, transparent fee based on the complexity of your needs. Contact us for a personalized quote.', link: '/contact', linkText: 'Get a quote' }, { question: 'How far in advance should I book?', answer: 'For peak season (June-August), we recommend 2-3 months. For other times, 3-4 weeks is usually sufficient.' }, { question: 'Do you only help with Sorrento?', answer: 'We cover Sorrento and the entire surrounding area including Capri, the Amalfi Coast, Naples, Pompeii, and more.', link: '/surrounding', linkText: 'Explore destinations' }] as faq, index}
+					{#each (contactData.faqs || defaultContent.faqs) as faq, index}
 						<div
 							class="scroll-reveal group rounded-3xl border-2 border-[color:var(--purple-lavender)]/20 bg-white p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[color:var(--purple-lavender)] hover:shadow-2xl"
 							style="transition-delay: {index * 0.1}s"
@@ -375,15 +436,6 @@
 							<p class="mb-4 ml-11 leading-relaxed text-gray-600">
 								{faq.answer}
 							</p>
-							{#if faq.link}
-								<a
-									href={faq.link}
-									class="ml-11 inline-flex items-center space-x-1 text-sm font-medium text-[color:var(--purple-lavender)] transition-transform group-hover:translate-x-2 hover:text-[color:var(--turquoise)]"
-								>
-									<span>{faq.linkText}</span>
-									<span>→</span>
-								</a>
-							{/if}
 						</div>
 					{/each}
 				</div>

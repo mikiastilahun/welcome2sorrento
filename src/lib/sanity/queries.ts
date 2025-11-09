@@ -438,3 +438,151 @@ export interface Testimonial {
 	featured?: boolean;
 }
 
+// Site Settings Queries
+export const siteSettingsQuery = groq`*[_type == "siteSettings"][0] {
+  _id,
+  title,
+  homepageStats,
+  featuredSections,
+  heroSection,
+  sorrentoPageStats,
+  sorrentoIntro,
+  insiderTips
+}`;
+
+// About Page Queries
+export const aboutPageQuery = groq`*[_type == "aboutPage"][0] {
+  _id,
+  title,
+  subtitle,
+  story,
+  mission,
+  services,
+  team,
+  values,
+  seo
+}`;
+
+// Contact Page Queries
+export const contactPageQuery = groq`*[_type == "contactPage"][0] {
+  _id,
+  title,
+  subtitle,
+  contactInfo,
+  businessHours,
+  faqs,
+  socialMedia,
+  seo
+}`;
+
+// Type Definitions for New Content Types
+export interface SiteSettings {
+	_type: 'siteSettings';
+	_id: string;
+	title: string;
+	homepageStats?: {
+		happyTravelers?: string;
+		partnerHotels?: string;
+		localGuides?: string;
+		yearsExperience?: string;
+	};
+	featuredSections?: {
+		eat?: {
+			title: string;
+			description: string;
+			image?: ImageAsset;
+		};
+		stay?: {
+			title: string;
+			description: string;
+			image?: ImageAsset;
+		};
+		do?: {
+			title: string;
+			description: string;
+			image?: ImageAsset;
+		};
+	};
+	heroSection?: {
+		title?: string;
+		subtitle?: string;
+		backgroundImage?: ImageAsset;
+	};
+	sorrentoPageStats?: {
+		restaurantCount?: number;
+		accommodationCount?: number;
+		activityCount?: number;
+	};
+	sorrentoIntro?: {
+		title?: string;
+		description?: string;
+	};
+	insiderTips?: Array<{
+		title: string;
+		description: string;
+		icon?: string;
+	}>;
+}
+
+export interface AboutPage {
+	_type: 'aboutPage';
+	_id: string;
+	title: string;
+	subtitle?: string;
+	story?: {
+		title?: string;
+		content?: PortableTextBlock[];
+	};
+	mission?: string;
+	services?: Array<{
+		title: string;
+		description: string;
+		icon?: string;
+	}>;
+	team?: Array<{
+		name: string;
+		role: string;
+		bio: string;
+		image?: ImageAsset;
+	}>;
+	values?: Array<{
+		title: string;
+		description: string;
+	}>;
+	seo?: {
+		metaTitle?: string;
+		metaDescription?: string;
+	};
+}
+
+export interface ContactPage {
+	_type: 'contactPage';
+	_id: string;
+	title: string;
+	subtitle?: string;
+	contactInfo?: {
+		email?: string;
+		phone?: string;
+		whatsapp?: string;
+		address?: string;
+	};
+	businessHours?: {
+		weekdays?: string;
+		weekends?: string;
+	};
+	faqs?: Array<{
+		question: string;
+		answer: string;
+	}>;
+	socialMedia?: {
+		facebook?: string;
+		instagram?: string;
+		twitter?: string;
+		linkedin?: string;
+	};
+	seo?: {
+		metaTitle?: string;
+		metaDescription?: string;
+	};
+}
+

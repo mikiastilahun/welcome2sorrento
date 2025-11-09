@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Destination } from '$lib/sanity/queries';
+	import { urlFor } from '$lib/sanity/image';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
@@ -13,6 +15,14 @@
 		Compass
 	} from '@lucide/svelte';
 	import { onMount } from 'svelte';
+
+	interface Props {
+		data: {
+			destinations: Destination[];
+		};
+	}
+
+	let { data }: Props = $props();
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -32,7 +42,8 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
-	const destinations = [
+	// Fallback destinations if CMS is not populated yet
+	const fallbackDestinations = [
 		{
 			name: 'Capri',
 			tagline: 'The Jewel of the Mediterranean',
@@ -112,6 +123,23 @@
 			gradient: 'from-pink-500 to-rose-500'
 		}
 	];
+
+	// Map CMS destinations to display format
+	const cmsDestinations = data.destinations.map((dest) => ({
+		name: dest.name,
+		tagline: dest.subtitle || '',
+		image: dest.cardImage ? urlFor(dest.cardImage).width(1200).height(800).url() : '',
+		description: dest.shortDescription || '',
+		highlights: dest.attractions?.slice(0, 4).map(a => a.name) || [],
+		link: `/surrounding/${dest.slug.current}`,
+		distance: '',
+		travelTime: '',
+		icon: Waves,
+		gradient: 'from-blue-500 to-cyan-500'
+	}));
+
+	// Use CMS destinations if available, otherwise use fallback
+	const destinations = cmsDestinations.length > 0 ? cmsDestinations : fallbackDestinations;
 </script>
 
 <svelte:head>

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Activity } from '$lib/sanity/queries';
+	import { urlFor } from '$lib/sanity/image';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
@@ -14,9 +16,18 @@
 		Footprints,
 		Compass,
 		Sparkles,
-		Clock
+		Clock,
+		Star
 	} from '@lucide/svelte';
 	import { onMount } from 'svelte';
+
+	interface Props {
+		data: {
+			activities: Activity[];
+		};
+	}
+
+	let { data }: Props = $props();
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -36,7 +47,8 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
-	const activities = [
+	// Fallback activities if CMS is not populated yet
+	const fallbackActivities = [
 		{
 			name: 'Boat Tour to Capri',
 			category: 'Water Activities',
@@ -133,24 +145,35 @@
 		}
 	];
 
-	const categories = [
-		'All',
-		'Water Activities',
-		'Culinary',
-		'Beaches',
-		'Nature & Hiking',
-		'Historical',
-		'Cultural',
-		'Shopping',
-		'Views & Relaxation'
-	];
+	// Use CMS activities if available, otherwise use fallback
+	const displayActivities = data.activities.length > 0 ? data.activities : fallbackActivities;
+
+	// Extract unique categories from activities
+	const categoriesFromData = Array.from(
+		new Set(displayActivities.map((a: any) => a.category).filter(Boolean))
+	).sort();
+
+	const categories = ['All', ...categoriesFromData];
 	let selectedCategory = $state('All');
 
 	const filteredActivities = $derived(
 		selectedCategory === 'All'
-			? activities
-			: activities.filter((a) => a.category === selectedCategory)
+			? displayActivities
+			: displayActivities.filter((a: any) => a.category === selectedCategory)
 	);
+
+	// Helper function to get activity image URL
+	function getActivityImage(activity: any) {
+		if (activity.mainImage) {
+			return urlFor(activity.mainImage).width(800).height(600).url();
+		}
+		return activity.image || 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800&q=80';
+	}
+
+	// Helper function to format category name
+	function formatCategory(category: string) {
+		return category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+	}
 </script>
 
 <svelte:head>
@@ -220,7 +243,7 @@
 							? 'bg-gradient-to-r from-green-500 to-teal-500 text-white transition-all duration-300 hover:shadow-lg'
 							: 'border-2 transition-all duration-300 hover:border-green-500 hover:text-green-500'}
 					>
-						{category}
+						{formatCategory(category)}
 					</Button>
 				{/each}
 			</div>
@@ -238,7 +261,7 @@
 						>
 							<div class="relative h-72 overflow-hidden">
 								<img
-									src={activity.image}
+									src={getActivityImage(activity)}
 									alt={activity.name}
 									class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
 								/>
@@ -251,25 +274,35 @@
 									<Badge
 										class="border-0 bg-white/90 font-semibold text-[color:var(--dark)] shadow-lg backdrop-blur-sm"
 									>
-										{activity.category}
+										{formatCategory(activity.category)}
 									</Badge>
 								</div>
 
-								<!-- Duration Badge -->
-								<div class="absolute bottom-4 left-4">
-									<Badge
-										class="bg-gradient-to-r {activity.gradient} flex items-center space-x-1 border-0 font-semibold text-white shadow-lg"
-									>
-										<Clock class="h-3 w-3" />
-										<span>{activity.duration}</span>
-									</Badge>
+								<!-- Duration/Rating Badge -->
+								<div class="absolute bottom-4 left-4 flex items-center space-x-2">
+									{#if activity.duration}
+										<Badge
+											class="bg-gradient-to-r from-green-500 to-teal-500 flex items-center space-x-1 border-0 font-semibold text-white shadow-lg"
+										>
+											<Clock class="h-3 w-3" />
+											<span>{activity.duration}</span>
+										</Badge>
+									{/if}
+									{#if activity.rating}
+										<Badge
+											class="bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center space-x-1 border-0 font-semibold text-white shadow-lg"
+										>
+											<Star class="h-3 w-3" />
+											<span>{activity.rating}/5</span>
+										</Badge>
+									{/if}
 								</div>
 							</div>
 
 							<CardContent class="flex flex-grow flex-col p-6">
 								<div class="flex-grow">
 									<CardTitle
-										class="mb-3 text-2xl group-hover:bg-gradient-to-r group-hover:text-transparent group-hover:{activity.gradient} transition-all duration-500 group-hover:bg-clip-text"
+										class="mb-3 text-2xl group-hover:bg-gradient-to-r group-hover:from-green-500 group-hover:to-teal-500 group-hover:text-transparent transition-all duration-500 group-hover:bg-clip-text"
 									>
 										{activity.name}
 									</CardTitle>
@@ -277,33 +310,44 @@
 										{activity.description}
 									</p>
 
-									<div class="mb-6 space-y-2">
-										<div
-											class="mb-2 flex items-center space-x-1 text-xs font-bold tracking-wide text-green-600 uppercase"
-										>
-											<Sparkles class="h-3 w-3" />
-											<span>Highlights</span>
+									{#if activity.highlights && activity.highlights.length > 0}
+										<div class="mb-6 space-y-2">
+											<div
+												class="mb-2 flex items-center space-x-1 text-xs font-bold tracking-wide text-green-600 uppercase"
+											>
+												<Sparkles class="h-3 w-3" />
+												<span>Highlights</span>
+											</div>
+											<div class="flex flex-wrap gap-2">
+												{#each activity.highlights as highlight}
+													<Badge
+														variant="outline"
+														class="border-green-500 text-xs text-green-500 transition-colors hover:bg-green-50"
+													>
+														{highlight}
+													</Badge>
+												{/each}
+											</div>
 										</div>
-										<div class="flex flex-wrap gap-2">
-											{#each activity.highlights as highlight}
-												<Badge
-													variant="outline"
-													class="border-green-500 text-xs text-green-500 transition-colors hover:bg-green-50"
-												>
-													{highlight}
-												</Badge>
-											{/each}
-										</div>
-									</div>
+									{/if}
 								</div>
 
 								<div
 									class="flex items-center justify-between border-t-2 border-[color:var(--off-white)] pt-4"
 								>
-									<span class="text-sm text-gray-600"
-										>Best for: <span class="font-medium text-foreground">{activity.bestFor}</span
-										></span
-									>
+									{#if activity.priceRange}
+										<span class="text-sm text-gray-600"
+											>Price: <span class="font-medium text-foreground">{activity.priceRange}</span
+											></span
+										>
+									{:else if activity.bestFor}
+										<span class="text-sm text-gray-600"
+											>Best for: <span class="font-medium text-foreground">{activity.bestFor}</span
+											></span
+										>
+									{:else}
+										<span></span>
+									{/if}
 								</div>
 							</CardContent>
 						</Card>

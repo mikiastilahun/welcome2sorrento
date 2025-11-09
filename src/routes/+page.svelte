@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { urlFor } from '$lib/sanity/image';
-	import type { BlogPost, Destination, Testimonial, LocalSpecialty } from '$lib/sanity/queries';
+	import type { BlogPost, Destination, Testimonial, LocalSpecialty, SiteSettings } from '$lib/sanity/queries';
 	import SEO from '$lib/components/SEO.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
@@ -32,6 +32,7 @@
 			featuredDestinations: Destination[];
 			testimonials: Testimonial[];
 			localSpecialties: LocalSpecialty[];
+			siteSettings: SiteSettings | null;
 		};
 	}
 
@@ -71,68 +72,98 @@
 		};
 	});
 
+	// Featured sections with CMS data or fallback to defaults
 	const featuredSections = [
 		{
-			title: 'Eat',
-			description: 'Discover authentic Italian cuisine and hidden culinary gems',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Pizza-christian-mackie-768x1024.jpg',
+			title: data.siteSettings?.featuredSections?.eat?.title || 'Eat',
+			description: data.siteSettings?.featuredSections?.eat?.description || 'Discover authentic Italian cuisine and hidden culinary gems',
+			image: data.siteSettings?.featuredSections?.eat?.image 
+				? urlFor(data.siteSettings.featuredSections.eat.image).width(768).height(1024).url()
+				: 'https://welcome2sorrento.com/wp-content/uploads/2024/12/Pizza-christian-mackie-768x1024.jpg',
 			link: '/sorrento/eat',
 			icon: Utensils,
 			color: 'from-orange-500 to-red-500'
 		},
 		{
-			title: 'Stay',
-			description: 'Find your perfect accommodation from luxury hotels to charming B&Bs',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Hotel-chloe-lefleur-768x1024.jpg',
+			title: data.siteSettings?.featuredSections?.stay?.title || 'Stay',
+			description: data.siteSettings?.featuredSections?.stay?.description || 'Find your perfect accommodation from luxury hotels to charming B&Bs',
+			image: data.siteSettings?.featuredSections?.stay?.image 
+				? urlFor(data.siteSettings.featuredSections.stay.image).width(768).height(1024).url()
+				: 'https://welcome2sorrento.com/wp-content/uploads/2024/12/Hotel-chloe-lefleur-768x1024.jpg',
 			link: '/sorrento/stay',
 			icon: Hotel,
 			color: 'from-blue-500 to-purple-500'
 		},
 		{
-			title: 'Do',
-			description: 'Experience unforgettable activities and explore stunning attractions',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Clear-Water-large-768x1024.jpeg',
+			title: data.siteSettings?.featuredSections?.do?.title || 'Do',
+			description: data.siteSettings?.featuredSections?.do?.description || 'Experience unforgettable activities and explore stunning attractions',
+			image: data.siteSettings?.featuredSections?.do?.image 
+				? urlFor(data.siteSettings.featuredSections.do.image).width(768).height(1024).url()
+				: 'https://welcome2sorrento.com/wp-content/uploads/2024/12/Clear-Water-large-768x1024.jpeg',
 			link: '/sorrento/do',
 			icon: Sparkles,
 			color: 'from-green-500 to-teal-500'
 		}
 	];
 
-	const destinations = [
-		{
-			name: 'Capri',
-			description: 'The jewel of the Mediterranean',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Clear-Water-large-768x1024.jpeg',
-			link: '/surrounding/capri',
+	// Use CMS destinations or fallback
+	const destinations = data.featuredDestinations.length > 0 
+		? data.featuredDestinations.map(dest => ({
+			name: dest.name,
+			description: dest.subtitle || dest.shortDescription,
+			image: dest.cardImage ? urlFor(dest.cardImage).width(768).height(1024).url() : '',
+			link: `/surrounding/${dest.slug.current}`,
 			icon: Waves
-		},
-		{
-			name: 'Amalfi Coast',
-			description: 'Dramatic cliffs and colorful villages',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Positano-marianna-berno-683x1024.jpg',
-			link: '/surrounding/amalfi',
-			icon: Mountain
-		},
-		{
-			name: 'Naples',
-			description: 'Vibrant culture and authentic pizza',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Marina-della-Lobra-scaled.jpeg',
-			link: '/surrounding/naples',
-			icon: Sun
-		}
-	];
+		}))
+		: [
+			{
+				name: 'Capri',
+				description: 'The jewel of the Mediterranean',
+				image:
+					'https://welcome2sorrento.com/wp-content/uploads/2024/12/Clear-Water-large-768x1024.jpeg',
+				link: '/surrounding/capri',
+				icon: Waves
+			},
+			{
+				name: 'Amalfi Coast',
+				description: 'Dramatic cliffs and colorful villages',
+				image:
+					'https://welcome2sorrento.com/wp-content/uploads/2024/12/Positano-marianna-berno-683x1024.jpg',
+				link: '/surrounding/amalfi',
+				icon: Mountain
+			},
+			{
+				name: 'Naples',
+				description: 'Vibrant culture and authentic pizza',
+				image:
+					'https://welcome2sorrento.com/wp-content/uploads/2024/12/Marina-della-Lobra-scaled.jpeg',
+				link: '/surrounding/naples',
+				icon: Sun
+			}
+		];
 
+	// Stats with CMS data or fallback to defaults
 	const stats = [
-		{ value: '5000+', label: 'Happy Travelers', icon: Users },
-		{ value: '200+', label: 'Partner Hotels', icon: Hotel },
-		{ value: '50+', label: 'Top Restaurants', icon: Award },
-		{ value: '98%', label: 'Satisfaction Rate', icon: TrendingUp }
+		{ 
+			value: data.siteSettings?.homepageStats?.happyTravelers || '5000+', 
+			label: 'Happy Travelers', 
+			icon: Users 
+		},
+		{ 
+			value: data.siteSettings?.homepageStats?.partnerHotels || '200+', 
+			label: 'Partner Hotels', 
+			icon: Hotel 
+		},
+		{ 
+			value: data.siteSettings?.homepageStats?.localGuides || '50+', 
+			label: 'Local Guides', 
+			icon: Award 
+		},
+		{ 
+			value: data.siteSettings?.homepageStats?.yearsExperience || '15+', 
+			label: 'Years Experience', 
+			icon: TrendingUp 
+		}
 	];
 
 	function handleNewsletter(e: Event) {

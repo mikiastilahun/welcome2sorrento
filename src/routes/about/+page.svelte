@@ -1,4 +1,7 @@
 <script lang="ts">
+	import type { AboutPage } from '$lib/sanity/queries';
+	import { urlFor } from '$lib/sanity/image';
+	import PortableTextRenderer from '$lib/components/PortableTextRenderer.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
@@ -16,6 +19,64 @@
 		Sparkles
 	} from '@lucide/svelte';
 	import { onMount } from 'svelte';
+
+	interface Props {
+		data: {
+			aboutPage: AboutPage | null;
+		};
+	}
+
+	let { data }: Props = $props();
+
+	// Default content for fallback
+	const defaultContent = {
+		title: 'About Welcome2Sorrento',
+		subtitle: 'Sharing our love for Sorrento with travelers from around the world',
+		story: {
+			title: 'A Love Story with Sorrento',
+			paragraphs: [
+				'Welcome2Sorrento was born from a simple love story – between two people and between them and this magical corner of Italy. Created and maintained by an Italian/British couple who have made the Sorrento Peninsula their home, this website is our way of sharing the insider knowledge, hidden gems, and authentic experiences that make this region so special.',
+				"After years of living here, exploring every beach, dining at countless restaurants, and discovering secret viewpoints known only to locals, we realized we had accumulated a treasure trove of information that could help travelers experience Sorrento the way it's meant to be experienced – authentically, deeply, and memorably.",
+				"We're not just guidebook writers or tourism professionals – we're locals who genuinely love this place and want to help you fall in love with it too."
+			]
+		},
+		services: [
+			{
+				title: 'Local Expertise',
+				description: 'We live here year-round and know Sorrento inside out – from hidden beaches to the best morning cappuccino',
+				icon: 'MapPin'
+			},
+			{
+				title: 'Honest Reviews',
+				description: "No sponsored content or paid placements – just genuine recommendations we'd give our friends",
+				icon: 'Heart'
+			},
+			{
+				title: 'Personal Touch',
+				description: "We're real people who respond to every message and genuinely care about your experience",
+				icon: 'Users'
+			},
+			{
+				title: 'Always Updated',
+				description: 'Living here means we know immediately when a new restaurant opens or when things change',
+				icon: 'Sparkles'
+			}
+		]
+	};
+
+	// Map icon names to components
+	const iconMap: Record<string, any> = {
+		MapPin,
+		Heart,
+		Users,
+		Sparkles,
+		Phone,
+		Globe,
+		Star,
+		Award
+	};
+
+	const aboutData = data.aboutPage || defaultContent;
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -37,10 +98,10 @@
 </script>
 
 <svelte:head>
-	<title>About Us - Our Story & Services | Welcome2Sorrento</title>
+	<title>{aboutData.seo?.metaTitle || 'About Us - Our Story & Services | Welcome2Sorrento'}</title>
 	<meta
 		name="description"
-		content="Learn about Welcome2Sorrento - created by an Italian/British couple who love the Sorrento Peninsula. Discover our WhatsApp booking service."
+		content={aboutData.seo?.metaDescription || 'Learn about Welcome2Sorrento - created by an Italian/British couple who love the Sorrento Peninsula. Discover our WhatsApp booking service.'}
 	/>
 </svelte:head>
 
@@ -71,10 +132,10 @@
 						<Heart class="h-10 w-10 fill-white text-white" />
 					</div>
 					<h1 class="mb-6 text-5xl font-bold sm:text-6xl lg:text-7xl">
-						About <span class="text-gradient">Welcome2Sorrento</span>
+						{@html aboutData.title || 'About <span class="text-gradient">Welcome2Sorrento</span>'}
 					</h1>
 					<p class="heading-serif mx-auto max-w-3xl text-xl font-light text-white/90 sm:text-2xl">
-						Sharing our love for Sorrento with travelers from around the world
+						{aboutData.subtitle || 'Sharing our love for Sorrento with travelers from around the world'}
 					</p>
 				</div>
 			</div>
@@ -93,7 +154,7 @@
 						<span class="text-sm font-medium text-[color:var(--dark)]">Our Journey</span>
 					</div>
 					<h2 class="mb-8 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
-						A Love Story with <span class="text-gradient">Sorrento</span>
+						{@html aboutData.story?.title || 'A Love Story with <span class="text-gradient">Sorrento</span>'}
 					</h2>
 				</div>
 
@@ -110,23 +171,17 @@
 					</div>
 
 					<div class="space-y-6 text-lg leading-relaxed text-gray-600">
-						<p>
-							Welcome2Sorrento was born from a simple love story – between two people and between
-							them and this magical corner of Italy. Created and maintained by an Italian/British
-							couple who have made the Sorrento Peninsula their home, this website is our way of
-							sharing the insider knowledge, hidden gems, and authentic experiences that make this
-							region so special.
-						</p>
-						<p>
-							After years of living here, exploring every beach, dining at countless restaurants,
-							and discovering secret viewpoints known only to locals, we realized we had accumulated
-							a treasure trove of information that could help travelers experience Sorrento the way
-							it's meant to be experienced – authentically, deeply, and memorably.
-						</p>
-						<p>
-							We're not just guidebook writers or tourism professionals – we're locals who genuinely
-							love this place and want to help you fall in love with it too.
-						</p>
+						{#if aboutData.story?.content}
+							<PortableTextRenderer value={aboutData.story.content} />
+						{:else if defaultContent.story.paragraphs}
+							{#each defaultContent.story.paragraphs as paragraph}
+								<p>{paragraph}</p>
+							{/each}
+						{/if}
+						
+						{#if aboutData.mission}
+							<p class="font-semibold text-[color:var(--dark)] mt-8">{aboutData.mission}</p>
+						{/if}
 					</div>
 				</div>
 			</div>
@@ -146,66 +201,30 @@
 			</div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-				<div
-					class="group scroll-reveal rounded-3xl border-2 border-[color:var(--purple-lavender)]/20 bg-white p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[color:var(--purple-lavender)] hover:shadow-2xl"
-				>
+				{#each (aboutData.services || defaultContent.services) as service, index}
+					{@const colors = ['purple-lavender', 'turquoise', 'purple-lavender', 'turquoise']}
+					{@const colorPairs = [
+						['purple-lavender', 'deep-purple'],
+						['turquoise', 'light-turquoise'],
+						['deep-purple', 'purple-lavender'],
+						['turquoise', 'purple-lavender']
+					]}
+					{@const IconComponent = iconMap[service.icon || 'MapPin'] || MapPin}
 					<div
-						class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--purple-lavender)] to-[color:var(--deep-purple)] transition-transform duration-500 group-hover:scale-110"
+						class="group scroll-reveal rounded-3xl border-2 border-[color:var(--{colors[index % 4]})]/20 bg-white p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[color:var(--{colors[index % 4]})] hover:shadow-2xl"
+						style="transition-delay: {index * 0.1}s"
 					>
-						<MapPin class="h-8 w-8 text-white" />
+						<div
+							class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--{colorPairs[index % 4][0]})] to-[color:var(--{colorPairs[index % 4][1]})] transition-transform duration-500 group-hover:scale-110"
+						>
+							<svelte:component this={IconComponent} class="h-8 w-8 text-white" />
+						</div>
+						<h3 class="mb-3 text-center text-xl font-bold">{service.title}</h3>
+						<p class="text-center text-sm leading-relaxed text-gray-600">
+							{service.description}
+						</p>
 					</div>
-					<h3 class="mb-3 text-center text-xl font-bold">Local Expertise</h3>
-					<p class="text-center text-sm leading-relaxed text-gray-600">
-						We live here year-round and know Sorrento inside out – from hidden beaches to the best
-						morning cappuccino
-					</p>
-				</div>
-
-				<div
-					class="group scroll-reveal rounded-3xl border-2 border-[color:var(--turquoise)]/20 bg-white p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[color:var(--turquoise)] hover:shadow-2xl"
-					style="transition-delay: 0.1s"
-				>
-					<div
-						class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--light-turquoise)] transition-transform duration-500 group-hover:scale-110"
-					>
-						<Heart class="h-8 w-8 text-white" />
-					</div>
-					<h3 class="mb-3 text-center text-xl font-bold">Honest Reviews</h3>
-					<p class="text-center text-sm leading-relaxed text-gray-600">
-						No sponsored content or paid placements – just genuine recommendations we'd give our
-						friends
-					</p>
-				</div>
-
-				<div
-					class="group scroll-reveal rounded-3xl border-2 border-[color:var(--purple-lavender)]/20 bg-white p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[color:var(--purple-lavender)] hover:shadow-2xl"
-					style="transition-delay: 0.2s"
-				>
-					<div
-						class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--deep-purple)] to-[color:var(--purple-lavender)] transition-transform duration-500 group-hover:scale-110"
-					>
-						<Users class="h-8 w-8 text-white" />
-					</div>
-					<h3 class="mb-3 text-center text-xl font-bold">Personal Touch</h3>
-					<p class="text-center text-sm leading-relaxed text-gray-600">
-						We're real people who respond to every message and genuinely care about your experience
-					</p>
-				</div>
-
-				<div
-					class="group scroll-reveal rounded-3xl border-2 border-[color:var(--turquoise)]/20 bg-white p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[color:var(--turquoise)] hover:shadow-2xl"
-					style="transition-delay: 0.3s"
-				>
-					<div
-						class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--purple-lavender)] transition-transform duration-500 group-hover:scale-110"
-					>
-						<Sparkles class="h-8 w-8 text-white" />
-					</div>
-					<h3 class="mb-3 text-center text-xl font-bold">Always Updated</h3>
-					<p class="text-center text-sm leading-relaxed text-gray-600">
-						Living here means we know immediately when a new restaurant opens or when things change
-					</p>
-				</div>
+				{/each}
 			</div>
 		</div>
 	</section>

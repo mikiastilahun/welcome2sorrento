@@ -19,7 +19,7 @@
 		Sparkles
 	} from '@lucide/svelte';
 	import { onMount } from 'svelte';
-
+	import type { PortableTextBlock } from '@portabletext/types';
 	interface Props {
 		data: {
 			aboutPage: AboutPage | null;
@@ -61,7 +61,12 @@
 				description: 'Living here means we know immediately when a new restaurant opens or when things change',
 				icon: 'Sparkles'
 			}
-		]
+		],
+		seo: {
+			metaTitle: 'About Us - Our Story & Services | Welcome2Sorrento',
+			metaDescription: 'Learn about Welcome2Sorrento - created by an Italian/British couple who love the Sorrento Peninsula. Discover our WhatsApp booking service.'
+		},
+		mission: 'We are a team of local experts who are passionate about sharing the beauty of Sorrento with the world.'
 	};
 
 	// Map icon names to components
@@ -171,8 +176,8 @@
 					</div>
 
 					<div class="space-y-6 text-lg leading-relaxed text-gray-600">
-						{#if aboutData.story?.content}
-							<PortableTextRenderer value={aboutData.story.content} />
+						{#if aboutData.story?.paragraphs}
+							<PortableTextRenderer value={aboutData.story.paragraphs as PortableTextBlock[]} />
 						{:else if defaultContent.story.paragraphs}
 							{#each defaultContent.story.paragraphs as paragraph}
 								<p>{paragraph}</p>

@@ -72,6 +72,9 @@
 		};
 	});
 
+	$effect(() => {
+		console.log({data});
+	});
 	// Featured sections with CMS data or fallback to defaults
 	const featuredSections = [
 		{
@@ -415,9 +418,9 @@
 											></div>
 											<div class="absolute top-6 right-6">
 												<div
-													class="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/30 bg-white/20 backdrop-blur-md"
+													class="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/30 bg-white/20 backdrop-blur-md transition-transform duration-300 group-hover:scale-110"
 												>
-													<Icon class="h-7 w-7 text-white" />
+													<Icon class="h-8 w-8 text-white" />
 												</div>
 											</div>
 										</div>
@@ -491,7 +494,7 @@
 
 								<!-- Floating Icon -->
 								<div
-									class="glass absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/20"
+									class="glass absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/20 transition-transform duration-300 group-hover:scale-110"
 								>
 									<Icon class="h-6 w-6 text-white" />
 								</div>
@@ -527,9 +530,9 @@
 								href="/surrounding/{destination.slug.current}"
 								class="group relative block h-96 overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
 							>
-								{#if destination.mainImage}
+								{#if destination.cardImage}
 									<img
-										src={urlFor(destination.mainImage).width(600).height(400).url()}
+										src={urlFor(destination.cardImage).width(600).height(400).url()}
 										alt={destination.name}
 										class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
 									/>
@@ -540,7 +543,7 @@
 
 								<!-- Floating Icon -->
 								<div
-									class="glass absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/20"
+									class="glass absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/20 transition-transform duration-300 group-hover:scale-110"
 								>
 									<MapPin class="h-6 w-6 text-white" />
 								</div>
@@ -556,7 +559,7 @@
 										class="mb-4 text-white/80 transition-transform duration-300 group-hover:translate-x-2"
 										style="transition-delay: 0.05s"
 									>
-										{destination.excerpt || destination.tagline || ''}
+										{destination.subtitle || destination.shortDescription || ''}
 									</p>
 									<div
 										class="flex items-center font-medium text-[color:var(--turquoise)] transition-transform duration-300 group-hover:translate-x-2"

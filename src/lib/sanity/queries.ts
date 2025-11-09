@@ -531,7 +531,7 @@ export interface AboutPage {
 	subtitle?: string;
 	story?: {
 		title?: string;
-		content?: PortableTextBlock[];
+		paragraphs?: PortableTextBlock[];
 	};
 	mission?: string;
 	services?: Array<{

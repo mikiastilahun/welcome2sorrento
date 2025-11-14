@@ -1,9 +1,4 @@
-import {
-	PUBLIC_SANITY_DATASET,
-	PUBLIC_SANITY_PROJECT_ID,
-	PUBLIC_SANITY_API_VERSION,
-	PUBLIC_SANITY_STUDIO_URL
-} from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
 export function assertEnvVar<T>(value: T | undefined, name: string): T {
 	if (value === undefined) {
@@ -13,14 +8,12 @@ export function assertEnvVar<T>(value: T | undefined, name: string): T {
 }
 
 // Use dummy values if not configured - app will work but show empty states
-export const dataset = PUBLIC_SANITY_DATASET || 'production';
-
-export const projectId = PUBLIC_SANITY_PROJECT_ID || 'dummy-project-id';
-
-export const apiVersion = PUBLIC_SANITY_API_VERSION || '2024-03-15';
-
-export const studioUrl = PUBLIC_SANITY_STUDIO_URL || 'http://localhost:3333';
+export const dataset = env.PUBLIC_SANITY_STUDIO_DATASET || 'production';
+export const projectId = env.PUBLIC_SANITY_STUDIO_PROJECT_ID || 'dummy-project-id';
+export const apiVersion = env.PUBLIC_SANITY_STUDIO_API_VERSION || '2024-03-15';
+export const studioUrl = env.PUBLIC_SANITY_STUDIO_STUDIO_URL || 'http://localhost:3333';
 
 // Check if Sanity is properly configured
-export const isSanityConfigured = !!(PUBLIC_SANITY_PROJECT_ID && PUBLIC_SANITY_DATASET);
-
+export const isSanityConfigured = !!(
+	env.PUBLIC_SANITY_STUDIO_PROJECT_ID && env.PUBLIC_SANITY_STUDIO_DATASET
+);

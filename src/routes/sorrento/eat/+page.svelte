@@ -60,16 +60,16 @@
 			: data.restaurants.filter((r) => r.category === selectedCategory)
 	);
 
-	// Helper to get gradient based on category
-	function getCategoryGradient(category: string): string {
-		const gradients: Record<string, string> = {
-			'fine-dining': 'from-amber-500 to-orange-600',
-			'traditional': 'from-red-500 to-pink-600',
-			'seafood': 'from-blue-500 to-cyan-500',
-			'casual-dining': 'from-green-500 to-emerald-600',
-			'pizzeria': 'from-orange-500 to-red-500'
+	// Helper to get solid color based on category
+	function getCategoryColor(category: string): string {
+		const colors: Record<string, string> = {
+			'fine-dining': 'bg-[color:var(--terracotta)]',
+			traditional: 'bg-[color:var(--coral)]',
+			seafood: 'bg-[color:var(--azure)]',
+			'casual-dining': 'bg-[color:var(--olive)]',
+			pizzeria: 'bg-[color:var(--terracotta)]'
 		};
-		return gradients[category] || 'from-purple-500 to-indigo-600';
+		return colors[category] || 'bg-[color:var(--azure)]';
 	}
 
 	// Helper to format category name
@@ -91,28 +91,19 @@
 
 <div class="-mt-24">
 	<!-- Hero Section -->
-	<section class="relative flex min-h-[70vh] items-center justify-center overflow-hidden pt-24">
+	<section class="relative flex min-h-[60vh] items-center justify-center overflow-hidden pt-24">
 		<div class="absolute inset-0 z-0">
 			<img
 				src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80"
 				alt="Italian cuisine in Sorrento"
 				class="h-full w-full object-cover"
 			/>
-			<div
-				class="absolute inset-0 bg-gradient-to-br from-[color:var(--dark)]/80 via-[color:var(--deep-purple)]/60 to-[color:var(--dark)]/80"
-			></div>
+			<div class="absolute inset-0 bg-(--charcoal)/50"></div>
 		</div>
 
 		<div class="relative z-10 container mx-auto px-4 py-32 text-center text-white sm:px-6 lg:px-8">
 			<div class="animate-fade-in-up">
-				<div
-					class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-orange-500 to-red-600 shadow-2xl"
-				>
-					<ChefHat class="h-10 w-10 text-white" />
-				</div>
-				<h1 class="mb-6 text-5xl font-bold sm:text-6xl lg:text-7xl">
-					Where to <span class="text-gradient">Eat</span> in Sorrento
-				</h1>
+				<h1 class="mb-6 text-5xl font-bold sm:text-6xl lg:text-7xl">Where to Eat in Sorrento</h1>
 				<p class="heading-serif mx-auto max-w-3xl text-xl font-light text-white/90 sm:text-2xl">
 					From Michelin stars to family trattorias, discover culinary excellence
 				</p>
@@ -121,7 +112,7 @@
 	</section>
 
 	<!-- Introduction -->
-	<section class="mesh-gradient relative py-20">
+	<section class="relative bg-[color:var(--warm-white)] py-20">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mx-auto max-w-4xl text-center">
 				<p class="text-xl leading-relaxed text-gray-600">
@@ -135,7 +126,7 @@
 
 	<!-- Category Filter -->
 	<section
-		class="sticky top-0 z-40 border-b border-gray-200 bg-white/95 py-8 shadow-md backdrop-blur-md"
+		class="sticky top-0 z-40 border-b border-[color:var(--sand)] bg-white/95 py-8 shadow-sm backdrop-blur-md"
 	>
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex flex-wrap justify-center gap-3">
@@ -144,8 +135,8 @@
 						variant={selectedCategory === category ? 'default' : 'outline'}
 						onclick={() => (selectedCategory = category)}
 						class={selectedCategory === category
-							? 'bg-gradient-to-r from-orange-500 to-red-500 text-white transition-all duration-300 hover:shadow-lg'
-							: 'border-2 transition-all duration-300 hover:border-orange-500 hover:text-orange-500'}
+							? 'bg-[color:var(--azure)] text-white transition-all duration-200 hover:bg-[color:var(--deep-azure)]'
+							: 'border border-[color:var(--sand)] transition-all duration-200 hover:border-[color:var(--azure)] hover:text-[color:var(--azure)]'}
 					>
 						{category === 'All' ? category : formatCategory(category)}
 					</Button>
@@ -170,56 +161,52 @@
 			{:else}
 				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 					{#each filteredRestaurants as restaurant, index}
-						{@const gradient = getCategoryGradient(restaurant.category)}
+						{@const categoryColor = getCategoryColor(restaurant.category)}
 						<div class="scroll-reveal h-full" style="transition-delay: {index * 0.1}s">
 							<Card
-								class="group flex h-full flex-col overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-orange-500 hover:shadow-2xl"
+								class="group flex h-full flex-col overflow-hidden border border-[color:var(--sand)] pt-0 transition-all duration-300 hover:border-[color:var(--azure)] hover:shadow-lg"
 							>
 								<div class="relative h-72 overflow-hidden">
-									{#if restaurant.mainImage}
-										<img
-											src={urlFor(restaurant.mainImage).width(800).height(600).url()}
-											alt={restaurant.name}
-											class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-										/>
-									{/if}
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/80 via-[color:var(--dark)]/20 to-transparent"
-									></div>
+									<img
+										src={restaurant?.mainImage?.asset?.url ||
+											'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80'}
+										alt={restaurant.name}
+										class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+									/>
 
 									<!-- Category Badge -->
 									<div class="absolute top-4 right-4">
-										<Badge
-											class="border-0 bg-white/90 font-semibold text-[color:var(--dark)] shadow-lg backdrop-blur-sm"
-										>
+										<Badge class="{categoryColor} border-0 font-semibold text-white shadow-md">
 											{formatCategory(restaurant.category)}
 										</Badge>
 									</div>
 
 									<!-- Rating -->
 									<div
-										class="glass absolute bottom-4 left-4 flex items-center space-x-1 rounded-xl border border-white/20 px-3 py-2"
+										class="absolute bottom-4 left-4 flex items-center space-x-1 rounded-lg bg-white px-3 py-2 shadow-md"
 									>
-										<Star class="h-5 w-5 fill-yellow-400 text-yellow-400" />
-										<span class="text-lg font-bold text-white">{restaurant.rating}</span>
+										<Star class="h-4 w-4 fill-yellow-400 text-yellow-400" />
+										<span class="text-sm font-bold text-[color:var(--charcoal)]"
+											>{restaurant.rating}</span
+										>
 									</div>
 
 									<!-- Price Range -->
-									<div
-										class="glass absolute right-4 bottom-4 rounded-xl border border-white/20 px-3 py-2"
-									>
-										<span class="font-semibold text-white">{restaurant.priceRange}</span>
+									<div class="absolute right-4 bottom-4 rounded-lg bg-white px-3 py-2 shadow-md">
+										<span class="text-sm font-semibold text-[color:var(--charcoal)]"
+											>{restaurant.priceRange}</span
+										>
 									</div>
 								</div>
 
 								<CardContent class="flex flex-grow flex-col p-6">
 									<div class="flex-grow">
 										<CardTitle
-											class="mb-2 text-2xl group-hover:bg-gradient-to-r group-hover:text-transparent group-hover:{gradient} transition-all duration-500 group-hover:bg-clip-text"
+											class="mb-2 text-2xl text-[color:var(--charcoal)] transition-colors duration-300 group-hover:text-[color:var(--azure)]"
 										>
 											{restaurant.name}
 										</CardTitle>
-										<div class="mb-4 text-sm font-medium text-gray-600">
+										<div class="mb-4 text-sm font-medium text-[color:var(--stone)]">
 											{restaurant.cuisine}
 										</div>
 										<p class="mb-6 text-sm leading-relaxed text-gray-600">
@@ -230,7 +217,7 @@
 											{#each restaurant.highlights as highlight}
 												<Badge
 													variant="outline"
-													class="border-orange-500 text-xs text-orange-500 transition-colors hover:bg-orange-50"
+													class="border-[color:var(--azure)] text-xs text-[color:var(--azure)] transition-colors hover:bg-[color:var(--azure)]/10"
 												>
 													{highlight}
 												</Badge>
@@ -239,9 +226,9 @@
 									</div>
 
 									<div
-										class="flex items-start space-x-2 border-t-2 border-[color:var(--off-white)] pt-4 text-sm text-gray-600"
+										class="flex items-start space-x-2 border-t border-[color:var(--sand)] pt-4 text-sm text-gray-600"
 									>
-										<MapPin class="mt-0.5 h-4 w-4 flex-shrink-0 text-orange-500" />
+										<MapPin class="mt-0.5 h-4 w-4 flex-shrink-0 text-[color:var(--azure)]" />
 										<span class="font-medium">{restaurant.location}</span>
 									</div>
 								</CardContent>
@@ -254,46 +241,35 @@
 	</section>
 
 	<!-- Local Specialties -->
-	<section class="relative bg-gradient-to-b from-white via-[color:var(--off-white)] to-white py-32">
+	<section class="relative bg-[color:var(--cream)] py-32">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mb-20 text-center">
-				<div
-					class="mb-6 inline-flex items-center space-x-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-2"
-				>
-					<Sparkles class="h-4 w-4 text-orange-500" />
-					<span class="text-sm font-medium text-[color:var(--dark)]">Taste of Sorrento</span>
-				</div>
-				<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
-					Must-Try <span class="text-gradient">Local Specialties</span>
+				<h2 class="mb-6 text-4xl font-bold text-[color:var(--charcoal)] sm:text-5xl">
+					Must-Try Local Specialties
 				</h2>
 			</div>
 
 			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-				{#each [{ name: 'Gnocchi alla Sorrentina', description: 'Potato dumplings with tomato, mozzarella, and basil', icon: UtensilsCrossed, gradient: 'from-red-500 to-orange-500' }, { name: 'Limoncello', description: 'Sweet lemon liqueur made from local lemons', icon: Wine, gradient: 'from-yellow-500 to-amber-500' }, { name: 'Scialatielli ai Frutti di Mare', description: 'Fresh pasta with mixed seafood', icon: ChefHat, gradient: 'from-blue-500 to-cyan-500' }, { name: 'Delizia al Limone', description: 'Lemon-flavored sponge cake dessert', icon: Coffee, gradient: 'from-amber-500 to-yellow-500' }] as dish, index}
+				{#each [{ name: 'Gnocchi alla Sorrentina', description: 'Potato dumplings with tomato, mozzarella, and basil', icon: UtensilsCrossed, color: 'bg-[color:var(--terracotta)]' }, { name: 'Limoncello', description: 'Sweet lemon liqueur made from local lemons', icon: Wine, color: 'bg-[color:var(--coral)]' }, { name: 'Scialatielli ai Frutti di Mare', description: 'Fresh pasta with mixed seafood', icon: ChefHat, color: 'bg-[color:var(--azure)]' }, { name: 'Delizia al Limone', description: 'Lemon-flavored sponge cake dessert', icon: Coffee, color: 'bg-[color:var(--olive)]' }] as dish, index}
 					<div class="scroll-reveal group" style="transition-delay: {index * 0.1}s">
-						<div class="relative h-full overflow-hidden rounded-3xl">
+						<div
+							class="flex h-full flex-col items-center rounded-2xl border border-[color:var(--sand)] bg-white p-8 text-center transition-all duration-300 hover:border-[color:var(--azure)] hover:shadow-md"
+						>
 							<div
-								class="absolute inset-0 bg-gradient-to-r {dish.gradient} opacity-5 transition-opacity duration-300 group-hover:opacity-10"
-							></div>
-							<div
-								class="relative flex h-full flex-col items-center rounded-3xl border-2 border-transparent bg-white p-8 text-center transition-all duration-300 group-hover:border-orange-500"
+								class="{dish.color} mb-6 flex h-16 w-16 items-center justify-center rounded-xl shadow-md transition-transform duration-300 group-hover:scale-110"
 							>
-								<div
-									class="h-16 w-16 rounded-2xl bg-gradient-to-br {dish.gradient} mb-6 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110"
-								>
-									{#if dish.icon === UtensilsCrossed}
-										<UtensilsCrossed class="h-8 w-8 text-white" />
-									{:else if dish.icon === Wine}
-										<Wine class="h-8 w-8 text-white" />
-									{:else if dish.icon === ChefHat}
-										<ChefHat class="h-8 w-8 text-white" />
-									{:else if dish.icon === Coffee}
-										<Coffee class="h-8 w-8 text-white" />
-									{/if}
-								</div>
-								<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">{dish.name}</h3>
-								<p class="text-sm leading-relaxed text-gray-600">{dish.description}</p>
+								{#if dish.icon === UtensilsCrossed}
+									<UtensilsCrossed class="h-8 w-8 text-white" />
+								{:else if dish.icon === Wine}
+									<Wine class="h-8 w-8 text-white" />
+								{:else if dish.icon === ChefHat}
+									<ChefHat class="h-8 w-8 text-white" />
+								{:else if dish.icon === Coffee}
+									<Coffee class="h-8 w-8 text-white" />
+								{/if}
 							</div>
+							<h3 class="mb-3 text-xl font-bold text-[color:var(--charcoal)]">{dish.name}</h3>
+							<p class="text-sm leading-relaxed text-gray-600">{dish.description}</p>
 						</div>
 					</div>
 				{/each}
@@ -306,37 +282,34 @@
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="mx-auto max-w-5xl">
 				<div class="scroll-reveal mb-20 text-center">
-					<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
-						<span class="text-gradient">Dining</span> Tips
+					<h2 class="mb-6 text-4xl font-bold text-[color:var(--charcoal)] sm:text-5xl">
+						Dining Tips
 					</h2>
 				</div>
 
 				<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-					{#each [{ title: 'Meal Times', description: 'Lunch: 12:30-3pm, Dinner: 7:30pm onwards. Many places close between meals.', icon: Clock, gradient: 'from-blue-500 to-cyan-500' }, { title: 'Pricing', description: '€ = Budget (€10-20), €€ = Moderate (€20-40), €€€ = Upscale (€40-70), €€€€ = Fine Dining (€70+)', icon: Euro, gradient: 'from-green-500 to-emerald-500' }, { title: 'Reservations', description: 'Book ahead for fine dining and popular spots, especially in peak season.', icon: MapPin, gradient: 'from-purple-500 to-indigo-500' }, { title: 'Local Etiquette', description: "Service charge is usually included. Round up for good service, but tipping isn't mandatory.", icon: Award, gradient: 'from-orange-500 to-red-500' }] as tip, index}
+					{#each [{ title: 'Meal Times', description: 'Lunch: 12:30-3pm, Dinner: 7:30pm onwards. Many places close between meals.', icon: Clock, color: 'bg-[color:var(--azure)]' }, { title: 'Pricing', description: '€ = Budget (€10-20), €€ = Moderate (€20-40), €€€ = Upscale (€40-70), €€€€ = Fine Dining (€70+)', icon: Euro, color: 'bg-[color:var(--olive)]' }, { title: 'Reservations', description: 'Book ahead for fine dining and popular spots, especially in peak season.', icon: MapPin, color: 'bg-[color:var(--terracotta)]' }, { title: 'Local Etiquette', description: "Service charge is usually included. Round up for good service, but tipping isn't mandatory.", icon: Award, color: 'bg-[color:var(--coral)]' }] as tip, index}
 						<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-							<div class="relative h-full overflow-hidden rounded-3xl">
-								<div class="absolute inset-0 bg-gradient-to-r {tip.gradient} opacity-5"></div>
-								<div
-									class="relative h-full rounded-3xl border-2 border-[color:var(--off-white)] bg-white p-8 transition-all duration-300 hover:border-orange-500"
-								>
-									<div class="flex items-start space-x-4">
-										<div
-											class="h-12 w-12 rounded-xl bg-gradient-to-br {tip.gradient} flex flex-shrink-0 items-center justify-center shadow-lg"
-										>
-											{#if tip.icon === Clock}
-												<Clock class="h-6 w-6 text-white" />
-											{:else if tip.icon === Euro}
-												<Euro class="h-6 w-6 text-white" />
-											{:else if tip.icon === MapPin}
-												<MapPin class="h-6 w-6 text-white" />
-											{:else if tip.icon === Award}
-												<Award class="h-6 w-6 text-white" />
-											{/if}
-										</div>
-										<div>
-											<h3 class="mb-2 text-lg font-bold text-[color:var(--dark)]">{tip.title}</h3>
-											<p class="text-sm leading-relaxed text-gray-600">{tip.description}</p>
-										</div>
+							<div
+								class="h-full rounded-2xl border border-[color:var(--sand)] bg-white p-8 transition-all duration-300 hover:border-[color:var(--azure)] hover:shadow-md"
+							>
+								<div class="flex items-start space-x-4">
+									<div
+										class="{tip.color} flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg shadow-sm"
+									>
+										{#if tip.icon === Clock}
+											<Clock class="h-6 w-6 text-white" />
+										{:else if tip.icon === Euro}
+											<Euro class="h-6 w-6 text-white" />
+										{:else if tip.icon === MapPin}
+											<MapPin class="h-6 w-6 text-white" />
+										{:else if tip.icon === Award}
+											<Award class="h-6 w-6 text-white" />
+										{/if}
+									</div>
+									<div>
+										<h3 class="mb-2 text-lg font-bold text-[color:var(--charcoal)]">{tip.title}</h3>
+										<p class="text-sm leading-relaxed text-gray-600">{tip.description}</p>
 									</div>
 								</div>
 							</div>
@@ -348,11 +321,7 @@
 	</section>
 
 	<!-- CTA -->
-	<section class="relative overflow-hidden py-32">
-		<div
-			class="animate-gradient absolute inset-0 bg-gradient-to-br from-orange-500 via-red-500 to-pink-600"
-		></div>
-
+	<section class="relative overflow-hidden bg-[color:var(--azure)] py-32">
 		<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8">
 			<div class="mx-auto max-w-3xl text-white">
 				<h2 class="mb-6 text-4xl font-bold sm:text-5xl">Need Restaurant Recommendations?</h2>
@@ -361,7 +330,7 @@
 				</p>
 				<Button
 					size="lg"
-					class="bg-white px-10 py-7 text-lg text-orange-600 shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-[color:var(--off-white)]"
+					class="bg-white px-10 py-7 text-lg text-[color:var(--azure)] shadow-lg transition-all duration-300 hover:bg-[color:var(--cream)]"
 				>
 					<a href="/contact" class="flex items-center space-x-2">
 						<ChefHat class="h-5 w-5" />

@@ -21,7 +21,8 @@
 {#if visible}
 	<button
 		onclick={scrollToTop}
-		class="group animate-fade-in fixed right-8 bottom-8 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-2xl"
+		class="group animate-fade-in fixed right-8 bottom-8 z-40 flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all duration-200 hover:shadow-xl"
+		style="background-color: var(--azure);"
 		aria-label="Back to top"
 	>
 		<ArrowUp class="h-5 w-5 transition-transform group-hover:-translate-y-1" />

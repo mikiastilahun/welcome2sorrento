@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { PortableText } from '@portabletext/svelte';
-	import { urlFor } from '$lib/sanity/image';
 	import type { BlogPost } from '$lib/sanity/queries';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import { Calendar, User, Clock, ArrowLeft, ArrowRight, Share2 } from '@lucide/svelte';
+	import { Calendar, Clock, ArrowLeft, ArrowRight, Share2 } from '@lucide/svelte';
 
 	interface Props {
 		data: {
@@ -17,15 +16,15 @@
 
 	let { data }: Props = $props();
 
-	function getCategoryGradient(category: string): string {
-		const gradients: Record<string, string> = {
-			'local-culture': 'from-yellow-500 to-orange-500',
-			'beaches': 'from-blue-500 to-cyan-500',
-			'travel-tips': 'from-purple-500 to-pink-500',
-			'day-trips': 'from-green-500 to-teal-500',
-			'food-drink': 'from-red-500 to-orange-500'
+	function getCategoryColor(category: string): string {
+		const colors: Record<string, string> = {
+			'local-culture': 'bg-[color:var(--terracotta)]',
+			beaches: 'bg-[color:var(--azure)]',
+			'travel-tips': 'bg-[color:var(--coral)]',
+			'day-trips': 'bg-[color:var(--olive)]',
+			'food-drink': 'bg-[color:var(--terracotta)]'
 		};
-		return gradients[category] || 'from-indigo-500 to-purple-500';
+		return colors[category] || 'bg-[color:var(--azure)]';
 	}
 
 	function formatCategory(category: string): string {
@@ -34,8 +33,6 @@
 			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 			.join(' ');
 	}
-
-	const gradient = $derived(getCategoryGradient(data.post.category));
 </script>
 
 <svelte:head>
@@ -45,28 +42,26 @@
 
 <div class="-mt-24">
 	<!-- Hero Section -->
-	<section class="relative flex min-h-[70vh] flex-col overflow-hidden pt-24">
+	<section class="relative flex min-h-[60vh] flex-col overflow-hidden pt-24">
 		<div class="absolute inset-0 z-0">
-			{#if data.post.mainImage}
+			{#if data.post.mainImage?.asset?.url}
 				<img
-					src={urlFor(data.post.mainImage).width(1920).height(1080).url()}
+					src={data.post.mainImage.asset.url}
 					alt={data.post.title}
 					class="h-full w-full object-cover"
 				/>
 			{/if}
-			<div
-				class="absolute inset-0 bg-gradient-to-br from-[color:var(--dark)]/80 via-[color:var(--deep-purple)]/60 to-[color:var(--dark)]/80"
-			></div>
+			<div class="absolute inset-0 bg-(--charcoal)/50"></div>
 		</div>
 
 		<div class="relative z-10">
 			<Breadcrumb />
 		</div>
 
-		<div class="relative z-10 flex flex-grow items-center justify-center">
+		<div class="relative z-10 flex grow items-center justify-center">
 			<div class="container mx-auto px-4 py-20 sm:px-6 lg:px-8">
 				<div class="mx-auto max-w-4xl text-center text-white">
-					<Badge class="mb-6 bg-gradient-to-r {gradient} border-0 px-4 py-2 text-white shadow-lg">
+					<Badge class="mb-6 {getCategoryColor(data.post.category)} border-0 px-4 py-2 text-white">
 						{formatCategory(data.post.category)}
 					</Badge>
 
@@ -78,18 +73,10 @@
 						{data.post.excerpt}
 					</p>
 
-					<div class="flex flex-wrap items-center justify-center gap-6 text-white/80">
+					<div class="flex flex-wrap items-center justify-center gap-6 text-white/90">
 						{#if data.post.author}
 							<div class="flex items-center space-x-2">
-								<div
-									class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br {gradient} text-sm font-bold text-white"
-								>
-									{data.post.author.name
-										.split(' ')
-										.map((n) => n[0])
-										.join('')}
-								</div>
-								<span class="font-medium">{data.post.author.name}</span>
+								<span class="font-medium">{data.post.author}</span>
 							</div>
 						{/if}
 						<div class="flex items-center space-x-2">
@@ -125,11 +112,11 @@
 
 				<!-- Tags -->
 				{#if data.post.tags && data.post.tags.length > 0}
-					<div class="mt-12 border-t-2 border-[color:var(--off-white)] pt-8">
-						<h3 class="mb-4 text-lg font-bold text-[color:var(--dark)]">Tags</h3>
+					<div class="mt-12 border-t border-[color:var(--sand)] pt-8">
+						<h3 class="mb-4 text-lg font-bold text-[color:var(--charcoal)]">Tags</h3>
 						<div class="flex flex-wrap gap-2">
 							{#each data.post.tags as tag}
-								<Badge variant="outline" class="border-[color:var(--purple-lavender)] text-sm">
+								<Badge variant="outline" class="border-[color:var(--azure)] text-sm">
 									{tag}
 								</Badge>
 							{/each}
@@ -138,25 +125,22 @@
 				{/if}
 
 				<!-- Author Bio -->
-				{#if data.post.author}
-					<div class="mt-12 rounded-3xl border-2 border-[color:var(--off-white)] bg-white p-8">
-						<h3 class="mb-4 text-xl font-bold text-[color:var(--dark)]">About the Author</h3>
+				{#if data.post.author && typeof data.post.author === 'string'}
+					<div class="mt-12 rounded-2xl border border-(--sand) bg-(--cream) p-8">
+						<h3 class="mb-4 text-xl font-bold text-(--charcoal)">About the Author</h3>
 						<div class="flex items-start space-x-4">
 							<div
-								class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br {gradient} text-2xl font-bold text-white"
+								class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-(--azure) text-2xl font-bold text-white"
 							>
-								{data.post.author.name
+								{data.post.author
 									.split(' ')
-									.map((n) => n[0])
+									.map((n: string) => n[0])
 									.join('')}
 							</div>
 							<div>
-								<h4 class="mb-2 text-lg font-bold text-[color:var(--dark)]">
-									{data.post.author.name}
+								<h4 class="mb-2 text-lg font-bold text-(--charcoal)">
+									{data.post.author}
 								</h4>
-								{#if data.post.author.bio}
-									<p class="text-gray-600">{data.post.author.bio}</p>
-								{/if}
 							</div>
 						</div>
 					</div>
@@ -181,48 +165,49 @@
 
 	<!-- Related Posts -->
 	{#if data.post.relatedPosts && data.post.relatedPosts.length > 0}
-		<section class="relative bg-gradient-to-b from-white via-[color:var(--off-white)] to-white py-20">
+		<section class="relative bg-[color:var(--cream)] py-20">
 			<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 text-center">
-					<h2 class="mb-4 text-3xl font-bold text-[color:var(--dark)] sm:text-4xl">
-						Related <span class="text-gradient">Articles</span>
+					<h2 class="mb-4 text-3xl font-bold text-[color:var(--charcoal)] sm:text-4xl">
+						Related Articles
 					</h2>
 				</div>
 
 				<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
 					{#each data.post.relatedPosts as relatedPost}
-						{@const relatedGradient = getCategoryGradient(relatedPost.category)}
+						{@const categoryColor = getCategoryColor(relatedPost.category)}
 						<a href="/blog/{relatedPost.slug.current}" class="group block">
 							<Card
-								class="flex h-full flex-col overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-[color:var(--purple-lavender)] hover:shadow-2xl"
+								class="flex h-full flex-col overflow-hidden border border-[color:var(--sand)] transition-all duration-300 hover:border-[color:var(--azure)] hover:shadow-lg"
 							>
 								<div class="relative h-48 overflow-hidden">
-									{#if relatedPost.mainImage}
+									{#if relatedPost.mainImage?.asset?.url}
 										<img
-											src={urlFor(relatedPost.mainImage).width(600).height(400).url()}
+											src={relatedPost.mainImage.asset.url}
 											alt={relatedPost.title}
-											class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+											class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 										/>
 									{/if}
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/80 to-transparent"
-									></div>
 									<div class="absolute top-4 left-4">
-										<Badge class="bg-gradient-to-r {relatedGradient} border-0 text-white">
+										<Badge class="{categoryColor} border-0 text-white">
 											{formatCategory(relatedPost.category)}
 										</Badge>
 									</div>
 								</div>
-								<CardContent class="flex flex-grow flex-col p-6">
-									<h3 class="mb-2 text-lg font-bold text-[color:var(--dark)]">
+								<CardContent class="flex grow flex-col p-6">
+									<h3
+										class="mb-2 text-lg font-bold text-[color:var(--charcoal)] transition-colors duration-200 group-hover:text-[color:var(--azure)]"
+									>
 										{relatedPost.title}
 									</h3>
-									<p class="mb-4 flex-grow text-sm text-gray-600">
+									<p class="mb-4 grow text-sm text-[color:var(--stone)]">
 										{relatedPost.excerpt}
 									</p>
-									<div class="flex items-center text-sm text-[color:var(--purple-lavender)]">
+									<div class="flex items-center text-sm text-[color:var(--azure)]">
 										<span>Read More</span>
-										<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
+										<ArrowRight
+											class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2"
+										/>
 									</div>
 								</CardContent>
 							</Card>
@@ -233,4 +218,3 @@
 		</section>
 	{/if}
 </div>
-

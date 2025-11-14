@@ -167,12 +167,17 @@
 		if (activity.mainImage) {
 			return urlFor(activity.mainImage).width(800).height(600).url();
 		}
-		return activity.image || 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800&q=80';
+		return (
+			activity.image || 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800&q=80'
+		);
 	}
 
 	// Helper function to format category name
 	function formatCategory(category: string) {
-		return category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+		return category
+			.split('-')
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ');
 	}
 </script>
 
@@ -186,28 +191,19 @@
 
 <div class="-mt-24">
 	<!-- Hero Section -->
-	<section class="relative flex min-h-[70vh] items-center justify-center overflow-hidden pt-24">
+	<section class="relative flex min-h-[60vh] items-center justify-center overflow-hidden pt-24">
 		<div class="absolute inset-0 z-0">
 			<img
 				src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=1920&q=80"
 				alt="Activities in Sorrento"
 				class="h-full w-full object-cover"
 			/>
-			<div
-				class="absolute inset-0 bg-gradient-to-br from-[color:var(--dark)]/80 via-[color:var(--deep-purple)]/60 to-[color:var(--dark)]/80"
-			></div>
+			<div class="absolute inset-0 bg-(--charcoal)/50"></div>
 		</div>
 
 		<div class="relative z-10 container mx-auto px-4 py-32 text-center text-white sm:px-6 lg:px-8">
 			<div class="animate-fade-in-up">
-				<div
-					class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-green-500 to-teal-500 shadow-2xl"
-				>
-					<Compass class="h-10 w-10 text-white" />
-				</div>
-				<h1 class="mb-6 text-5xl font-bold sm:text-6xl lg:text-7xl">
-					Things to <span class="text-gradient">Do</span> in Sorrento
-				</h1>
+				<h1 class="mb-6 text-5xl font-bold sm:text-6xl lg:text-7xl">Things to Do in Sorrento</h1>
 				<p class="heading-serif mx-auto max-w-3xl text-xl font-light text-white/90 sm:text-2xl">
 					Unforgettable experiences and adventures await
 				</p>
@@ -216,7 +212,7 @@
 	</section>
 
 	<!-- Introduction -->
-	<section class="mesh-gradient relative py-20">
+	<section class="relative bg-(--warm-white) py-20">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mx-auto max-w-4xl text-center">
 				<p class="text-xl leading-relaxed text-gray-600">
@@ -231,7 +227,7 @@
 
 	<!-- Category Filter -->
 	<section
-		class="sticky top-0 z-40 border-b border-gray-200 bg-white/95 py-8 shadow-md backdrop-blur-md"
+		class="sticky top-0 z-40 border-b border-(--sand) bg-white/95 py-8 shadow-sm backdrop-blur-md"
 	>
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex flex-wrap justify-center gap-3">
@@ -240,8 +236,8 @@
 						variant={selectedCategory === category ? 'default' : 'outline'}
 						onclick={() => (selectedCategory = category)}
 						class={selectedCategory === category
-							? 'bg-gradient-to-r from-green-500 to-teal-500 text-white transition-all duration-300 hover:shadow-lg'
-							: 'border-2 transition-all duration-300 hover:border-green-500 hover:text-green-500'}
+							? 'bg-(--azure) text-white transition-all duration-200 hover:bg-(--deep-azure)'
+							: 'border border-(--sand) transition-all duration-200 hover:border-(--azure) hover:text-(--azure)'}
 					>
 						{formatCategory(category)}
 					</Button>
@@ -257,23 +253,18 @@
 				{#each filteredActivities as activity, index}
 					<div class="scroll-reveal h-full" style="transition-delay: {index * 0.1}s">
 						<Card
-							class="group flex h-full flex-col overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-green-500 hover:shadow-2xl"
+							class="group flex h-full flex-col overflow-hidden border border-(--sand) pt-0 transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
 						>
 							<div class="relative h-72 overflow-hidden">
 								<img
 									src={getActivityImage(activity)}
 									alt={activity.name}
-									class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 								/>
-								<div
-									class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/80 via-[color:var(--dark)]/20 to-transparent"
-								></div>
 
 								<!-- Category Badge -->
 								<div class="absolute top-4 right-4">
-									<Badge
-										class="border-0 bg-white/90 font-semibold text-[color:var(--dark)] shadow-lg backdrop-blur-sm"
-									>
+									<Badge class="border-0 bg-white/90 font-semibold text-(--charcoal) shadow-md">
 										{formatCategory(activity.category)}
 									</Badge>
 								</div>
@@ -282,7 +273,7 @@
 								<div class="absolute bottom-4 left-4 flex items-center space-x-2">
 									{#if activity.duration}
 										<Badge
-											class="bg-gradient-to-r from-green-500 to-teal-500 flex items-center space-x-1 border-0 font-semibold text-white shadow-lg"
+											class="flex items-center space-x-1 border-0 bg-(--azure) font-semibold text-white shadow-md"
 										>
 											<Clock class="h-3 w-3" />
 											<span>{activity.duration}</span>
@@ -290,7 +281,7 @@
 									{/if}
 									{#if activity.rating}
 										<Badge
-											class="bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center space-x-1 border-0 font-semibold text-white shadow-lg"
+											class="flex items-center space-x-1 border-0 bg-(--coral) font-semibold text-white shadow-md"
 										>
 											<Star class="h-3 w-3" />
 											<span>{activity.rating}/5</span>
@@ -299,10 +290,10 @@
 								</div>
 							</div>
 
-							<CardContent class="flex flex-grow flex-col p-6">
-								<div class="flex-grow">
+							<CardContent class="flex grow flex-col p-6">
+								<div class="grow">
 									<CardTitle
-										class="mb-3 text-2xl group-hover:bg-gradient-to-r group-hover:from-green-500 group-hover:to-teal-500 group-hover:text-transparent transition-all duration-500 group-hover:bg-clip-text"
+										class="mb-3 text-2xl text-(--charcoal) transition-colors duration-300 group-hover:text-(--azure)"
 									>
 										{activity.name}
 									</CardTitle>
@@ -313,7 +304,7 @@
 									{#if activity.highlights && activity.highlights.length > 0}
 										<div class="mb-6 space-y-2">
 											<div
-												class="mb-2 flex items-center space-x-1 text-xs font-bold tracking-wide text-green-600 uppercase"
+												class="mb-2 flex items-center space-x-1 text-xs font-bold tracking-wide text-(--azure) uppercase"
 											>
 												<Sparkles class="h-3 w-3" />
 												<span>Highlights</span>
@@ -322,7 +313,7 @@
 												{#each activity.highlights as highlight}
 													<Badge
 														variant="outline"
-														class="border-green-500 text-xs text-green-500 transition-colors hover:bg-green-50"
+														class="border-(--azure) text-xs text-(--azure) transition-colors hover:bg-(--azure)/10"
 													>
 														{highlight}
 													</Badge>
@@ -332,9 +323,7 @@
 									{/if}
 								</div>
 
-								<div
-									class="flex items-center justify-between border-t-2 border-[color:var(--off-white)] pt-4"
-								>
+								<div class="flex items-center justify-between border-t border-(--sand) pt-4">
 									{#if activity.priceRange}
 										<span class="text-sm text-gray-600"
 											>Price: <span class="font-medium text-foreground">{activity.priceRange}</span
@@ -358,44 +347,35 @@
 	</section>
 
 	<!-- Quick Activity Guide -->
-	<section class="relative bg-gradient-to-b from-white via-[color:var(--off-white)] to-white py-32">
+	<section class="relative bg-(--cream) py-32">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mb-20 text-center">
-				<div
-					class="mb-6 inline-flex items-center space-x-2 rounded-full border border-green-500/20 bg-green-500/10 px-4 py-2"
-				>
-					<Sparkles class="h-4 w-4 text-green-500" />
-					<span class="text-sm font-medium text-[color:var(--dark)]">By Interest</span>
-				</div>
-				<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
-					Activities by <span class="text-gradient">Interest</span>
+				<h2 class="mb-6 text-4xl font-bold text-(--charcoal) sm:text-5xl">
+					Activities by Interest
 				</h2>
 			</div>
 
 			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-				{#each [{ title: 'Water Lovers', description: 'Boat tours, beaches, swimming, snorkeling', icon: Waves, gradient: 'from-blue-500 to-cyan-500' }, { title: 'Food Enthusiasts', description: 'Cooking classes, wine tours, market visits', icon: ChefHat, gradient: 'from-orange-500 to-red-500' }, { title: 'Active Explorers', description: 'Hiking trails, bike tours, kayaking', icon: Footprints, gradient: 'from-green-500 to-emerald-500' }, { title: 'History Buffs', description: 'Ancient sites, museums, cultural tours', icon: Church, gradient: 'from-purple-500 to-pink-500' }] as interest, index}
+				{#each [{ title: 'Water Lovers', description: 'Boat tours, beaches, swimming, snorkeling', icon: Waves, color: 'bg-[color:var(--azure)]' }, { title: 'Food Enthusiasts', description: 'Cooking classes, wine tours, market visits', icon: ChefHat, color: 'bg-[color:var(--terracotta)]' }, { title: 'Active Explorers', description: 'Hiking trails, bike tours, kayaking', icon: Footprints, color: 'bg-[color:var(--olive)]' }, { title: 'History Buffs', description: 'Ancient sites, museums, cultural tours', icon: Church, color: 'bg-[color:var(--coral)]' }] as interest, index}
 					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<div class="relative h-full overflow-hidden rounded-3xl">
-							<div class="absolute inset-0 bg-gradient-to-r {interest.gradient} opacity-5"></div>
+						<div
+							class="h-full rounded-2xl border border-(--sand) bg-white p-8 text-center transition-all duration-300 hover:border-(--azure) hover:shadow-md"
+						>
 							<div
-								class="relative h-full rounded-3xl border-2 border-transparent bg-white p-8 text-center transition-all duration-300 hover:border-green-500"
+								class="{interest.color} mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-xl shadow-sm"
 							>
-								<div
-									class="h-16 w-16 rounded-2xl bg-gradient-to-br {interest.gradient} mx-auto mb-6 flex items-center justify-center shadow-lg"
-								>
-									{#if interest.icon === Waves}
-										<Waves class="h-8 w-8 text-white" />
-									{:else if interest.icon === ChefHat}
-										<ChefHat class="h-8 w-8 text-white" />
-									{:else if interest.icon === Footprints}
-										<Footprints class="h-8 w-8 text-white" />
-									{:else if interest.icon === Church}
-										<Church class="h-8 w-8 text-white" />
-									{/if}
-								</div>
-								<h3 class="mb-3 text-xl font-bold text-[color:var(--dark)]">{interest.title}</h3>
-								<p class="text-sm leading-relaxed text-gray-600">{interest.description}</p>
+								{#if interest.icon === Waves}
+									<Waves class="h-8 w-8 text-white" />
+								{:else if interest.icon === ChefHat}
+									<ChefHat class="h-8 w-8 text-white" />
+								{:else if interest.icon === Footprints}
+									<Footprints class="h-8 w-8 text-white" />
+								{:else if interest.icon === Church}
+									<Church class="h-8 w-8 text-white" />
+								{/if}
 							</div>
+							<h3 class="mb-3 text-xl font-bold text-(--charcoal)">{interest.title}</h3>
+							<p class="text-sm leading-relaxed text-gray-600">{interest.description}</p>
 						</div>
 					</div>
 				{/each}
@@ -404,11 +384,7 @@
 	</section>
 
 	<!-- CTA -->
-	<section class="relative overflow-hidden py-32">
-		<div
-			class="animate-gradient absolute inset-0 bg-gradient-to-br from-green-500 via-teal-500 to-emerald-600"
-		></div>
-
+	<section class="relative overflow-hidden bg-(--azure) py-32">
 		<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8">
 			<div class="mx-auto max-w-3xl text-white">
 				<h2 class="mb-6 text-4xl font-bold sm:text-5xl">Ready to Book Your Activities?</h2>
@@ -417,7 +393,7 @@
 				</p>
 				<Button
 					size="lg"
-					class="bg-white px-10 py-7 text-lg text-green-600 shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-[color:var(--off-white)]"
+					class="bg-white px-10 py-7 text-lg text-(--azure) shadow-lg transition-all duration-300 hover:bg-(--cream)"
 				>
 					<a href="/contact" class="flex items-center space-x-2">
 						<Compass class="h-5 w-5" />

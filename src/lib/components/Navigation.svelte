@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Menu, X, ChevronDown, Sparkles } from '@lucide/svelte';
+	import { Menu, X, ChevronDown } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
 	let mobileMenuOpen = $state(false);
@@ -58,178 +58,176 @@
 </script>
 
 <nav
-	class="fixed top-0 right-0 left-0 z-50 transition-all duration-500 ease-out {hidden
+	class="fixed top-0 right-0 left-0 z-50 bg-white transition-all duration-300 {hidden
 		? '-translate-y-full'
-		: 'translate-y-0'} {scrolled ? 'py-2' : 'py-4'}"
+		: 'translate-y-0'} {scrolled ? 'shadow-md' : 'shadow-sm'}"
 >
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-		<div
-			class="rounded-2xl {scrolled
-				? 'glass-dark shadow-2xl'
-				: 'glass-dark shadow-lg'} transition-all duration-500"
-		>
-			<div class="flex items-center justify-between px-6 py-4">
-				<!-- Logo with gradient -->
-				<a href="/" class="group relative flex items-center space-x-2">
-					<div
-						class="absolute -inset-2 rounded-xl bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] opacity-0 blur-xl transition-all duration-500 group-hover:opacity-20"
-					></div>
-					<Sparkles class="relative h-6 w-6 animate-pulse text-[color:var(--turquoise)]" />
-					<div class="relative text-xl font-bold sm:text-2xl">
-						<span class="text-gradient">Welcome</span><span class="text-[color:var(--turquoise)]"
-							>2</span
-						><span class="text-gradient">Sorrento</span>
-					</div>
-				</a>
+		<div class="flex h-20 items-center justify-between">
+			<!-- Logo -->
+			<a href="/" class="group flex items-center space-x-2">
+				<div class="text-xl font-bold sm:text-2xl">
+					<span style="color: var(--azure);">W</span><span style="color: var(--sand);">2</span><span
+						style="color: var(--azure);">S</span
+					>
+				</div>
+			</a>
 
-				<!-- Desktop Navigation -->
-				<div class="hidden items-center space-x-1 lg:flex">
-					{#each navLinks as link}
-						{#if link.submenu}
-							{@const isActive = $page.url.pathname.startsWith(link.href)}
-							<div class="group relative">
-								<a
-									href={link.href}
-									class="group flex items-center space-x-1 rounded-xl px-4 py-2 font-medium text-white/90 transition-all duration-300 hover:bg-white/10 hover:text-white {isActive
-										? 'bg-white/10'
-										: ''}"
-								>
-									<span>{link.name}</span>
-									<ChevronDown
-										class="h-4 w-4 transition-transform duration-300 group-hover:rotate-180"
-									/>
-									{#if isActive}
-										<div
-											class="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)]"
-										></div>
-									{/if}
-								</a>
-								<div
-									class="invisible absolute top-full left-0 mt-2 w-56 translate-y-2 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
-								>
-									<div
-										class="glass-dark overflow-hidden rounded-2xl border border-white/10 p-2 shadow-2xl"
-									>
-										{#each link.submenu as sublink}
-											<a
-												href={sublink.href}
-												class="block rounded-xl px-4 py-3 text-sm text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white {$page
-													.url.pathname === sublink.href
-													? 'bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] font-semibold text-white'
-													: ''}"
-											>
-												{sublink.name}
-											</a>
-										{/each}
-									</div>
-								</div>
-							</div>
-						{:else}
+			<!-- Desktop Navigation -->
+			<div class="hidden items-center space-x-1 lg:flex">
+				{#each navLinks as link}
+					{#if link.submenu}
+						{@const isActive = $page.url.pathname.startsWith(link.href)}
+						<div class="group relative">
 							<a
 								href={link.href}
-								class="group relative overflow-hidden rounded-xl px-4 py-2 font-medium text-white/90 transition-all duration-300 hover:bg-white/10 hover:text-white {$page
-									.url.pathname === link.href
-									? 'bg-white/10'
-									: ''}"
+								class="group relative flex items-center space-x-1 px-4 py-2 text-[0.95rem] font-medium transition-colors duration-200 {isActive
+									? 'text-[color:var(--azure)]'
+									: 'text-[color:var(--charcoal)] hover:text-[color:var(--azure)]'}"
 							>
-								<span class="relative z-10">{link.name}</span>
-								{#if $page.url.pathname === link.href}
+								<span>{link.name}</span>
+								<ChevronDown
+									class="h-4 w-4 transition-transform duration-300 group-hover:rotate-180"
+								/>
+								{#if isActive}
 									<div
-										class="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)]"
+										class="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full"
+										style="background-color: var(--azure);"
 									></div>
 								{/if}
 							</a>
-						{/if}
-					{/each}
-
-					<!-- CTA Button -->
-					<a href="/contact" class="ml-4">
-						<Button
-							class="bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[color:var(--purple-lavender)]/50"
-						>
-							<div class="flex items-center space-x-2">
-								<Sparkles class="h-4 w-4" />
-								<span>Get in Touch</span>
+							<div
+								class="invisible absolute top-full left-0 mt-2 w-56 translate-y-2 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+							>
+								<div
+									class="overflow-hidden rounded-xl border bg-white p-2 shadow-lg"
+									style="border-color: var(--sand);"
+								>
+									{#each link.submenu as sublink}
+										<a
+											href={sublink.href}
+											class="block rounded-lg px-4 py-3 text-sm transition-colors duration-200 {$page
+												.url.pathname === sublink.href
+												? 'font-semibold'
+												: 'hover:bg-[color:var(--cream)]'}"
+											style="color: {$page.url.pathname === sublink.href
+												? 'var(--azure)'
+												: 'var(--charcoal)'};"
+										>
+											{sublink.name}
+										</a>
+									{/each}
+								</div>
 							</div>
-						</Button>
-					</a>
-				</div>
-
-				<!-- Mobile Menu Button -->
-				<button
-					onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-					class="group relative rounded-xl p-2 text-white transition-all duration-300 hover:bg-white/10 lg:hidden"
-					aria-label="Toggle menu"
-				>
-					<div
-						class="absolute inset-0 rounded-xl bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] opacity-0 blur transition-all duration-300 group-hover:opacity-20"
-					></div>
-					{#if mobileMenuOpen}
-						<X class="relative h-6 w-6" />
+						</div>
 					{:else}
-						<Menu class="relative h-6 w-6" />
+						<a
+							href={link.href}
+							class="group relative px-4 py-2 text-[0.95rem] font-medium transition-colors duration-200 {$page
+								.url.pathname === link.href
+								? 'text-[color:var(--azure)]'
+								: 'text-[color:var(--charcoal)] hover:text-[color:var(--azure)]'}"
+						>
+							<span>{link.name}</span>
+							{#if $page.url.pathname === link.href}
+								<div
+									class="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full"
+									style="background-color: var(--azure);"
+								></div>
+							{/if}
+						</a>
 					{/if}
-				</button>
+				{/each}
+
+				<!-- CTA Button -->
+				<a href="/contact" class="ml-4">
+					<Button
+						class="rounded-lg px-8 py-3 text-white transition-all duration-200 hover:shadow-md"
+						style="background-color: var(--azure);"
+					>
+						Get in Touch
+					</Button>
+				</a>
 			</div>
+
+			<!-- Mobile Menu Button -->
+			<button
+				onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+				class="rounded-lg p-2 transition-colors duration-200 hover:bg-[color:var(--cream)] lg:hidden"
+				style="color: var(--charcoal);"
+				aria-label="Toggle menu"
+			>
+				{#if mobileMenuOpen}
+					<X class="h-6 w-6" />
+				{:else}
+					<Menu class="h-6 w-6" />
+				{/if}
+			</button>
 		</div>
 	</div>
 
 	<!-- Mobile Menu -->
 	{#if mobileMenuOpen}
-		<div class="animate-fade-in mt-4 lg:hidden">
-			<div class="container mx-auto px-4">
-				<div class="glass-dark overflow-hidden rounded-2xl border border-white/10 p-4 shadow-2xl">
-					<div class="space-y-1">
-						{#each navLinks as link}
-							{#if link.submenu}
-								<div class="space-y-1">
-									<a
-										href={link.href}
-										class="block rounded-xl px-4 py-3 font-medium text-white/90 transition-all duration-200 hover:bg-white/10 hover:text-white"
-									>
-										{link.name}
-									</a>
-									<div class="space-y-1 pl-4">
-										{#each link.submenu as sublink}
-											<a
-												href={sublink.href}
-												class="block rounded-xl px-4 py-2 text-sm text-white/70 transition-all duration-200 hover:bg-white/10 hover:text-white {$page
-													.url.pathname === sublink.href
-													? 'bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] font-semibold text-white'
-													: ''}"
-												onclick={() => (mobileMenuOpen = false)}
-											>
-												{sublink.name}
-											</a>
-										{/each}
-									</div>
-								</div>
-							{:else}
+		<div
+			class="animate-fade-in border-t bg-white shadow-md lg:hidden"
+			style="border-color: var(--sand);"
+		>
+			<div class="container mx-auto px-4 py-4">
+				<div class="space-y-1">
+					{#each navLinks as link}
+						{#if link.submenu}
+							<div class="space-y-1">
 								<a
 									href={link.href}
-									class="block rounded-xl px-4 py-3 font-medium text-white/90 transition-all duration-200 hover:bg-white/10 hover:text-white {$page
-										.url.pathname === link.href
-										? 'bg-white/10'
-										: ''}"
-									onclick={() => (mobileMenuOpen = false)}
+									class="block rounded-lg px-4 py-3 font-medium transition-colors duration-200 hover:bg-[color:var(--cream)]"
+									style="color: var(--charcoal);"
 								>
 									{link.name}
 								</a>
-							{/if}
-						{/each}
-
-						<div class="border-t border-white/10 pt-4">
-							<a href="/contact" class="block" onclick={() => (mobileMenuOpen = false)}>
-								<Button
-									class="w-full bg-gradient-to-r from-[color:var(--purple-lavender)] to-[color:var(--turquoise)] transition-all duration-300 hover:shadow-lg"
-								>
-									<div class="flex w-full items-center justify-center space-x-2">
-										<Sparkles class="h-4 w-4" />
-										<span>Get in Touch</span>
-									</div>
-								</Button>
+								<div class="space-y-1 pl-4">
+									{#each link.submenu as sublink}
+										<a
+											href={sublink.href}
+											class="block rounded-lg px-4 py-2 text-sm transition-colors duration-200 hover:bg-[color:var(--cream)] {$page
+												.url.pathname === sublink.href
+												? 'font-semibold'
+												: ''}"
+											style="color: {$page.url.pathname === sublink.href
+												? 'var(--azure)'
+												: 'var(--stone)'};"
+											onclick={() => (mobileMenuOpen = false)}
+										>
+											{sublink.name}
+										</a>
+									{/each}
+								</div>
+							</div>
+						{:else}
+							<a
+								href={link.href}
+								class="block rounded-lg px-4 py-3 font-medium transition-colors duration-200 hover:bg-[color:var(--cream)] {$page
+									.url.pathname === link.href
+									? 'font-semibold'
+									: ''}"
+								style="color: {$page.url.pathname === link.href
+									? 'var(--azure)'
+									: 'var(--charcoal)'};"
+								onclick={() => (mobileMenuOpen = false)}
+							>
+								{link.name}
 							</a>
-						</div>
+						{/if}
+					{/each}
+
+					<div class="border-t pt-4" style="border-color: var(--sand);">
+						<a href="/contact" class="block" onclick={() => (mobileMenuOpen = false)}>
+							<Button
+								class="w-full rounded-lg px-8 py-3 text-white transition-all duration-200"
+								style="background-color: var(--azure);"
+							>
+								Get in Touch
+							</Button>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -238,4 +236,4 @@
 </nav>
 
 <!-- Spacer to prevent content from going under fixed nav -->
-<div class="h-24"></div>
+<div class="h-20"></div>

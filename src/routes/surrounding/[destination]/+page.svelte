@@ -65,9 +65,9 @@
 	<!-- Hero -->
 	<section class="relative flex min-h-[80vh] items-center justify-center overflow-hidden pt-24">
 		<div class="absolute inset-0 z-0">
-			{#if destination.mainImage}
+			{#if destination.heroImage?.asset?.url}
 				<img
-					src={urlFor(destination.mainImage).width(1920).height(1080).url()}
+					src={destination.heroImage.asset.url}
 					alt={destination.name}
 					class="h-full w-full object-cover"
 				/>
@@ -141,7 +141,7 @@
 									>
 										<TransportIcon class="h-8 w-8 text-white" />
 									</div>
-									<h3 class="mb-2 text-2xl font-bold capitalize text-[color:var(--dark)]">
+									<h3 class="mb-2 text-2xl font-bold text-[color:var(--dark)] capitalize">
 										{option.type}
 									</h3>
 									<p class="mb-4 flex-grow text-gray-600">
@@ -189,9 +189,9 @@
 								class="group h-full overflow-hidden border-2 border-transparent transition-all duration-500 hover:border-green-500 hover:shadow-2xl"
 							>
 								<div class="relative h-64 overflow-hidden">
-									{#if attraction.image}
+									{#if attraction.image?.asset?.url}
 										<img
-											src={urlFor(attraction.image).width(600).height(400).url()}
+											src={attraction.image.asset.url}
 											alt={attraction.name}
 											class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
 										/>
@@ -219,9 +219,7 @@
 		<section class="relative bg-gradient-to-b from-[color:var(--off-white)] to-white py-32">
 			<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div class="scroll-reveal mb-16 text-center">
-					<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">
-						Visitor Tips
-					</h2>
+					<h2 class="mb-6 text-4xl font-bold text-[color:var(--dark)] sm:text-5xl">Visitor Tips</h2>
 					<p class="mx-auto max-w-3xl text-xl text-gray-600">
 						Insider advice for your visit to {destination.name}
 					</p>
@@ -254,9 +252,7 @@
 	<section class="relative bg-gradient-to-br from-green-500 to-teal-500 py-32">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mx-auto max-w-4xl text-center text-white">
-				<h2 class="mb-6 text-4xl font-bold sm:text-5xl">
-					Explore More of the Amalfi Coast Region
-				</h2>
+				<h2 class="mb-6 text-4xl font-bold sm:text-5xl">Explore More of the Amalfi Coast Region</h2>
 				<p class="mb-12 text-xl text-white/90">
 					Discover more beautiful destinations near Sorrento
 				</p>
@@ -282,4 +278,3 @@
 		</div>
 	</section>
 </div>
-

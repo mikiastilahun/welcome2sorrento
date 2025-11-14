@@ -23,7 +23,7 @@
 <div class="flex min-h-screen flex-col">
 	<Navigation />
 
-	<main class="flex-grow">
+	<main class="grow">
 		{@render children()}
 	</main>
 

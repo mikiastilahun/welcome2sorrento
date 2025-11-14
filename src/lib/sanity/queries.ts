@@ -10,7 +10,13 @@ export const blogPostsQuery = groq`*[_type == "blogPost"] | order(publishedAt de
   slug,
   category,
   excerpt,
-  mainImage,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   "author": author.name,
   publishedAt,
   readTime,
@@ -24,8 +30,14 @@ export const blogPostQuery = groq`*[_type == "blogPost" && slug.current == $slug
   slug,
   category,
   excerpt,
-  mainImage,
-  author,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
+  "author": author.name,
   publishedAt,
   readTime,
   body,
@@ -36,7 +48,13 @@ export const blogPostQuery = groq`*[_type == "blogPost" && slug.current == $slug
     title,
     slug,
     excerpt,
-    mainImage,
+    mainImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    },
     category,
     publishedAt
   }
@@ -48,7 +66,13 @@ export const featuredBlogPostsQuery = groq`*[_type == "blogPost" && featured == 
   slug,
   category,
   excerpt,
-  mainImage,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   "author": author.name,
   publishedAt,
   readTime
@@ -63,7 +87,13 @@ export const restaurantsQuery = groq`*[_type == "restaurant"] | order(order asc,
   cuisine,
   priceRange,
   rating,
-  mainImage,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   description,
   highlights,
   location,
@@ -78,8 +108,20 @@ export const restaurantQuery = groq`*[_type == "restaurant" && slug.current == $
   cuisine,
   priceRange,
   rating,
-  mainImage,
-  gallery,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
+  gallery[] {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   description,
   highlights,
   location,
@@ -97,7 +139,13 @@ export const restaurantsByCategoryQuery = groq`*[_type == "restaurant" && catego
   cuisine,
   priceRange,
   rating,
-  mainImage,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   description,
   highlights,
   location
@@ -112,7 +160,13 @@ export const accommodationsQuery = groq`*[_type == "accommodation"] | order(orde
   starRating,
   priceRange,
   rating,
-  mainImage,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   description,
   amenities,
   highlights,
@@ -128,8 +182,20 @@ export const accommodationQuery = groq`*[_type == "accommodation" && slug.curren
   starRating,
   priceRange,
   rating,
-  mainImage,
-  gallery,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
+  gallery[] {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   description,
   amenities,
   highlights,
@@ -152,7 +218,13 @@ export const activitiesQuery = groq`*[_type == "activity"] | order(order asc, ra
   priceRange,
   priceDetails,
   rating,
-  mainImage,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   description,
   highlights,
   location,
@@ -168,8 +240,20 @@ export const activityQuery = groq`*[_type == "activity" && slug.current == $slug
   priceRange,
   priceDetails,
   rating,
-  mainImage,
-  gallery,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
+  gallery[] {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   description,
   highlights,
   included,
@@ -193,7 +277,13 @@ export const activitiesByCategoryQuery = groq`*[_type == "activity" && category 
   priceRange,
   priceDetails,
   rating,
-  mainImage,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   description,
   highlights,
   location
@@ -205,7 +295,13 @@ export const destinationsQuery = groq`*[_type == "destination"] | order(order as
   name,
   slug,
   subtitle,
-  cardImage,
+  cardImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   shortDescription,
   featured
 }`;
@@ -215,11 +311,35 @@ export const destinationQuery = groq`*[_type == "destination" && slug.current ==
   name,
   slug,
   subtitle,
-  heroImage,
-  gallery,
+  heroImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
+  gallery[] {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   shortDescription,
   introduction,
-  attractions,
+  attractions[] {
+    name,
+    description,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    },
+    duration,
+    entryFee
+  },
   restaurants,
   howToGetThere,
   planningTips,
@@ -234,7 +354,13 @@ export const localSpecialtiesQuery = groq`*[_type == "localSpecialty"] | order(o
   slug,
   type,
   description,
-  image,
+  image {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   featured
 }`;
 
@@ -245,8 +371,20 @@ export const localSpecialtyQuery = groq`*[_type == "localSpecialty" && slug.curr
   type,
   description,
   longDescription,
-  image,
-  gallery,
+  image {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
+  gallery[] {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   history,
   whereToBuy,
   bestSeasons
@@ -259,7 +397,13 @@ export const testimonialsQuery = groq`*[_type == "testimonial"] | order(order as
   location,
   text,
   rating,
-  photo,
+  photo {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
   service,
   featured
 }`;
@@ -270,8 +414,23 @@ export const featuredTestimonialsQuery = groq`*[_type == "testimonial" && featur
   location,
   text,
   rating,
-  photo
+  photo {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  }
 }`;
+
+// Image type with asset reference
+export interface SanityImage {
+	asset?: {
+		_id: string;
+		url: string;
+	};
+	alt?: string;
+}
 
 // Type Definitions
 export interface BlogPost {
@@ -282,7 +441,7 @@ export interface BlogPost {
 	slug: Slug;
 	category: string;
 	excerpt: string;
-	mainImage?: ImageAsset;
+	mainImage?: SanityImage;
 	author: string;
 	publishedAt: string;
 	readTime: string;
@@ -301,8 +460,8 @@ export interface Restaurant {
 	cuisine: string;
 	priceRange: string;
 	rating: number;
-	mainImage: ImageAsset;
-	gallery?: ImageAsset[];
+	mainImage?: SanityImage;
+	gallery?: SanityImage[];
 	description: string;
 	highlights: string[];
 	location: string;
@@ -322,8 +481,8 @@ export interface Accommodation {
 	starRating?: number;
 	priceRange: string;
 	rating: number;
-	mainImage: ImageAsset;
-	gallery?: ImageAsset[];
+	mainImage?: SanityImage;
+	gallery?: SanityImage[];
 	description: string;
 	amenities: string[];
 	highlights: string[];
@@ -347,8 +506,8 @@ export interface Activity {
 	priceRange: string;
 	priceDetails?: string;
 	rating: number;
-	mainImage: ImageAsset;
-	gallery?: ImageAsset[];
+	mainImage?: SanityImage;
+	gallery?: SanityImage[];
 	description: string;
 	highlights: string[];
 	included?: string[];
@@ -370,15 +529,15 @@ export interface Destination {
 	name: string;
 	slug: Slug;
 	subtitle: string;
-	heroImage: ImageAsset;
-	cardImage?: ImageAsset;
-	gallery?: ImageAsset[];
+	heroImage?: SanityImage;
+	cardImage?: SanityImage;
+	gallery?: SanityImage[];
 	shortDescription: string;
 	introduction: PortableTextBlock[];
 	attractions?: Array<{
 		name: string;
 		description: string;
-		image?: ImageAsset;
+		image?: SanityImage;
 		duration?: string;
 		entryFee?: string;
 	}>;
@@ -418,8 +577,8 @@ export interface LocalSpecialty {
 	type: string;
 	description: string;
 	longDescription?: PortableTextBlock[];
-	image: ImageAsset;
-	gallery?: ImageAsset[];
+	image?: SanityImage;
+	gallery?: SanityImage[];
 	history?: PortableTextBlock[];
 	whereToBuy?: string[];
 	bestSeasons?: string[];
@@ -433,7 +592,7 @@ export interface Testimonial {
 	location: string;
 	text: string;
 	rating: number;
-	photo?: ImageAsset;
+	photo?: SanityImage;
 	service?: string;
 	featured?: boolean;
 }
@@ -443,8 +602,52 @@ export const siteSettingsQuery = groq`*[_type == "siteSettings"][0] {
   _id,
   title,
   homepageStats,
-  featuredSections,
-  heroSection,
+  featuredSections {
+    eat {
+      title,
+      description,
+      image {
+        asset-> {
+          _id,
+          url
+        },
+        alt
+      }
+    },
+    stay {
+      title,
+      description,
+      image {
+        asset-> {
+          _id,
+          url
+        },
+        alt
+      }
+    },
+    do {
+      title,
+      description,
+      image {
+        asset-> {
+          _id,
+          url
+        },
+        alt
+      }
+    }
+  },
+  heroSection {
+    title,
+    subtitle,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
   sorrentoPageStats,
   sorrentoIntro,
   insiderTips
@@ -458,7 +661,18 @@ export const aboutPageQuery = groq`*[_type == "aboutPage"][0] {
   story,
   mission,
   services,
-  team,
+  team[] {
+    name,
+    role,
+    bio,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
   values,
   seo
 }`;
@@ -490,23 +704,23 @@ export interface SiteSettings {
 		eat?: {
 			title: string;
 			description: string;
-			image?: ImageAsset;
+			image?: SanityImage;
 		};
 		stay?: {
 			title: string;
 			description: string;
-			image?: ImageAsset;
+			image?: SanityImage;
 		};
 		do?: {
 			title: string;
 			description: string;
-			image?: ImageAsset;
+			image?: SanityImage;
 		};
 	};
 	heroSection?: {
 		title?: string;
 		subtitle?: string;
-		backgroundImage?: ImageAsset;
+		backgroundImage?: SanityImage;
 	};
 	sorrentoPageStats?: {
 		restaurantCount?: number;
@@ -543,7 +757,7 @@ export interface AboutPage {
 		name: string;
 		role: string;
 		bio: string;
-		image?: ImageAsset;
+		image?: SanityImage;
 	}>;
 	values?: Array<{
 		title: string;
@@ -585,4 +799,3 @@ export interface ContactPage {
 		metaDescription?: string;
 	};
 }
-

@@ -169,11 +169,11 @@
 				<a href="#explore">
 					<Button
 						size="lg"
-						class="cursor-pointer bg-(--azure) px-8 py-6 text-lg transition-all duration-200 hover:bg-(--deep-azure) hover:shadow-lg"
+						class="cursor-pointer bg-(--azure) px-8 py-6 text-lg transition-all duration-200 ease-out hover:bg-(--deep-azure) hover:shadow-lg hover:brightness-110"
 					>
 						<div class="flex items-center space-x-2">
 							<span>Explore Sorrento</span>
-							<ArrowRight class="h-5 w-5" />
+							<ArrowRight class="h-5 w-5 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
 						</div>
 					</Button>
 				</a>
@@ -199,7 +199,7 @@
 
 				<!-- Feature Cards - Simplified -->
 				<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-					<Card class="border-[color:var(--sand)] transition-shadow duration-300 hover:shadow-lg">
+					<Card class="border-[color:var(--sand)] transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg">
 						<CardContent class="p-6">
 							<div
 								class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[color:var(--azure)]"
@@ -215,7 +215,7 @@
 						</CardContent>
 					</Card>
 
-					<Card class="border-[color:var(--sand)] transition-shadow duration-300 hover:shadow-lg">
+					<Card class="border-[color:var(--sand)] transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg">
 						<CardContent class="p-6">
 							<div
 								class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[color:var(--azure)]"
@@ -229,7 +229,7 @@
 						</CardContent>
 					</Card>
 
-					<Card class="border-[color:var(--sand)] transition-shadow duration-300 hover:shadow-lg">
+					<Card class="border-[color:var(--sand)] transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg">
 						<CardContent class="p-6">
 							<div
 								class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[color:var(--azure)]"
@@ -267,18 +267,18 @@
 					<div class="scroll-reveal" style="transition-delay: {index * 100}ms">
 						<a href={section.link} class="group block">
 							<Card
-								class="h-full overflow-hidden border-(--sand) pt-0 transition-all duration-300 hover:-translate-y-1 hover:border-(--azure) hover:shadow-lg"
+								class="h-full overflow-hidden border-(--sand) pt-0 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-(--azure) hover:shadow-lg"
 							>
 								<div class="relative h-64 overflow-hidden">
 									<img
 										src={section.image}
 										alt={section.title}
-										class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+										class="h-full w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
 									/>
 								</div>
 								<CardHeader>
 									<div
-										class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-[color:var(--azure)] transition-transform duration-300 group-hover:scale-110"
+										class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-[color:var(--azure)] transition-transform duration-200 ease-out group-hover:scale-105"
 									>
 										<Icon class="h-5 w-5 text-white" />
 									</div>
@@ -291,11 +291,11 @@
 								</CardHeader>
 								<CardContent class="pb-6">
 									<div
-										class="flex items-center font-medium text-[color:var(--azure)] transition-transform duration-300 group-hover:translate-x-2"
+										class="flex items-center font-medium text-[color:var(--azure)] transition-transform duration-200 ease-out group-hover:translate-x-1"
 									>
 										<span>Explore {section.title}</span>
 										<ArrowRight
-											class="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+											class="ml-2 h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
 										/>
 									</div>
 								</CardContent>
@@ -325,14 +325,14 @@
 						<div class="scroll-reveal">
 							<a href={destination.link} class="group block">
 								<Card
-									class="h-full overflow-hidden border-[color:var(--sand)] py-0 transition-all duration-300 hover:shadow-lg"
+									class="h-full overflow-hidden border-[color:var(--sand)] py-0 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
 								>
 									<div class="relative aspect-[4/5] overflow-hidden bg-[color:var(--sand)]">
 										{#if destination.image}
 											<img
 												src={destination.image}
 												alt={destination.name}
-												class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+												class="h-full w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
 											/>
 										{/if}
 										<div
@@ -356,14 +356,14 @@
 						<div class="scroll-reveal">
 							<a href="/surrounding/{destination.slug.current}" class="group block">
 								<Card
-									class="h-full overflow-hidden border-[color:var(--sand)] py-0 transition-all duration-300 hover:shadow-lg"
+									class="h-full overflow-hidden border-[color:var(--sand)] py-0 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
 								>
 									<div class="relative aspect-[4/5] overflow-hidden bg-[color:var(--sand)]">
 										<img
 											src={destination.cardImage?.asset?.url ||
 												'https://welcome2sorrento.com/wp-content/uploads/2024/12/Clear-Water-large-768x1024.jpeg'}
 											alt={destination.name}
-											class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+											class="h-full w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
 										/>
 										<div
 											class="absolute inset-0 bg-gradient-to-t from-[color:var(--charcoal)]/60 to-transparent"
@@ -388,7 +388,7 @@
 				<a href="/surrounding">
 					<Button
 						size="lg"
-						class="bg-[color:var(--azure)] px-8 py-6 text-lg transition-all duration-200 hover:bg-[color:var(--deep-azure)] hover:shadow-lg"
+						class="group bg-[color:var(--azure)] px-8 py-6 text-lg transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:shadow-lg hover:brightness-110"
 					>
 						<div class="flex items-center space-x-2">
 							<span>View All Destinations</span>
@@ -512,7 +512,7 @@
 					<Button
 						type="submit"
 						size="lg"
-						class="h-12 bg-[color:var(--azure)] px-8 text-base transition-all duration-200 hover:bg-[color:var(--deep-azure)] hover:shadow-lg sm:whitespace-nowrap"
+						class="h-12 bg-[color:var(--azure)] px-8 text-base transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:shadow-lg hover:brightness-110 sm:whitespace-nowrap"
 					>
 						Subscribe
 					</Button>
@@ -549,7 +549,7 @@
 					<a href="/about#services">
 						<Button
 							size="lg"
-							class="bg-white px-10 py-6 text-lg text-[color:var(--charcoal)] transition-all duration-200 hover:bg-[color:var(--cream)]"
+							class="group bg-white px-10 py-6 text-lg text-[color:var(--charcoal)] transition-all duration-200 ease-out hover:bg-[color:var(--cream)] hover:shadow-lg"
 						>
 							<div class="flex items-center space-x-2">
 								<span>Our Services</span>
@@ -561,7 +561,7 @@
 						<Button
 							size="lg"
 							variant="outline"
-							class="border-2 border-white bg-transparent px-10 py-6 text-lg text-white transition-all duration-200 hover:bg-white hover:text-[color:var(--charcoal)]"
+							class="border-2 border-white bg-transparent px-10 py-6 text-lg text-white transition-all duration-200 ease-out hover:bg-white hover:text-[color:var(--charcoal)] hover:shadow-lg"
 						>
 							<div class="flex items-center space-x-2">
 								<Mail class="h-5 w-5" />

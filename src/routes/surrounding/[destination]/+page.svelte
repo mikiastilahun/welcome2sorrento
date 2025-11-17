@@ -190,11 +190,11 @@
 							>
 								<div class="relative h-64 overflow-hidden">
 									{#if attraction.image?.asset?.url}
-										<img
-											src={attraction.image.asset.url}
-											alt={attraction.name}
-											class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-										/>
+									<img
+										src={attraction.image.asset.url}
+										alt={attraction.name}
+										class="h-full w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
+									/>
 									{/if}
 									<div
 										class="absolute inset-0 bg-gradient-to-t from-[color:var(--dark)]/80 via-[color:var(--dark)]/20 to-transparent"

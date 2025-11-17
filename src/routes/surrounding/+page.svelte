@@ -201,7 +201,7 @@
 				{#each destinations as destination, index}
 					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
 						<a href={destination.link} class="group block h-full">
-							<Card class="h-full overflow-hidden pt-0 transition-all duration-300 hover:shadow-lg">
+							<Card class="h-full overflow-hidden pt-0 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg">
 								<!-- Image -->
 								<div
 									class="relative {!destination.description ? 'h-full' : 'h-80'} overflow-hidden"
@@ -210,7 +210,7 @@
 										src={destination.image ||
 											'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80'}
 										alt={destination.name}
-										class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+										class="h-full w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
 									/>
 									<div
 										class="absolute inset-0 bg-gradient-to-t from-[color:var(--charcoal)]/60 via-transparent to-transparent"
@@ -294,10 +294,10 @@
 				<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
 					{#each [{ title: 'Ferry Services', description: 'Regular ferries to Capri, Ischia, Procida, and Naples from Sorrento port', icon: Waves }, { title: 'Bus & Train', description: 'SITA buses along the coast, Circumvesuviana train to Naples and Pompeii', icon: Mountain }, { title: 'Private Tours', description: 'Customized private tours and transfers available through our booking service', icon: Sparkles }] as transport, index}
 						<div class="scroll-reveal group" style="transition-delay: {index * 0.1}s">
-							<Card class="h-full text-center transition-all duration-300 hover:shadow-lg">
+							<Card class="h-full text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg">
 								<CardContent class="flex h-full flex-col items-center p-8">
 									<div
-										class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[color:var(--azure)] shadow-md transition-transform duration-300 group-hover:scale-110"
+										class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[color:var(--azure)] shadow-md transition-transform duration-200 ease-out group-hover:scale-105"
 									>
 										<svelte:component this={transport.icon} class="h-8 w-8 text-white" />
 									</div>
@@ -328,7 +328,7 @@
 				</p>
 				<Button
 					size="lg"
-					class="bg-white px-8 py-6 text-base text-[color:var(--charcoal)] shadow-lg transition-all duration-300 hover:bg-[color:var(--cream)]"
+					class="group bg-white px-8 py-6 text-base text-[color:var(--charcoal)] shadow-lg transition-all duration-200 ease-out hover:bg-[color:var(--cream)] hover:shadow-xl"
 				>
 					<a href="/contact" class="flex items-center space-x-2">
 						<span>Contact us for trip planning</span>

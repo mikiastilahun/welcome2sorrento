@@ -21,10 +21,10 @@
 {#if visible}
 	<button
 		onclick={scrollToTop}
-		class="group animate-fade-in fixed right-8 bottom-8 z-40 flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all duration-200 hover:shadow-xl"
+		class="group fixed right-8 bottom-8 z-40 flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all duration-200 ease-out animate-in fade-in-0 slide-in-from-bottom-2 hover:shadow-xl hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 		style="background-color: var(--azure);"
 		aria-label="Back to top"
 	>
-		<ArrowUp class="h-5 w-5 transition-transform group-hover:-translate-y-1" />
+		<ArrowUp class="h-5 w-5 transition-transform duration-200 ease-out group-hover:-translate-y-0.5" />
 	</button>
 {/if}

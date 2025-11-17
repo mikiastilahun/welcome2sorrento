@@ -244,7 +244,7 @@
 								<Button
 									type="submit"
 									size="lg"
-									class="h-14 w-full bg-[color:var(--azure)] text-lg text-white transition-all duration-200 hover:bg-[color:var(--deep-azure)] hover:shadow-lg"
+									class="h-14 w-full bg-[color:var(--azure)] text-lg text-white transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:shadow-lg hover:brightness-110"
 								>
 									<span class="flex items-center justify-center space-x-2">
 										<Send class="h-5 w-5" />
@@ -271,10 +271,10 @@
 							<div class="space-y-6">
 								{#if contactData.contactInfo?.email}
 									<div
-										class="group flex cursor-pointer items-start space-x-4 rounded-lg p-4 transition-colors duration-200 hover:bg-[color:var(--cream)]"
+										class="group flex cursor-pointer items-start space-x-4 rounded-lg p-4 transition-colors duration-200 ease-out hover:bg-[color:var(--cream)]"
 									>
 										<div
-											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--azure)] transition-transform group-hover:scale-105"
+											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--azure)] transition-transform duration-200 ease-out group-hover:scale-105"
 										>
 											<Mail class="h-6 w-6 text-white" />
 										</div>
@@ -294,10 +294,10 @@
 
 								{#if contactData.contactInfo?.phone || contactData.contactInfo?.whatsapp}
 									<div
-										class="group flex cursor-pointer items-start space-x-4 rounded-lg p-4 transition-colors duration-200 hover:bg-[color:var(--cream)]"
+										class="group flex cursor-pointer items-start space-x-4 rounded-lg p-4 transition-colors duration-200 ease-out hover:bg-[color:var(--cream)]"
 									>
 										<div
-											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--olive)] transition-transform group-hover:scale-105"
+											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--olive)] transition-transform duration-200 ease-out group-hover:scale-105"
 										>
 											<Phone class="h-6 w-6 text-white" />
 										</div>
@@ -321,10 +321,10 @@
 
 								{#if contactData.contactInfo?.address}
 									<div
-										class="group flex items-start space-x-4 rounded-lg p-4 transition-colors duration-200 hover:bg-[color:var(--cream)]"
+										class="group flex items-start space-x-4 rounded-lg p-4 transition-colors duration-200 ease-out hover:bg-[color:var(--cream)]"
 									>
 										<div
-											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--terracotta)] transition-transform group-hover:scale-105"
+											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--terracotta)] transition-transform duration-200 ease-out group-hover:scale-105"
 										>
 											<MapPin class="h-6 w-6 text-white" />
 										</div>
@@ -374,7 +374,7 @@
 											href={contactData.socialMedia.facebook}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--azure)] text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--azure)] text-white shadow-md transition-all duration-200 ease-out hover:scale-105 hover:shadow-lg hover:brightness-110"
 										>
 											<Facebook class="h-6 w-6" />
 										</a>
@@ -384,7 +384,7 @@
 											href={contactData.socialMedia.instagram}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--terracotta)] text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--terracotta)] text-white shadow-md transition-all duration-200 ease-out hover:scale-105 hover:shadow-lg hover:brightness-110"
 										>
 											<Instagram class="h-6 w-6" />
 										</a>
@@ -394,7 +394,7 @@
 											href={contactData.socialMedia.twitter}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--olive)] text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--olive)] text-white shadow-md transition-all duration-200 ease-out hover:scale-105 hover:shadow-lg hover:brightness-110"
 										>
 											<Twitter class="h-6 w-6" />
 										</a>
@@ -431,7 +431,7 @@
 								class="rounded-lg border border-[color:var(--sand)] bg-white px-6 shadow-sm"
 							>
 								<Accordion.Trigger
-									class="py-5 text-left font-semibold text-[color:var(--charcoal)] hover:text-[color:var(--azure)]"
+									class="py-5 text-left font-semibold text-[color:var(--charcoal)] transition-colors duration-200 ease-out hover:text-[color:var(--azure)]"
 								>
 									{faq.question}
 								</Accordion.Trigger>

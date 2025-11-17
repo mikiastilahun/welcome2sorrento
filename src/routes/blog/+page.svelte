@@ -129,8 +129,8 @@
 						variant={selectedCategory === category ? 'default' : 'outline'}
 						onclick={() => (selectedCategory = category)}
 						class={selectedCategory === category
-							? 'bg-[color:var(--azure)] text-white transition-colors duration-200 hover:bg-[color:var(--deep-azure)]'
-							: 'border-2 border-[color:var(--sand)] transition-colors duration-200 hover:border-[color:var(--azure)] hover:text-[color:var(--azure)]'}
+							? 'bg-[color:var(--azure)] text-white transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:brightness-110'
+							: 'border-2 border-[color:var(--sand)] transition-all duration-200 ease-out hover:border-[color:var(--azure)] hover:text-[color:var(--azure)]'}
 					>
 						{category}
 					</Button>
@@ -159,14 +159,14 @@
 						<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
 							<a href="/blog/{post.slug.current}" class="group block h-full">
 								<Card
-									class="flex h-full flex-col overflow-hidden border border-[color:var(--sand)] pt-0 transition-all duration-300 hover:border-[color:var(--azure)] hover:shadow-lg"
+									class="flex h-full flex-col overflow-hidden border border-[color:var(--sand)] pt-0 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--azure)] hover:shadow-lg"
 								>
 									<div class="relative h-64 overflow-hidden">
 										<img
 											src={post?.mainImage?.asset?.url ||
 												'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=1920&q=80'}
 											alt={post.title}
-											class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+											class="h-full w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
 										/>
 
 										<div class="absolute top-4 left-4">
@@ -183,7 +183,7 @@
 
 									<CardContent class="flex grow flex-col p-6">
 										<h3
-											class="mb-3 text-xl font-bold text-[color:var(--charcoal)] transition-colors duration-200 group-hover:text-[color:var(--azure)]"
+											class="mb-3 text-xl font-bold text-[color:var(--charcoal)] transition-colors duration-200 ease-out group-hover:text-[color:var(--azure)]"
 										>
 											{post.title}
 										</h3>
@@ -229,7 +229,7 @@
 				<a href="/#newsletter">
 					<Button
 						size="lg"
-						class="bg-[color:var(--azure)] px-10 py-7 text-lg text-white transition-colors duration-200 hover:bg-[color:var(--deep-azure)]"
+						class="group bg-[color:var(--azure)] px-10 py-7 text-lg text-white transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:shadow-lg hover:brightness-110"
 					>
 						<div class="flex items-center space-x-2">
 							<span>Subscribe Now</span>

@@ -87,7 +87,7 @@
 							>
 								<span>{link.name}</span>
 								<ChevronDown
-									class="h-4 w-4 transition-transform duration-300 group-hover:rotate-180"
+									class="h-4 w-4 transition-transform duration-200 ease-out group-hover:rotate-90"
 								/>
 								{#if isActive}
 									<div
@@ -97,7 +97,7 @@
 								{/if}
 							</a>
 							<div
-								class="invisible absolute top-full left-0 mt-2 w-56 translate-y-2 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+								class="invisible absolute top-full left-0 mt-2 w-56 translate-y-2 opacity-0 transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
 							>
 								<div
 									class="overflow-hidden rounded-xl border bg-white p-2 shadow-lg"
@@ -142,7 +142,7 @@
 				<!-- CTA Button -->
 				<a href="/contact" class="ml-4">
 					<Button
-						class="rounded-lg px-8 py-3 text-white transition-all duration-200 hover:shadow-md"
+						class="rounded-lg px-8 py-3 text-white transition-all duration-200 hover:shadow-md hover:brightness-110"
 						style="background-color: var(--azure);"
 					>
 						Get in Touch
@@ -153,7 +153,7 @@
 			<!-- Mobile Menu Button -->
 			<button
 				onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-				class="rounded-lg p-2 transition-colors duration-200 hover:bg-[color:var(--cream)] lg:hidden"
+				class="rounded-lg p-2 transition-colors duration-200 hover:bg-[color:var(--cream)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--azure)] lg:hidden"
 				style="color: var(--charcoal);"
 				aria-label="Toggle menu"
 			>
@@ -169,7 +169,7 @@
 	<!-- Mobile Menu -->
 	{#if mobileMenuOpen}
 		<div
-			class="animate-fade-in border-t bg-white shadow-md lg:hidden"
+			class="border-t bg-white shadow-md animate-in slide-in-from-top-2 fade-in-0 duration-200 lg:hidden"
 			style="border-color: var(--sand);"
 		>
 			<div class="container mx-auto px-4 py-4">

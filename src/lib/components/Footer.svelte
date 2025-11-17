@@ -70,11 +70,11 @@
 					<div class="space-y-3">
 						<a
 							href="mailto:margheroba@email.com"
-							class="group flex items-center space-x-3 rounded-xl border p-4 transition-all duration-200 hover:bg-white/5"
+							class="group flex items-center space-x-3 rounded-xl border p-4 transition-all duration-200 ease-out hover:bg-white/5"
 							style="border-color: rgba(255, 255, 255, 0.1);"
 						>
 							<div
-								class="flex h-10 w-10 items-center justify-center rounded-lg transition-transform group-hover:scale-110"
+								class="flex h-10 w-10 items-center justify-center rounded-lg transition-transform duration-200 ease-out group-hover:scale-105"
 								style="background-color: var(--azure);"
 							>
 								<Mail class="h-5 w-5 text-white" />
@@ -90,11 +90,11 @@
 
 						<a
 							href="tel:+39123456789"
-							class="group flex items-center space-x-3 rounded-xl border p-4 transition-all duration-200 hover:bg-white/5"
+							class="group flex items-center space-x-3 rounded-xl border p-4 transition-all duration-200 ease-out hover:bg-white/5"
 							style="border-color: rgba(255, 255, 255, 0.1);"
 						>
 							<div
-								class="flex h-10 w-10 items-center justify-center rounded-lg transition-transform group-hover:scale-110"
+								class="flex h-10 w-10 items-center justify-center rounded-lg transition-transform duration-200 ease-out group-hover:scale-105"
 								style="background-color: var(--terracotta);"
 							>
 								<Phone class="h-5 w-5 text-white" />
@@ -113,7 +113,7 @@
 					<div class="flex space-x-3 pt-4">
 						<button
 							type="button"
-							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 hover:bg-white/5"
+							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							style="border-color: rgba(255, 255, 255, 0.1); background-color: var(--azure);"
 							aria-label="Facebook"
 						>
@@ -121,7 +121,7 @@
 						</button>
 						<button
 							type="button"
-							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 hover:bg-white/5"
+							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							style="border-color: rgba(255, 255, 255, 0.1); background-color: var(--azure);"
 							aria-label="Instagram"
 						>
@@ -129,7 +129,7 @@
 						</button>
 						<button
 							type="button"
-							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 hover:bg-white/5"
+							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							style="border-color: rgba(255, 255, 255, 0.1); background-color: var(--azure);"
 							aria-label="Twitter"
 						>
@@ -203,8 +203,9 @@
 								/>
 								<button
 									type="submit"
-									class="absolute top-1 right-1 bottom-1 rounded-lg px-3 transition-transform hover:scale-105"
+									class="absolute top-1 right-1 bottom-1 rounded-lg px-3 transition-all duration-200 ease-out hover:brightness-110 focus-visible:outline-2 focus-visible:outline-white"
 									style="background-color: var(--azure);"
+									aria-label="Subscribe"
 								>
 									<Mail class="h-4 w-4 text-white" />
 								</button>
@@ -223,7 +224,7 @@
 					<span>© {currentYear} Welcome2Sorrento.</span>
 					<span class="hidden sm:inline">Made with</span>
 					<Heart
-						class="h-4 w-4 animate-pulse"
+						class="h-4 w-4"
 						style="color: var(--terracotta); fill: var(--terracotta);"
 					/>
 					<span class="hidden sm:inline">in Italy</span>

@@ -135,8 +135,8 @@
 						variant={selectedCategory === category ? 'default' : 'outline'}
 						onclick={() => (selectedCategory = category)}
 						class={selectedCategory === category
-							? 'bg-[color:var(--azure)] text-white transition-all duration-200 hover:bg-[color:var(--deep-azure)]'
-							: 'border border-[color:var(--sand)] transition-all duration-200 hover:border-[color:var(--azure)] hover:text-[color:var(--azure)]'}
+							? 'bg-[color:var(--azure)] text-white transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:brightness-110'
+							: 'border border-[color:var(--sand)] transition-all duration-200 ease-out hover:border-[color:var(--azure)] hover:text-[color:var(--azure)]'}
 					>
 						{category === 'All' ? category : formatCategory(category)}
 					</Button>
@@ -164,14 +164,14 @@
 						{@const categoryColor = getCategoryColor(restaurant.category)}
 						<div class="scroll-reveal h-full" style="transition-delay: {index * 0.1}s">
 							<Card
-								class="group flex h-full flex-col overflow-hidden border border-[color:var(--sand)] pt-0 transition-all duration-300 hover:border-[color:var(--azure)] hover:shadow-lg"
+								class="group flex h-full flex-col overflow-hidden border border-[color:var(--sand)] pt-0 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--azure)] hover:shadow-lg"
 							>
 								<div class="relative h-72 overflow-hidden">
 									<img
 										src={restaurant?.mainImage?.asset?.url ||
 											'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80'}
 										alt={restaurant.name}
-										class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+										class="h-full w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
 									/>
 
 									<!-- Category Badge -->
@@ -253,10 +253,10 @@
 				{#each [{ name: 'Gnocchi alla Sorrentina', description: 'Potato dumplings with tomato, mozzarella, and basil', icon: UtensilsCrossed, color: 'bg-[color:var(--terracotta)]' }, { name: 'Limoncello', description: 'Sweet lemon liqueur made from local lemons', icon: Wine, color: 'bg-[color:var(--coral)]' }, { name: 'Scialatielli ai Frutti di Mare', description: 'Fresh pasta with mixed seafood', icon: ChefHat, color: 'bg-[color:var(--azure)]' }, { name: 'Delizia al Limone', description: 'Lemon-flavored sponge cake dessert', icon: Coffee, color: 'bg-[color:var(--olive)]' }] as dish, index}
 					<div class="scroll-reveal group" style="transition-delay: {index * 0.1}s">
 						<div
-							class="flex h-full flex-col items-center rounded-2xl border border-[color:var(--sand)] bg-white p-8 text-center transition-all duration-300 hover:border-[color:var(--azure)] hover:shadow-md"
+							class="flex h-full flex-col items-center rounded-2xl border border-[color:var(--sand)] bg-white p-8 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--azure)] hover:shadow-md"
 						>
 							<div
-								class="{dish.color} mb-6 flex h-16 w-16 items-center justify-center rounded-xl shadow-md transition-transform duration-300 group-hover:scale-110"
+								class="{dish.color} mb-6 flex h-16 w-16 items-center justify-center rounded-xl shadow-md transition-transform duration-200 ease-out group-hover:scale-105"
 							>
 								{#if dish.icon === UtensilsCrossed}
 									<UtensilsCrossed class="h-8 w-8 text-white" />
@@ -291,8 +291,8 @@
 					{#each [{ title: 'Meal Times', description: 'Lunch: 12:30-3pm, Dinner: 7:30pm onwards. Many places close between meals.', icon: Clock, color: 'bg-[color:var(--azure)]' }, { title: 'Pricing', description: '€ = Budget (€10-20), €€ = Moderate (€20-40), €€€ = Upscale (€40-70), €€€€ = Fine Dining (€70+)', icon: Euro, color: 'bg-[color:var(--olive)]' }, { title: 'Reservations', description: 'Book ahead for fine dining and popular spots, especially in peak season.', icon: MapPin, color: 'bg-[color:var(--terracotta)]' }, { title: 'Local Etiquette', description: "Service charge is usually included. Round up for good service, but tipping isn't mandatory.", icon: Award, color: 'bg-[color:var(--coral)]' }] as tip, index}
 						<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
 							<div
-								class="h-full rounded-2xl border border-[color:var(--sand)] bg-white p-8 transition-all duration-300 hover:border-[color:var(--azure)] hover:shadow-md"
-							>
+							class="h-full rounded-2xl border border-[color:var(--sand)] bg-white p-8 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--azure)] hover:shadow-md"
+						>
 								<div class="flex items-start space-x-4">
 									<div
 										class="{tip.color} flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg shadow-sm"
@@ -330,7 +330,7 @@
 				</p>
 				<Button
 					size="lg"
-					class="bg-white px-10 py-7 text-lg text-[color:var(--azure)] shadow-lg transition-all duration-300 hover:bg-[color:var(--cream)]"
+					class="group bg-white px-10 py-7 text-lg text-[color:var(--azure)] shadow-lg transition-all duration-200 ease-out hover:bg-[color:var(--cream)] hover:shadow-xl"
 				>
 					<a href="/contact" class="flex items-center space-x-2">
 						<ChefHat class="h-5 w-5" />

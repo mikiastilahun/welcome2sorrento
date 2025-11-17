@@ -165,7 +165,7 @@
 						<img
 							src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800&q=80"
 							alt="Sorrento"
-							class="h-[500px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+							class="h-[500px] w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
 						/>
 					</div>
 
@@ -206,14 +206,14 @@
 					{@const colors = ['azure', 'terracotta', 'olive', 'azure']}
 					{@const IconComponent = iconMap[service.icon || 'MapPin'] || MapPin}
 					<Card
-						class="group scroll-reveal border-[color:var(--sand)] p-8 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+						class="group scroll-reveal border-[color:var(--sand)] p-8 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
 						style="transition-delay: {index * 0.1}s"
 					>
 						<CardContent class="p-0">
 							<div
 								class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-[color:var(--{colors[
 									index % 4
-								]})] transition-transform duration-200 group-hover:scale-105"
+								]})] transition-transform duration-200 ease-out group-hover:scale-105"
 							>
 								<svelte:component this={IconComponent} class="h-8 w-8 text-white" />
 							</div>
@@ -296,7 +296,7 @@
 							<a href="/contact" class="block">
 								<Button
 									size="lg"
-									class="w-full bg-[color:var(--azure)] text-lg text-white transition-all duration-200 hover:bg-[color:var(--deep-azure)] hover:shadow-lg"
+									class="w-full bg-[color:var(--azure)] text-lg text-white transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:shadow-lg hover:brightness-110"
 								>
 									<div class="flex w-full items-center justify-center space-x-2">
 										<MessageCircle class="h-5 w-5" />
@@ -325,7 +325,7 @@
 			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
 				{#each [{ name: 'Emma Thompson', location: 'Manchester, UK', text: 'The booking service was a game-changer. They secured us a table at a restaurant that was supposedly fully booked and arranged a private boat tour that was the highlight of our trip.', color: 'azure' }, { name: 'James Chen', location: 'San Francisco, USA', text: 'Having local experts plan our itinerary made such a difference. We experienced Sorrento like locals, not tourists. Worth every penny!', color: 'terracotta' }, { name: 'Sophie Martin', location: 'Paris, France', text: 'The WhatsApp support during our trip was incredible. When our ferry was cancelled, they immediately arranged alternative transport. Highly recommend!', color: 'olive' }] as testimonial, index}
 					<Card
-						class="scroll-reveal border-[color:var(--sand)] p-8 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+						class="scroll-reveal border-[color:var(--sand)] p-8 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
 						style="transition-delay: {index * 0.1}s"
 					>
 						<CardContent class="p-0">
@@ -371,7 +371,7 @@
 				<a href="/contact">
 					<Button
 						size="lg"
-						class="bg-white px-10 py-7 text-lg text-[color:var(--charcoal)] shadow-lg transition-all duration-200 hover:bg-[color:var(--cream)] hover:shadow-xl"
+						class="group bg-white px-10 py-7 text-lg text-[color:var(--charcoal)] shadow-lg transition-all duration-200 ease-out hover:bg-[color:var(--cream)] hover:shadow-xl"
 					>
 						<div class="flex items-center space-x-2">
 							<span>Get in Touch</span>

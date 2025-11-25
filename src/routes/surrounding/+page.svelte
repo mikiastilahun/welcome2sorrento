@@ -1,20 +1,11 @@
 <script lang="ts">
 	import type { Destination } from '$lib/sanity/queries';
-	import { urlFor } from '$lib/sanity/image';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import Card from '$lib/components/ui/card/card.svelte';
-	import CardContent from '$lib/components/ui/card/card-content.svelte';
-	import {
-		MapPin,
-		ArrowRight,
-		Clock,
-		Sparkles,
-		Waves,
-		Mountain,
-		Sun,
-		Compass
-	} from '@lucide/svelte';
-	import { onMount } from 'svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
+	import Intro from '$lib/components/surrounding/Intro.svelte';
+	import DestinationsGrid from '$lib/components/surrounding/DestinationsGrid.svelte';
+	import TransportationInfo from '$lib/components/surrounding/TransportationInfo.svelte';
+	import CTA from '$lib/components/surrounding/CTA.svelte';
+	import { Waves, Mountain, Sun, Sparkles, Compass } from '@lucide/svelte';
 
 	interface Props {
 		data: {
@@ -23,24 +14,6 @@
 	}
 
 	let { data }: Props = $props();
-
-	onMount(() => {
-		const handleScroll = () => {
-			const reveals = document.querySelectorAll('.scroll-reveal');
-			reveals.forEach((element) => {
-				const elementTop = element.getBoundingClientRect().top;
-				const elementVisible = 150;
-				if (elementTop < window.innerHeight - elementVisible) {
-					element.classList.add('revealed');
-				}
-			});
-		};
-
-		window.addEventListener('scroll', handleScroll);
-		handleScroll();
-
-		return () => window.removeEventListener('scroll', handleScroll);
-	});
 
 	// Fallback destinations if CMS is not populated yet
 	const fallbackDestinations = [
@@ -151,191 +124,17 @@
 </svelte:head>
 
 <div class="-mt-24">
-	<!-- Hero Section -->
-	<section class="relative flex min-h-[60vh] items-center justify-center overflow-hidden pt-24">
-		<div class="absolute inset-0 z-0">
-			<img
-				src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80"
-				alt="Amalfi Coast panorama"
-				class="h-full w-full object-cover"
-			/>
-			<div class="absolute inset-0 bg-(--charcoal)/50"></div>
-		</div>
+	<PageHeader
+		title="Explore the Surrounding Area"
+		subtitle="World-renowned destinations just a short journey from Sorrento"
+		image="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80"
+	/>
 
-		<div class="relative z-10 container mx-auto px-4 py-20 text-center text-white sm:px-6 lg:px-8">
-			<div class="animate-fade-in-up">
-				<h1 class="heading-serif mb-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
-					Explore the Surrounding Area
-				</h1>
-				<p class="heading-serif mx-auto max-w-3xl text-lg font-light text-white/90 sm:text-xl">
-					World-renowned destinations just a short journey from Sorrento
-				</p>
-			</div>
-		</div>
-	</section>
+	<Intro />
 
-	<!-- Introduction -->
-	<section class="relative bg-[color:var(--warm-white)] py-24">
-		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="scroll-reveal mx-auto max-w-4xl">
-				<div class="mb-16 text-center">
-					<h2
-						class="heading-serif mb-6 text-3xl font-semibold text-[color:var(--charcoal)] sm:text-4xl"
-					>
-						Your Perfect Base
-					</h2>
-					<p class="text-lg leading-relaxed text-[color:var(--stone)]">
-						Sorrento's prime location makes it the perfect base for exploring some of Italy's most
-						iconic destinations. From legendary islands to dramatic coastal drives, ancient ruins to
-						vibrant cities, each destination offers unique experiences and unforgettable memories.
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
+	<DestinationsGrid {destinations} />
 
-	<!-- Destinations Grid -->
-	<section class="relative bg-white py-24">
-		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-				{#each destinations as destination, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<a href={destination.link} class="group block h-full">
-							<Card class="h-full overflow-hidden pt-0 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg">
-								<!-- Image -->
-								<div
-									class="relative {!destination.description ? 'h-full' : 'h-80'} overflow-hidden"
-								>
-									<img
-										src={destination.image ||
-											'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80'}
-										alt={destination.name}
-										class="h-full w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
-									/>
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-[color:var(--charcoal)]/60 via-transparent to-transparent"
-									></div>
+	<TransportationInfo />
 
-									<!-- Title Overlay -->
-									<div class="absolute right-0 bottom-0 left-0 p-6 text-white">
-										<h3 class="heading-serif mb-1 text-2xl font-semibold">{destination.name}</h3>
-										<p class="text-sm text-white/90">{destination.tagline}</p>
-									</div>
-								</div>
-
-								<!-- Content -->
-								<CardContent class="flex flex-col p-6">
-									{#if destination.description}
-										<p class="mb-6 leading-relaxed text-(--stone)">
-											{destination.description}
-										</p>
-									{/if}
-
-									{#if destination.highlights.length > 0}
-										<div class="mb-6">
-											<h4
-												class="mb-3 text-sm font-semibold tracking-wide text-[color:var(--azure)] uppercase"
-											>
-												Top Highlights
-											</h4>
-											<div class="space-y-2">
-												{#each destination.highlights.slice(0, 4) as highlight}
-													<div
-														class="flex items-center space-x-2 text-sm text-[color:var(--charcoal)]"
-													>
-														<div class="h-1.5 w-1.5 rounded-full bg-[color:var(--azure)]"></div>
-														<span>{highlight}</span>
-													</div>
-												{/each}
-											</div>
-										</div>
-									{/if}
-
-									{#if destination.distance || destination.travelTime}
-										<div class="mt-auto space-y-2 border-t border-[color:var(--sand)] pt-4">
-											{#if destination.distance}
-												<div class="flex items-center space-x-2 text-sm text-[color:var(--stone)]">
-													<MapPin class="h-4 w-4 text-[color:var(--azure)]" />
-													<span>{destination.distance}</span>
-												</div>
-											{/if}
-											{#if destination.travelTime}
-												<div class="flex items-center space-x-2 text-sm text-[color:var(--stone)]">
-													<Clock class="h-4 w-4 text-[color:var(--azure)]" />
-													<span>{destination.travelTime}</span>
-												</div>
-											{/if}
-										</div>
-									{/if}
-								</CardContent>
-							</Card>
-						</a>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</section>
-
-	<!-- Transportation Info -->
-	<section class="relative bg-[color:var(--cream)] py-24">
-		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="mx-auto max-w-5xl">
-				<div class="scroll-reveal mb-16 text-center">
-					<h2
-						class="heading-serif mb-4 text-3xl font-semibold text-[color:var(--charcoal)] sm:text-4xl"
-					>
-						Getting Around
-					</h2>
-					<p class="text-lg text-[color:var(--stone)]">
-						Multiple transportation options to explore the region
-					</p>
-				</div>
-
-				<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-					{#each [{ title: 'Ferry Services', description: 'Regular ferries to Capri, Ischia, Procida, and Naples from Sorrento port', icon: Waves }, { title: 'Bus & Train', description: 'SITA buses along the coast, Circumvesuviana train to Naples and Pompeii', icon: Mountain }, { title: 'Private Tours', description: 'Customized private tours and transfers available through our booking service', icon: Sparkles }] as transport, index}
-						<div class="scroll-reveal group" style="transition-delay: {index * 0.1}s">
-							<Card class="h-full text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg">
-								<CardContent class="flex h-full flex-col items-center p-8">
-									<div
-										class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[color:var(--azure)] shadow-md transition-transform duration-200 ease-out group-hover:scale-105"
-									>
-										<svelte:component this={transport.icon} class="h-8 w-8 text-white" />
-									</div>
-									<h3 class="mb-4 text-xl font-semibold text-[color:var(--charcoal)]">
-										{transport.title}
-									</h3>
-									<p class="leading-relaxed text-[color:var(--stone)]">
-										{transport.description}
-									</p>
-								</CardContent>
-							</Card>
-						</div>
-					{/each}
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- CTA -->
-	<section class="relative overflow-hidden bg-(--azure) py-24">
-		<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8">
-			<div class="mx-auto max-w-3xl text-white">
-				<h2 class="heading-serif mb-6 text-3xl font-semibold sm:text-4xl">
-					Plan Your Perfect Day Trips
-				</h2>
-				<p class="mb-10 text-lg text-white/90">
-					Let us help you arrange transportation, tours, and tickets for unforgettable excursions
-				</p>
-				<Button
-					size="lg"
-					class="group bg-white px-8 py-6 text-base text-[color:var(--charcoal)] shadow-lg transition-all duration-200 ease-out hover:bg-[color:var(--cream)] hover:shadow-xl"
-				>
-					<a href="/contact" class="flex items-center space-x-2">
-						<span>Contact us for trip planning</span>
-						<ArrowRight class="h-5 w-5" />
-					</a>
-				</Button>
-			</div>
-		</div>
-	</section>
+	<CTA />
 </div>

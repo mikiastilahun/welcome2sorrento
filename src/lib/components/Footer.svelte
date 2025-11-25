@@ -6,12 +6,10 @@
 		Mail,
 		Phone,
 		MapPin,
-		Clock,
-		Sparkles,
 		Heart,
 		ExternalLink
 	} from '@lucide/svelte';
-	import { onMount } from 'svelte';
+	import Logo from '$lib/components/Logo.svelte';
 
 	let currentYear = new Date().getFullYear();
 	let email = $state('');
@@ -47,7 +45,7 @@
 	}
 </script>
 
-<footer class="relative" style="background-color: var(--charcoal);">
+<footer class="relative bg-[var(--charcoal)]">
 	<div class="relative">
 		<!-- Main Footer Content -->
 		<div class="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
@@ -55,10 +53,8 @@
 				<!-- Brand Section (Larger) -->
 				<div class="space-y-6 lg:col-span-5">
 					<div class="flex items-center space-x-3">
-						<h3 class="text-3xl font-bold">
-							<span style="color: var(--azure);">Welcome</span><span
-								style="color: var(--terracotta);">2</span
-							><span style="color: var(--azure);">Sorrento</span>
+						<h3 class="text-3xl font-bold text-white">
+							<Logo class="text-3xl" />
 						</h3>
 					</div>
 					<p class="max-w-md text-lg leading-relaxed text-white/70">
@@ -70,12 +66,10 @@
 					<div class="space-y-3">
 						<a
 							href="mailto:margheroba@email.com"
-							class="group flex items-center space-x-3 rounded-xl border p-4 transition-all duration-200 ease-out hover:bg-white/5"
-							style="border-color: rgba(255, 255, 255, 0.1);"
+							class="group flex items-center space-x-3 rounded-xl border border-white/10 p-4 transition-all duration-200 ease-out hover:bg-white/5"
 						>
 							<div
-								class="flex h-10 w-10 items-center justify-center rounded-lg transition-transform duration-200 ease-out group-hover:scale-105"
-								style="background-color: var(--azure);"
+								class="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--azure)] transition-transform duration-200 ease-out group-hover:scale-105"
 							>
 								<Mail class="h-5 w-5 text-white" />
 							</div>
@@ -90,12 +84,10 @@
 
 						<a
 							href="tel:+39123456789"
-							class="group flex items-center space-x-3 rounded-xl border p-4 transition-all duration-200 ease-out hover:bg-white/5"
-							style="border-color: rgba(255, 255, 255, 0.1);"
+							class="group flex items-center space-x-3 rounded-xl border border-white/10 p-4 transition-all duration-200 ease-out hover:bg-white/5"
 						>
 							<div
-								class="flex h-10 w-10 items-center justify-center rounded-lg transition-transform duration-200 ease-out group-hover:scale-105"
-								style="background-color: var(--terracotta);"
+								class="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--terracotta)] transition-transform duration-200 ease-out group-hover:scale-105"
 							>
 								<Phone class="h-5 w-5 text-white" />
 							</div>
@@ -113,24 +105,21 @@
 					<div class="flex space-x-3 pt-4">
 						<button
 							type="button"
-							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-							style="border-color: rgba(255, 255, 255, 0.1); background-color: var(--azure);"
+							class="group flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[var(--azure)] transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							aria-label="Facebook"
 						>
 							<Facebook class="h-5 w-5 text-white" />
 						</button>
 						<button
 							type="button"
-							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-							style="border-color: rgba(255, 255, 255, 0.1); background-color: var(--azure);"
+							class="group flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[var(--azure)] transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							aria-label="Instagram"
 						>
 							<Instagram class="h-5 w-5 text-white" />
 						</button>
 						<button
 							type="button"
-							class="group flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-							style="border-color: rgba(255, 255, 255, 0.1); background-color: var(--azure);"
+							class="group flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[var(--azure)] transition-all duration-200 ease-out hover:bg-white/5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							aria-label="Twitter"
 						>
 							<Twitter class="h-5 w-5 text-white" />
@@ -182,7 +171,7 @@
 									href={dest.href}
 									class="flex items-center space-x-2 text-white/70 transition-colors duration-200 hover:text-white"
 								>
-									<MapPin class="h-3 w-3" style="color: var(--azure);" />
+									<MapPin class="h-3 w-3 text-[var(--azure)]" />
 									<span>{dest.name}</span>
 								</a>
 							</li>
@@ -198,13 +187,11 @@
 									placeholder="Quick subscribe"
 									bind:value={email}
 									required
-									class="h-11 w-full rounded-xl border bg-white/5 px-4 pr-11 text-white transition-all outline-none placeholder:text-white/40 focus:bg-white/10"
-									style="border-color: rgba(255, 255, 255, 0.1);"
+									class="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-4 pr-11 text-white transition-all outline-none placeholder:text-white/40 focus:bg-white/10"
 								/>
 								<button
 									type="submit"
-									class="absolute top-1 right-1 bottom-1 rounded-lg px-3 transition-all duration-200 ease-out hover:brightness-110 focus-visible:outline-2 focus-visible:outline-white"
-									style="background-color: var(--azure);"
+									class="absolute top-1 right-1 bottom-1 rounded-lg bg-[var(--azure)] px-3 transition-all duration-200 ease-out hover:brightness-110 focus-visible:outline-2 focus-visible:outline-white"
 									aria-label="Subscribe"
 								>
 									<Mail class="h-4 w-4 text-white" />
@@ -216,17 +203,14 @@
 			</div>
 
 			<!-- Divider -->
-			<div class="mb-8 h-px" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+			<div class="mb-8 h-px bg-white/10"></div>
 
 			<!-- Bottom Bar -->
 			<div class="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
 				<div class="flex items-center space-x-2 text-sm text-white/60">
 					<span>© {currentYear} Welcome2Sorrento.</span>
 					<span class="hidden sm:inline">Made with</span>
-					<Heart
-						class="h-4 w-4"
-						style="color: var(--terracotta); fill: var(--terracotta);"
-					/>
+					<Heart class="h-4 w-4 fill-[var(--terracotta)] text-[var(--terracotta)]" />
 					<span class="hidden sm:inline">in Italy</span>
 				</div>
 

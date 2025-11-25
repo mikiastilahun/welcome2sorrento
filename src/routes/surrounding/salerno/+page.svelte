@@ -77,16 +77,17 @@
 			</div>
 
 			<div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
-				{#each [{ title: 'Lungomare Trieste', description: 'Beautiful seafront promenade perfect for evening strolls', icon: ShoppingBag }, { title: 'Salerno Cathedral', description: '11th-century Duomo with beautiful crypt and bell tower', icon: Church }, { title: 'Paestum Temples', description: 'Ancient Greek temples (40 min south) - UNESCO World Heritage', icon: Church }] as sight, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<Card
-							class="h-full overflow-hidden border border-(--sand) bg-white transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
-						>
-							<CardContent class="p-8 text-center">
-								<div
-									class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-(--olive) shadow-lg"
-								>
-									<svelte:component this={sight.icon} class="h-8 w-8 text-white" />
+			{#each [{ title: 'Lungomare Trieste', description: 'Beautiful seafront promenade perfect for evening strolls', icon: ShoppingBag }, { title: 'Salerno Cathedral', description: '11th-century Duomo with beautiful crypt and bell tower', icon: Church }, { title: 'Paestum Temples', description: 'Ancient Greek temples (40 min south) - UNESCO World Heritage', icon: Church }] as sight, index}
+				{@const SightIcon = sight.icon}
+				<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+					<Card
+						class="h-full overflow-hidden border border-(--sand) bg-white transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
+					>
+						<CardContent class="p-8 text-center">
+							<div
+								class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-(--olive) shadow-lg"
+							>
+							<SightIcon class="h-8 w-8 text-white" />
 								</div>
 								<h3 class="mb-3 text-xl font-bold text-(--charcoal)">{sight.title}</h3>
 								<p class="leading-relaxed text-gray-600">{sight.description}</p>

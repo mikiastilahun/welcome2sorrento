@@ -90,16 +90,17 @@
 			</div>
 
 			<div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
-				{#each [{ title: 'Pompeii & Vesuvius', description: "Explore the ancient Roman city frozen in time and hike to the active volcano's crater.", duration: 'Full day excursion recommended', icon: Mountain }, { title: 'Historic Center', description: 'UNESCO site with narrow streets, baroque churches, and vibrant street life.', duration: 'Half day walking tour', icon: Church }, { title: 'Pizza Napoletana', description: 'Taste authentic Neapolitan pizza at legendary pizzerias like Da Michele and Sorbillo.', duration: 'Must-try experience', icon: Utensils }, { title: 'Archaeological Museum', description: 'World-class collection of Roman artifacts, mosaics, and treasures from Pompeii.', duration: '2-3 hours', icon: Church }] as attraction, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<Card
-							class="h-full overflow-hidden border border-(--sand) bg-white transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
-						>
-							<CardContent class="p-8">
-								<div
-									class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-(--terracotta) shadow-lg"
-								>
-									<svelte:component this={attraction.icon} class="h-7 w-7 text-white" />
+			{#each [{ title: 'Pompeii & Vesuvius', description: "Explore the ancient Roman city frozen in time and hike to the active volcano's crater.", duration: 'Full day excursion recommended', icon: Mountain }, { title: 'Historic Center', description: 'UNESCO site with narrow streets, baroque churches, and vibrant street life.', duration: 'Half day walking tour', icon: Church }, { title: 'Pizza Napoletana', description: 'Taste authentic Neapolitan pizza at legendary pizzerias like Da Michele and Sorbillo.', duration: 'Must-try experience', icon: Utensils }, { title: 'Archaeological Museum', description: 'World-class collection of Roman artifacts, mosaics, and treasures from Pompeii.', duration: '2-3 hours', icon: Church }] as attraction, index}
+				{@const AttractionIcon = attraction.icon}
+				<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+					<Card
+						class="h-full overflow-hidden border border-(--sand) bg-white transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
+					>
+						<CardContent class="p-8">
+							<div
+								class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-(--terracotta) shadow-lg"
+							>
+							<AttractionIcon class="h-7 w-7 text-white" />
 								</div>
 								<h3 class="mb-3 text-2xl font-bold text-(--charcoal)">
 									{attraction.title}

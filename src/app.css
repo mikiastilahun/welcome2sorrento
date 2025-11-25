@@ -561,3 +561,642 @@ html {
 .transition-shadow {
 	transition: box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* ========================================
+   LA DOLCE VITA DESIGN SYSTEM
+   Mediterranean-inspired aesthetics
+   ======================================== */
+
+/* Texture Overlays */
+.texture-grain {
+	position: relative;
+}
+
+.texture-grain::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+	opacity: 0.04;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.texture-paper {
+	position: relative;
+	background: linear-gradient(135deg, var(--cream) 0%, var(--warm-white) 50%, var(--cream) 100%);
+}
+
+.texture-paper::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+	opacity: 0.03;
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* Majolica Tile Border Pattern */
+.border-tile {
+	border-image: repeating-linear-gradient(
+			90deg,
+			var(--azure) 0px,
+			var(--azure) 8px,
+			var(--terracotta) 8px,
+			var(--terracotta) 16px,
+			var(--olive) 16px,
+			var(--olive) 24px,
+			var(--coral) 24px,
+			var(--coral) 32px
+		)
+		4;
+}
+
+.border-tile-decorative {
+	background: repeating-linear-gradient(
+		90deg,
+		var(--azure) 0px,
+		var(--azure) 4px,
+		transparent 4px,
+		transparent 8px,
+		var(--terracotta) 8px,
+		var(--terracotta) 12px,
+		transparent 12px,
+		transparent 16px
+	);
+	height: 4px;
+}
+
+/* Mediterranean Shadows */
+.shadow-mediterranean {
+	box-shadow:
+		0 4px 20px rgba(75, 85, 99, 0.08),
+		0 8px 40px rgba(75, 85, 99, 0.04),
+		0 0 0 1px rgba(75, 85, 99, 0.02);
+}
+
+.shadow-mediterranean-lg {
+	box-shadow:
+		0 8px 40px rgba(75, 85, 99, 0.12),
+		0 16px 60px rgba(75, 85, 99, 0.08),
+		0 0 0 1px rgba(75, 85, 99, 0.02);
+}
+
+.shadow-warm {
+	box-shadow:
+		0 4px 20px rgba(182, 100, 65, 0.1),
+		0 8px 40px rgba(182, 100, 65, 0.05);
+}
+
+/* Gradient Utilities */
+.gradient-sunset {
+	background: linear-gradient(135deg, var(--coral) 0%, var(--terracotta) 50%, var(--azure) 100%);
+}
+
+.gradient-mediterranean {
+	background: linear-gradient(180deg, var(--sky-blue) 0%, var(--azure) 50%, var(--deep-azure) 100%);
+}
+
+.gradient-golden-hour {
+	background: linear-gradient(
+		135deg,
+		oklch(0.95 0.04 75) 0%,
+		oklch(0.85 0.08 50) 50%,
+		oklch(0.7 0.12 35) 100%
+	);
+}
+
+.gradient-ocean {
+	background: linear-gradient(180deg, var(--azure) 0%, var(--deep-azure) 100%);
+}
+
+.gradient-lemon {
+	background: linear-gradient(135deg, oklch(0.92 0.15 100) 0%, oklch(0.85 0.18 95) 100%);
+}
+
+/* Film Grain Overlay */
+.film-grain {
+	position: relative;
+}
+
+.film-grain::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+	opacity: 0.15;
+	pointer-events: none;
+	mix-blend-mode: overlay;
+	z-index: 2;
+}
+
+/* ========================================
+   LA DOLCE VITA ANIMATIONS
+   ======================================== */
+
+/* Gentle Floating Motion */
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0) rotate(0deg);
+	}
+	25% {
+		transform: translateY(-10px) rotate(1deg);
+	}
+	50% {
+		transform: translateY(-5px) rotate(-1deg);
+	}
+	75% {
+		transform: translateY(-15px) rotate(0.5deg);
+	}
+}
+
+.animate-float {
+	animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+	animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+	animation: float 6s ease-in-out infinite 2s;
+}
+
+/* Ocean Wave Motion */
+@keyframes wave {
+	0%,
+	100% {
+		transform: translateX(0) translateY(0);
+	}
+	25% {
+		transform: translateX(5px) translateY(-3px);
+	}
+	50% {
+		transform: translateX(0) translateY(0);
+	}
+	75% {
+		transform: translateX(-5px) translateY(-3px);
+	}
+}
+
+.animate-wave {
+	animation: wave 4s ease-in-out infinite;
+}
+
+/* Sunlight Shimmer */
+@keyframes shimmer {
+	0% {
+		background-position: -200% center;
+	}
+	100% {
+		background-position: 200% center;
+	}
+}
+
+.animate-shimmer {
+	background: linear-gradient(
+		90deg,
+		transparent 0%,
+		rgba(255, 255, 255, 0.4) 50%,
+		transparent 100%
+	);
+	background-size: 200% 100%;
+	animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Typewriter Text Reveal */
+@keyframes typewriter {
+	from {
+		width: 0;
+	}
+	to {
+		width: 100%;
+	}
+}
+
+@keyframes blink-caret {
+	from,
+	to {
+		border-color: transparent;
+	}
+	50% {
+		border-color: var(--azure);
+	}
+}
+
+.animate-typewriter {
+	overflow: hidden;
+	white-space: nowrap;
+	border-right: 2px solid var(--azure);
+	animation:
+		typewriter 3s steps(40, end),
+		blink-caret 0.75s step-end infinite;
+}
+
+/* Ken Burns Parallax Effect */
+@keyframes ken-burns {
+	0% {
+		transform: scale(1) translate(0, 0);
+	}
+	50% {
+		transform: scale(1.1) translate(-2%, -1%);
+	}
+	100% {
+		transform: scale(1) translate(0, 0);
+	}
+}
+
+.animate-ken-burns {
+	animation: ken-burns 20s ease-in-out infinite;
+}
+
+/* Gentle Pulse */
+@keyframes gentle-pulse {
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.85;
+		transform: scale(1.02);
+	}
+}
+
+.animate-gentle-pulse {
+	animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+/* Spin Slow - for compass */
+@keyframes spin-slow {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.animate-spin-slow {
+	animation: spin-slow 20s linear infinite;
+}
+
+/* Stamp Bounce */
+@keyframes stamp {
+	0% {
+		transform: scale(2) rotate(-15deg);
+		opacity: 0;
+	}
+	50% {
+		transform: scale(0.9) rotate(-12deg);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1) rotate(-12deg);
+		opacity: 1;
+	}
+}
+
+.animate-stamp {
+	animation: stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Envelope Open */
+@keyframes envelope-open {
+	0% {
+		transform: rotateX(0deg);
+	}
+	100% {
+		transform: rotateX(-180deg);
+	}
+}
+
+.animate-envelope-open {
+	animation: envelope-open 0.6s ease-out forwards;
+	transform-origin: top center;
+}
+
+/* Paper Airplane Fly */
+@keyframes paper-airplane {
+	0% {
+		transform: translateX(0) translateY(0) rotate(0deg);
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(200px) translateY(-100px) rotate(15deg);
+		opacity: 0;
+	}
+}
+
+.animate-paper-airplane {
+	animation: paper-airplane 1s ease-out forwards;
+}
+
+/* Marquee Scroll */
+@keyframes marquee {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+.animate-marquee {
+	animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+	animation-play-state: paused;
+}
+
+/* Tilt Effect */
+.tilt-card {
+	transition: transform 0.3s ease-out;
+	transform-style: preserve-3d;
+	perspective: 1000px;
+}
+
+.tilt-card:hover {
+	transform: rotateY(-5deg) rotateX(5deg) translateZ(10px);
+}
+
+/* Polaroid Hover Effect */
+.polaroid-hover {
+	transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.polaroid-hover:hover {
+	transform: rotate(-2deg) scale(1.02);
+	box-shadow:
+		0 15px 40px rgba(0, 0, 0, 0.15),
+		0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Vintage Number Badge */
+.vintage-badge {
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 3rem;
+	font-weight: 700;
+	color: var(--azure);
+	opacity: 0.15;
+	position: absolute;
+	top: -0.5rem;
+	left: -0.5rem;
+	line-height: 1;
+}
+
+/* Luggage Tag */
+.luggage-tag {
+	position: relative;
+}
+
+.luggage-tag::before {
+	content: '';
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: var(--terracotta);
+	border-radius: 50%;
+	border: 3px solid var(--cream);
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+}
+
+.luggage-tag::after {
+	content: '';
+	position: absolute;
+	top: -0.5rem;
+	right: 1.25rem;
+	width: 3px;
+	height: 1rem;
+	background: linear-gradient(to bottom, var(--charcoal) 0%, var(--charcoal) 60%, transparent 100%);
+	z-index: 9;
+}
+
+/* Postcard Frame */
+.postcard-frame {
+	position: relative;
+	border-radius: 0.5rem;
+	background: var(--cream);
+	padding: 1rem;
+	box-shadow:
+		0 4px 20px rgba(0, 0, 0, 0.08),
+		0 0 0 1px rgba(0, 0, 0, 0.04),
+		inset 0 0 30px rgba(0, 0, 0, 0.02);
+}
+
+.postcard-frame::before {
+	content: '';
+	position: absolute;
+	inset: 0.5rem;
+	border: 1px dashed var(--stone);
+	border-radius: 0.25rem;
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+/* Vintage Stamp */
+.vintage-stamp {
+	position: relative;
+	background: var(--coral);
+	padding: 0.75rem 1rem;
+	transform: rotate(-12deg);
+	box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vintage-stamp::before {
+	content: '';
+	position: absolute;
+	inset: -4px;
+	background: repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 4px,
+			var(--coral) 4px,
+			var(--coral) 8px
+		),
+		repeating-linear-gradient(
+			90deg,
+			transparent,
+			transparent 4px,
+			var(--coral) 4px,
+			var(--coral) 8px
+		);
+	mask: radial-gradient(circle at 4px 4px, transparent 3px, black 3px);
+	-webkit-mask: radial-gradient(circle at 4px 4px, transparent 3px, black 3px);
+	mask-size: 8px 8px;
+	-webkit-mask-size: 8px 8px;
+	z-index: -1;
+}
+
+/* Wave Divider */
+.wave-divider {
+	position: relative;
+	height: 60px;
+	overflow: hidden;
+}
+
+.wave-divider svg {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Page Transitions */
+@keyframes page-enter {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.page-transition {
+	animation: page-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Staggered Reveal */
+.stagger-reveal > * {
+	opacity: 0;
+	transform: translateY(20px);
+	animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stagger-reveal > *:nth-child(1) {
+	animation-delay: 0.1s;
+}
+.stagger-reveal > *:nth-child(2) {
+	animation-delay: 0.2s;
+}
+.stagger-reveal > *:nth-child(3) {
+	animation-delay: 0.3s;
+}
+.stagger-reveal > *:nth-child(4) {
+	animation-delay: 0.4s;
+}
+.stagger-reveal > *:nth-child(5) {
+	animation-delay: 0.5s;
+}
+.stagger-reveal > *:nth-child(6) {
+	animation-delay: 0.6s;
+}
+
+/* Decorative Quote Marks */
+.vintage-quote::before {
+	content: '"';
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 6rem;
+	color: var(--azure);
+	opacity: 0.2;
+	position: absolute;
+	top: -1rem;
+	left: -0.5rem;
+	line-height: 1;
+}
+
+/* Glass Morphism Enhanced */
+.glass-mediterranean {
+	background: rgba(255, 255, 255, 0.85);
+	backdrop-filter: blur(20px) saturate(180%);
+	-webkit-backdrop-filter: blur(20px) saturate(180%);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Italian Colors */
+.bg-italian-green {
+	background-color: oklch(0.45 0.12 145);
+}
+.bg-italian-white {
+	background-color: var(--warm-white);
+}
+.bg-italian-red {
+	background-color: oklch(0.55 0.2 25);
+}
+
+/* Lemon Decorative Elements */
+.lemon-glow {
+	filter: drop-shadow(0 0 20px oklch(0.92 0.15 100 / 0.5));
+}
+
+/* Compass Animation */
+@keyframes compass-point {
+	0%,
+	100% {
+		transform: rotate(-5deg);
+	}
+	50% {
+		transform: rotate(5deg);
+	}
+}
+
+.animate-compass {
+	animation: compass-point 3s ease-in-out infinite;
+	transform-origin: center center;
+}
+
+/* Vintage Button Style */
+.btn-vintage {
+	position: relative;
+	background: var(--terracotta);
+	color: white;
+	padding: 0.875rem 2rem;
+	border-radius: 0.25rem;
+	font-family: 'Cormorant Garamond', serif;
+	font-size: 1.125rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	border: 2px solid var(--terracotta);
+	box-shadow:
+		4px 4px 0 var(--charcoal),
+		inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+	transition: all 0.2s ease;
+}
+
+.btn-vintage:hover {
+	transform: translate(-2px, -2px);
+	box-shadow:
+		6px 6px 0 var(--charcoal),
+		inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.btn-vintage:active {
+	transform: translate(2px, 2px);
+	box-shadow:
+		2px 2px 0 var(--charcoal),
+		inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Ciao Animation */
+@keyframes ciao-wave {
+	0%,
+	100% {
+		transform: rotate(0deg);
+	}
+	25% {
+		transform: rotate(20deg);
+	}
+	75% {
+		transform: rotate(-10deg);
+	}
+}
+
+.animate-ciao {
+	display: inline-block;
+	animation: ciao-wave 1s ease-in-out;
+}
+
+.animate-ciao:hover {
+	animation: ciao-wave 0.5s ease-in-out infinite;
+}

@@ -144,6 +144,7 @@
 		title="Things to Do in Sorrento"
 		subtitle="Unforgettable experiences and adventures await"
 		image="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=1920&q=80"
+		label="Esperienze"
 	/>
 
 	<Intro />

@@ -42,6 +42,7 @@
 		title="Where to Stay in Sorrento"
 		subtitle="From luxury clifftop hotels to charming family-run B&Bs"
 		image="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80"
+		label="Alloggio"
 	/>
 
 	<Intro />

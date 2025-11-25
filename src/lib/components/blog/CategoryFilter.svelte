@@ -9,18 +9,23 @@
 	let { categories, selectedCategory = $bindable() }: Props = $props();
 </script>
 
-<section
-	class="sticky top-0 z-40 border-b border-[color:var(--sand)] bg-white/95 py-8 shadow-sm backdrop-blur-md"
->
+<section class="sticky top-0 z-40 border-b border-[var(--sand)] bg-white/95 py-6 shadow-mediterranean backdrop-blur-md">
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+		<!-- Section label -->
+		<div class="mb-4 flex items-center justify-center gap-3">
+			<div class="h-px w-8 bg-[var(--azure)]"></div>
+			<span class="font-serif text-xs tracking-[0.2em] text-[var(--azure)] uppercase">Categories</span>
+			<div class="h-px w-8 bg-[var(--azure)]"></div>
+		</div>
+
 		<div class="flex flex-wrap justify-center gap-3">
 			{#each categories as category}
 				<Button
 					variant={selectedCategory === category ? 'default' : 'outline'}
 					onclick={() => (selectedCategory = category)}
 					class={selectedCategory === category
-						? 'bg-[color:var(--azure)] text-white transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:brightness-110'
-						: 'border-2 border-[color:var(--sand)] transition-all duration-200 ease-out hover:border-[color:var(--azure)] hover:text-[color:var(--azure)]'}
+						? 'rounded-full bg-[var(--azure)] px-5 text-white shadow-lg transition-all duration-200 ease-out hover:bg-[var(--deep-azure)] hover:shadow-xl'
+						: 'rounded-full border-2 border-[var(--sand)] px-5 transition-all duration-200 ease-out hover:border-[var(--azure)] hover:bg-[var(--azure)]/5 hover:text-[var(--azure)]'}
 				>
 					{category}
 				</Button>
@@ -28,4 +33,3 @@
 		</div>
 	</div>
 </section>
-

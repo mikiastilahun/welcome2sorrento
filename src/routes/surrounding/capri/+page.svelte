@@ -186,31 +186,32 @@
 			</div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-				{#each attractions as attraction, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<Card
-							class="flex h-full flex-col overflow-hidden border border-(--sand) bg-white pt-0 transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
-						>
-							<div class="relative h-56 overflow-hidden rounded-t-lg">
-								<img
-									src={attraction.image}
-									alt={attraction.name}
-									class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-								/>
+			{#each attractions as attraction, index}
+				{@const AttractionIcon = attraction.icon}
+				<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+					<Card
+						class="flex h-full flex-col overflow-hidden border border-(--sand) bg-white pt-0 transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
+					>
+						<div class="relative h-56 overflow-hidden rounded-t-lg">
+							<img
+								src={attraction.image}
+								alt={attraction.name}
+								class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+							/>
+						</div>
+						<CardContent class="flex grow flex-col p-6">
+							<h3 class="mb-3 text-xl font-bold text-(--charcoal)">{attraction.name}</h3>
+							<p class="mb-4 grow text-sm leading-relaxed text-(--stone)">
+								{attraction.description}
+							</p>
+							<div class="flex items-center text-sm text-(--azure)">
+							<AttractionIcon class="mr-2 h-4 w-4" />
+								<span>{attraction.duration}</span>
 							</div>
-							<CardContent class="flex grow flex-col p-6">
-								<h3 class="mb-3 text-xl font-bold text-(--charcoal)">{attraction.name}</h3>
-								<p class="mb-4 grow text-sm leading-relaxed text-(--stone)">
-									{attraction.description}
-								</p>
-								<div class="flex items-center text-sm text-(--azure)">
-									<svelte:component this={attraction.icon} class="mr-2 h-4 w-4" />
-									<span>{attraction.duration}</span>
-								</div>
-							</CardContent>
-						</Card>
-					</div>
-				{/each}
+						</CardContent>
+					</Card>
+				</div>
+			{/each}
 			</div>
 		</div>
 	</section>

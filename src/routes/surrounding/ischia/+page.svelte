@@ -77,16 +77,17 @@
 			</div>
 
 			<div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
-				{#each [{ title: 'Thermal Parks', description: 'Poseidon Gardens and Negombo - natural hot springs and pools', icon: Sparkles }, { title: 'Aragonese Castle', description: 'Medieval fortress on islet connected by bridge', icon: Mountain }, { title: 'Maronti Beach', description: 'Long sandy beach with natural hot springs in the sand', icon: Waves }] as experience, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<Card
-							class="h-full overflow-hidden border border-(--sand) bg-white transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
-						>
-							<CardContent class="p-8 text-center">
-								<div
-									class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-(--azure) shadow-lg"
-								>
-									<svelte:component this={experience.icon} class="h-8 w-8 text-white" />
+			{#each [{ title: 'Thermal Parks', description: 'Poseidon Gardens and Negombo - natural hot springs and pools', icon: Sparkles }, { title: 'Aragonese Castle', description: 'Medieval fortress on islet connected by bridge', icon: Mountain }, { title: 'Maronti Beach', description: 'Long sandy beach with natural hot springs in the sand', icon: Waves }] as experience, index}
+				{@const ExperienceIcon = experience.icon}
+				<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+					<Card
+						class="h-full overflow-hidden border border-(--sand) bg-white transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
+					>
+						<CardContent class="p-8 text-center">
+							<div
+								class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-(--azure) shadow-lg"
+							>
+							<ExperienceIcon class="h-8 w-8 text-white" />
 								</div>
 								<h3 class="mb-3 text-xl font-bold text-(--charcoal)">
 									{experience.title}

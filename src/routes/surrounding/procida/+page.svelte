@@ -77,16 +77,17 @@
 			</div>
 
 			<div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
-				{#each [{ title: 'Marina Corricella', description: 'Iconic harbor with colorful houses cascading to the sea', icon: Camera }, { title: 'Terra Murata', description: "Medieval village at the island's highest point", icon: Heart }, { title: 'Chiaiolella Beach', description: 'Sandy beach with view of nearby Ischia', icon: Ship }] as highlight, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<Card
-							class="h-full overflow-hidden border border-(--sand) bg-white transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
-						>
-							<CardContent class="p-8 text-center">
-								<div
-									class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-(--coral) shadow-lg"
-								>
-									<svelte:component this={highlight.icon} class="h-8 w-8 text-white" />
+			{#each [{ title: 'Marina Corricella', description: 'Iconic harbor with colorful houses cascading to the sea', icon: Camera }, { title: 'Terra Murata', description: "Medieval village at the island's highest point", icon: Heart }, { title: 'Chiaiolella Beach', description: 'Sandy beach with view of nearby Ischia', icon: Ship }] as highlight, index}
+				{@const HighlightIcon = highlight.icon}
+				<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+					<Card
+						class="h-full overflow-hidden border border-(--sand) bg-white transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
+					>
+						<CardContent class="p-8 text-center">
+							<div
+								class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-(--coral) shadow-lg"
+							>
+							<HighlightIcon class="h-8 w-8 text-white" />
 								</div>
 								<h3 class="mb-3 text-xl font-bold text-(--charcoal)">{highlight.title}</h3>
 								<p class="leading-relaxed text-gray-600">{highlight.description}</p>

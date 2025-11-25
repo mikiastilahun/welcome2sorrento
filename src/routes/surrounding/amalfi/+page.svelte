@@ -84,22 +84,23 @@
 			</div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-				{#each [{ name: 'Positano', description: 'Cascading pastel houses, chic boutiques, and stunning beach. The most photogenic town on the coast.', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80', icon: Camera }, { name: 'Amalfi Town', description: "Historic maritime republic with magnificent cathedral and charming piazzas. The coast's namesake.", image: 'https://images.unsplash.com/photo-1591799265444-d66432b91588?w=800&q=80', icon: MapPin }, { name: 'Ravello', description: 'Perched high above, known for stunning gardens (Villa Rufolo, Villa Cimbrone) and summer music festival.', image: 'https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80', icon: Sparkles }] as town, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
-						<Card
-							class="group flex h-full flex-col overflow-hidden border border-(--sand) bg-white pt-0 transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
-						>
-							<div class="relative h-72 overflow-hidden rounded-t-lg">
-								<img
-									src={town.image}
-									alt={town.name}
-									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-								/>
-								<div class="absolute right-6 bottom-6 left-6">
-									<div
-										class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-(--azure) shadow-lg"
-									>
-										<svelte:component this={town.icon} class="h-6 w-6 text-white" />
+			{#each [{ name: 'Positano', description: 'Cascading pastel houses, chic boutiques, and stunning beach. The most photogenic town on the coast.', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80', icon: Camera }, { name: 'Amalfi Town', description: "Historic maritime republic with magnificent cathedral and charming piazzas. The coast's namesake.", image: 'https://images.unsplash.com/photo-1591799265444-d66432b91588?w=800&q=80', icon: MapPin }, { name: 'Ravello', description: 'Perched high above, known for stunning gardens (Villa Rufolo, Villa Cimbrone) and summer music festival.', image: 'https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80', icon: Sparkles }] as town, index}
+				{@const TownIcon = town.icon}
+				<div class="scroll-reveal" style="transition-delay: {index * 0.1}s">
+					<Card
+						class="group flex h-full flex-col overflow-hidden border border-(--sand) bg-white pt-0 transition-all duration-300 hover:border-(--azure) hover:shadow-lg"
+					>
+						<div class="relative h-72 overflow-hidden rounded-t-lg">
+							<img
+								src={town.image}
+								alt={town.name}
+								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+							/>
+							<div class="absolute right-6 bottom-6 left-6">
+								<div
+									class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-(--azure) shadow-lg"
+								>
+								<TownIcon class="h-6 w-6 text-white" />
 									</div>
 									<h3 class="mb-2 text-3xl font-bold text-white">{town.name}</h3>
 								</div>

@@ -2,10 +2,10 @@
 	import type { AboutPage } from '$lib/sanity/queries';
 	import { urlFor } from '$lib/sanity/image';
 	import PortableTextRenderer from '$lib/components/PortableTextRenderer.svelte';
+	import { PostcardFrame, VintageButton } from '$lib/components/ui/decorative';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import {
 		Heart,
 		MessageCircle,
@@ -16,10 +16,12 @@
 		Globe,
 		Star,
 		Award,
-		Sparkles
+		Sparkles,
+		ArrowRight
 	} from '@lucide/svelte';
-	import { onMount } from 'svelte';
+	import { reveal } from '$lib/actions/reveal';
 	import type { PortableTextBlock } from '@portabletext/types';
+
 	interface Props {
 		data: {
 			aboutPage: AboutPage | null;
@@ -88,24 +90,7 @@
 	};
 
 	const aboutData = data.aboutPage || defaultContent;
-
-	onMount(() => {
-		const handleScroll = () => {
-			const reveals = document.querySelectorAll('.scroll-reveal');
-			reveals.forEach((element) => {
-				const elementTop = element.getBoundingClientRect().top;
-				const elementVisible = 150;
-				if (elementTop < window.innerHeight - elementVisible) {
-					element.classList.add('revealed');
-				}
-			});
-		};
-
-		window.addEventListener('scroll', handleScroll);
-		handleScroll(); // Check on mount
-
-		return () => window.removeEventListener('scroll', handleScroll);
-	});
+	const colorAccents = ['azure', 'terracotta', 'olive', 'coral'];
 </script>
 
 <svelte:head>
@@ -119,57 +104,49 @@
 
 <div class="-mt-24">
 	<!-- Hero Section -->
-	<section class="relative flex h-[60vh] flex-col overflow-hidden pt-24">
-		<div class="absolute inset-0 z-0">
-			<img
-				src="https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=1920&q=80"
-				alt="Sorrento coastline"
-				class="h-full w-full object-cover"
-			/>
-			<div class="absolute inset-0 bg-(--charcoal)/50"></div>
-		</div>
-
-		<div class="relative z-10">
-			<Breadcrumb />
-		</div>
-
-		<div class="relative z-10 flex flex-grow items-center justify-center">
-			<div class="container mx-auto px-4 text-center text-white sm:px-6 lg:px-8">
-				<div class="animate-fade-in-up">
-					<h1 class="heading-serif mb-6 text-5xl font-semibold sm:text-6xl lg:text-7xl">
-						{aboutData.title || 'About Welcome2Sorrento'}
-					</h1>
-					<p class="mx-auto max-w-3xl text-xl font-light text-white/90 sm:text-2xl">
-						{aboutData.subtitle ||
-							'Sharing our love for Sorrento with travelers from around the world'}
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
+	<PageHeader
+		title={aboutData.title || 'About Welcome2Sorrento'}
+		subtitle={aboutData.subtitle || 'Sharing our love for Sorrento with travelers from around the world'}
+		image="https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=1920&q=80"
+		label="La Nostra Storia"
+	/>
 
 	<!-- Our Story -->
-	<section class="relative bg-[color:var(--warm-white)] py-32">
+	<section class="texture-grain relative bg-[var(--warm-white)] py-24">
+		<!-- Decorative tile border -->
+		<div class="absolute top-0 right-0 left-0">
+			<div class="mx-auto max-w-6xl px-4">
+				<div class="border-tile-decorative"></div>
+			</div>
+		</div>
+
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="scroll-reveal mx-auto max-w-6xl">
-				<div class="mb-16 text-center">
-					<h2
-						class="heading-serif mb-8 text-4xl font-semibold text-[color:var(--charcoal)] sm:text-5xl"
-					>
+			<div class="scroll-reveal mx-auto max-w-6xl" use:reveal>
+				<div class="mb-12 text-center">
+					<!-- Section label -->
+					<div class="mb-4 flex items-center justify-center gap-3">
+						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase">Our Story</span>
+						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
+					</div>
+					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
 						{aboutData.story?.title || 'A Love Story with Sorrento'}
 					</h2>
 				</div>
 
 				<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-					<div class="group relative overflow-hidden rounded-lg shadow-lg">
-						<img
-							src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800&q=80"
-							alt="Sorrento"
-							class="h-[500px] w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
-						/>
-					</div>
+					<!-- Image with postcard frame -->
+					<PostcardFrame showStamp stampText="SORRENTO">
+						<div class="group relative overflow-hidden rounded-lg">
+							<img
+								src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800&q=80"
+								alt="Sorrento"
+								class="h-[450px] w-full object-cover transition-transform duration-500 ease-in-out will-change-transform group-hover:scale-[1.04]"
+							/>
+						</div>
+					</PostcardFrame>
 
-					<div class="space-y-6 text-lg leading-relaxed text-[color:var(--stone)]">
+					<div class="space-y-6 text-lg leading-relaxed text-[var(--stone)]">
 						{#if aboutData.story?.paragraphs}
 							<PortableTextRenderer value={aboutData.story.paragraphs as PortableTextBlock[]} />
 						{:else if defaultContent.story.paragraphs}
@@ -179,7 +156,9 @@
 						{/if}
 
 						{#if aboutData.mission}
-							<p class="mt-8 font-semibold text-[color:var(--charcoal)]">{aboutData.mission}</p>
+							<p class="mt-8 rounded-lg border-l-4 border-[var(--azure)] bg-[var(--cream)] p-4 font-semibold text-[var(--charcoal)] italic">
+								"{aboutData.mission}"
+							</p>
 						{/if}
 					</div>
 				</div>
@@ -188,64 +167,100 @@
 	</section>
 
 	<!-- What Makes Us Different -->
-	<section class="relative bg-white py-32">
-		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="scroll-reveal mb-20 text-center">
-				<h2
-					class="heading-serif mb-6 text-4xl font-semibold text-[color:var(--charcoal)] sm:text-5xl"
-				>
+	<section class="relative overflow-hidden bg-white py-24">
+		<!-- Decorative background -->
+		<div class="pointer-events-none absolute inset-0 opacity-[0.02]">
+			<svg class="h-full w-full">
+				<defs>
+					<pattern id="about-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+						<path d="M 60 0 L 0 0 0 60" fill="none" stroke="var(--charcoal)" stroke-width="1" />
+					</pattern>
+				</defs>
+				<rect width="100%" height="100%" fill="url(#about-grid)" />
+			</svg>
+		</div>
+
+		<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="scroll-reveal mb-16 text-center" use:reveal>
+				<div class="mb-4 flex items-center justify-center gap-3">
+					<div class="h-px w-8 bg-[var(--azure)]"></div>
+					<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase">Why Us</span>
+					<div class="h-px w-8 bg-[var(--azure)]"></div>
+				</div>
+				<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
 					What Makes Us Different
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-[color:var(--stone)]">
+				<p class="mx-auto max-w-2xl text-xl text-[var(--stone)]">
 					Authentic local expertise combined with genuine passion
 				</p>
 			</div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
 				{#each aboutData.services || defaultContent.services as service, index}
-					{@const colors = ['azure', 'terracotta', 'olive', 'azure']}
 					{@const IconComponent = iconMap[service.icon || 'MapPin'] || MapPin}
-					<Card
-						class="group scroll-reveal border-[color:var(--sand)] p-8 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
-						style="transition-delay: {index * 0.1}s"
-					>
-						<CardContent class="p-0">
-							<div
-								class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-[color:var(--{colors[
-									index % 4
-								]})] transition-transform duration-200 ease-out group-hover:scale-105"
-							>
-								<svelte:component this={IconComponent} class="h-8 w-8 text-white" />
-							</div>
-							<h3 class="mb-3 text-center text-xl font-semibold text-[color:var(--charcoal)]">
-								{service.title}
-							</h3>
-							<p class="text-center text-sm leading-relaxed text-[color:var(--stone)]">
-								{service.description}
-							</p>
-						</CardContent>
-					</Card>
+					{@const accentColor = colorAccents[index % 4]}
+					<div class="scroll-reveal polaroid-hover" style="transition-delay: {index * 100}ms" use:reveal>
+						<PostcardFrame variant={index === 1 ? 'cream' : 'default'}>
+							<Card class="border-0 bg-transparent shadow-none">
+								<CardContent class="p-4 text-center">
+									<!-- Vintage number -->
+									<div class="absolute -top-2 -left-2 font-serif text-5xl font-bold text-[var(--{accentColor})] opacity-10">
+										0{index + 1}
+									</div>
+									<div
+										class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--{accentColor})] to-[var(--{accentColor === 'azure' ? 'deep-azure' : accentColor})] shadow-lg transition-transform duration-200 ease-out group-hover:scale-105"
+									>
+										<IconComponent class="h-8 w-8 text-white" />
+									</div>
+									<h3 class="heading-serif mb-3 text-xl font-semibold text-[var(--charcoal)]">
+										{service.title}
+									</h3>
+									<p class="text-sm leading-relaxed text-[var(--stone)]">
+										{service.description}
+									</p>
+								</CardContent>
+							</Card>
+						</PostcardFrame>
+					</div>
 				{/each}
 			</div>
 		</div>
 	</section>
 
 	<!-- Our Services -->
-	<section class="relative bg-[color:var(--cream)] py-32" id="services">
-		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="scroll-reveal mx-auto max-w-6xl">
-				<div class="mb-16 text-center">
-					<h2
-						class="heading-serif mb-6 text-4xl font-semibold text-[color:var(--charcoal)] sm:text-5xl"
-					>
+	<section class="relative bg-[var(--cream)] py-24" id="services">
+		<!-- Wave decoration at top -->
+		<div class="absolute top-0 right-0 left-0">
+			<svg
+				class="h-12 w-full"
+				viewBox="0 0 1200 60"
+				preserveAspectRatio="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M0,60 C300,20 600,50 900,30 C1050,20 1100,40 1200,30 L1200,0 L0,0 Z"
+					fill="white"
+				></path>
+			</svg>
+		</div>
+
+		<div class="container mx-auto px-4 pt-8 sm:px-6 lg:px-8">
+			<div class="scroll-reveal mx-auto max-w-6xl" use:reveal>
+				<div class="mb-12 text-center">
+					<div class="mb-4 flex items-center justify-center gap-3">
+						<div class="h-px w-8 bg-[var(--olive)]"></div>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase">Services</span>
+						<div class="h-px w-8 bg-[var(--olive)]"></div>
+					</div>
+					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
 						WhatsApp Booking Service
 					</h2>
-					<p class="mx-auto max-w-2xl text-xl text-[color:var(--stone)]">
+					<p class="mx-auto max-w-2xl text-xl text-[var(--stone)]">
 						Personalized travel planning at your fingertips
 					</p>
 				</div>
 
-				<Card class="overflow-hidden border-[color:var(--sand)] py-0 shadow-lg">
+				<Card class="overflow-hidden border-[var(--sand)] py-0 shadow-mediterranean-lg">
 					<div class="grid grid-cols-1 lg:grid-cols-2">
 						<div class="relative h-96 overflow-hidden lg:h-auto">
 							<img
@@ -253,11 +268,9 @@
 								alt="WhatsApp booking service"
 								class="h-full w-full object-cover"
 							/>
-							<div class="absolute inset-0 bg-[color:var(--charcoal)]/30"></div>
+							<div class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/60 to-transparent"></div>
 							<div class="absolute right-8 bottom-8 left-8 text-white">
-								<div
-									class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm"
-								>
+								<div class="mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
 									<Phone class="h-8 w-8" />
 								</div>
 								<h3 class="heading-serif text-3xl font-semibold">Available 24/7</h3>
@@ -266,44 +279,33 @@
 						</div>
 
 						<CardContent class="p-8 lg:p-12">
-							<h3 class="heading-serif mb-6 text-3xl font-semibold text-[color:var(--charcoal)]">
+							<h3 class="heading-serif mb-6 text-3xl font-semibold text-[var(--charcoal)]">
 								Stress-Free Planning
 							</h3>
-							<p class="mb-8 text-lg leading-relaxed text-[color:var(--stone)]">
+							<p class="mb-8 text-lg leading-relaxed text-[var(--stone)]">
 								For a fixed, transparent fee, we'll handle every detail of your Sorrento adventure.
 								Focus on anticipating your Italian getaway while we take care of the rest.
 							</p>
 
-							<h4
-								class="mb-4 flex items-center space-x-2 text-xl font-semibold text-[color:var(--charcoal)]"
-							>
-								<Star class="h-5 w-5 text-[color:var(--azure)]" />
+							<h4 class="mb-4 flex items-center space-x-2 text-xl font-semibold text-[var(--charcoal)]">
+								<Star class="h-5 w-5 text-[var(--azure)]" />
 								<span>What We Handle:</span>
 							</h4>
-							<ul class="mb-8 space-y-4">
-								{#each ['Restaurant reservations at the best tables', 'Hotel and accommodation booking assistance', 'Activity and tour arrangements', 'Transportation coordination', 'Customized itinerary planning', 'Real-time support via WhatsApp'] as item}
-									<li class="flex items-start space-x-3">
-										<div
-											class="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--azure)]"
-										>
+							<ul class="mb-8 space-y-3">
+								{#each ['Restaurant reservations at the best tables', 'Hotel and accommodation booking assistance', 'Activity and tour arrangements', 'Transportation coordination', 'Customized itinerary planning', 'Real-time support via WhatsApp'] as item, index}
+									<li class="flex items-start space-x-3" style="animation-delay: {index * 50}ms">
+										<div class="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--azure)]">
 											<CheckCircle class="h-4 w-4 text-white" />
 										</div>
-										<span class="leading-relaxed text-[color:var(--stone)]">{item}</span>
+										<span class="leading-relaxed text-[var(--stone)]">{item}</span>
 									</li>
 								{/each}
 							</ul>
 
-							<a href="/contact" class="block">
-								<Button
-									size="lg"
-									class="w-full bg-[color:var(--azure)] text-lg text-white transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:shadow-lg hover:brightness-110"
-								>
-									<div class="flex w-full items-center justify-center space-x-2">
-										<MessageCircle class="h-5 w-5" />
-										<span>Get in Touch</span>
-									</div>
-								</Button>
-							</a>
+							<VintageButton href="/contact" variant="azure" size="lg" class="w-full">
+								<MessageCircle class="h-5 w-5" />
+								<span>Get in Touch</span>
+							</VintageButton>
 						</CardContent>
 					</div>
 				</Card>
@@ -312,73 +314,84 @@
 	</section>
 
 	<!-- Testimonials -->
-	<section class="relative bg-white py-32">
+	<section class="relative bg-white py-24">
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="scroll-reveal mb-20 text-center">
-				<h2
-					class="heading-serif mb-6 text-4xl font-semibold text-[color:var(--charcoal)] sm:text-5xl"
-				>
+			<div class="scroll-reveal mb-16 text-center" use:reveal>
+				<div class="mb-4 flex items-center justify-center gap-3">
+					<div class="h-px w-8 bg-[var(--coral)]"></div>
+					<span class="font-serif text-sm tracking-[0.2em] text-[var(--coral)] uppercase">Testimonials</span>
+					<div class="h-px w-8 bg-[var(--coral)]"></div>
+				</div>
+				<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
 					What Travelers Say
 				</h2>
 			</div>
 
 			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
 				{#each [{ name: 'Emma Thompson', location: 'Manchester, UK', text: 'The booking service was a game-changer. They secured us a table at a restaurant that was supposedly fully booked and arranged a private boat tour that was the highlight of our trip.', color: 'azure' }, { name: 'James Chen', location: 'San Francisco, USA', text: 'Having local experts plan our itinerary made such a difference. We experienced Sorrento like locals, not tourists. Worth every penny!', color: 'terracotta' }, { name: 'Sophie Martin', location: 'Paris, France', text: 'The WhatsApp support during our trip was incredible. When our ferry was cancelled, they immediately arranged alternative transport. Highly recommend!', color: 'olive' }] as testimonial, index}
-					<Card
-						class="scroll-reveal border-[color:var(--sand)] p-8 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
-						style="transition-delay: {index * 0.1}s"
-					>
-						<CardContent class="p-0">
-							<div class="mb-4 flex space-x-1">
-								{#each Array(5) as _}
-									<Star class="h-5 w-5 fill-[color:var(--azure)] text-[color:var(--azure)]" />
-								{/each}
-							</div>
-							<p class="mb-6 leading-relaxed text-[color:var(--stone)] italic">
-								"{testimonial.text}"
-							</p>
-							<div class="flex items-center space-x-3">
-								<div
-									class="flex h-12 w-12 items-center justify-center rounded-lg bg-[color:var(--{testimonial.color})] font-bold text-white shadow-md"
-								>
-									{testimonial.name
-										.split(' ')
-										.map((n) => n[0])
-										.join('')}
+					<div class="scroll-reveal" style="transition-delay: {index * 100}ms" use:reveal>
+						<Card class="group relative h-full border-[var(--sand)] p-8 shadow-mediterranean transition-all duration-300 hover:-translate-y-1 hover:shadow-mediterranean-lg">
+							<!-- Vintage quote mark -->
+							<div class="absolute -top-2 -left-2 font-serif text-6xl leading-none text-[var(--{testimonial.color})] opacity-20">"</div>
+							
+							<CardContent class="relative p-0">
+								<div class="mb-4 flex space-x-1">
+									{#each Array(5) as _}
+										<Star class="h-5 w-5 fill-[var(--azure)] text-[var(--azure)]" />
+									{/each}
 								</div>
-								<div>
-									<div class="font-semibold text-[color:var(--charcoal)]">{testimonial.name}</div>
-									<div class="text-sm text-[color:var(--stone)]">{testimonial.location}</div>
+								<p class="mb-6 font-serif text-lg leading-relaxed text-[var(--stone)] italic">
+									"{testimonial.text}"
+								</p>
+								<div class="flex items-center space-x-3">
+									<div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--{testimonial.color})] to-[var(--{testimonial.color})] font-bold text-white shadow-md">
+										{testimonial.name.split(' ').map((n) => n[0]).join('')}
+									</div>
+									<div>
+										<div class="font-semibold text-[var(--charcoal)]">{testimonial.name}</div>
+										<div class="text-sm text-[var(--stone)]">{testimonial.location}</div>
+									</div>
 								</div>
-							</div>
-						</CardContent>
-					</Card>
+							</CardContent>
+						</Card>
+					</div>
 				{/each}
 			</div>
 		</div>
 	</section>
 
 	<!-- CTA -->
-	<section class="relative overflow-hidden bg-[color:var(--azure)] py-32">
-		<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8">
+	<section class="relative overflow-hidden py-24">
+		<!-- Background with Ken Burns effect -->
+		<div class="absolute inset-0">
+			<div class="animate-ken-burns h-full w-full">
+				<img
+					src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=1920&q=80"
+					alt="Sorrento coastline"
+					class="h-full w-full object-cover"
+				/>
+			</div>
+			<div class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"></div>
+			<div class="film-grain pointer-events-none absolute inset-0"></div>
+		</div>
+
+		<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8" use:reveal>
 			<div class="mx-auto max-w-3xl text-white">
+				<div class="mb-4 flex items-center justify-center gap-3">
+					<div class="h-px w-8 bg-white/50"></div>
+					<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase">Get Started</span>
+					<div class="h-px w-8 bg-white/50"></div>
+				</div>
 				<h2 class="heading-serif mb-6 text-4xl font-semibold sm:text-5xl">
 					Ready to Plan Your Perfect Trip?
 				</h2>
 				<p class="mb-10 text-xl text-white/90">
 					Let us help you create unforgettable memories in Sorrento and the Amalfi Coast
 				</p>
-				<a href="/contact">
-					<Button
-						size="lg"
-						class="group bg-white px-10 py-7 text-lg text-[color:var(--charcoal)] shadow-lg transition-all duration-200 ease-out hover:bg-[color:var(--cream)] hover:shadow-xl"
-					>
-						<div class="flex items-center space-x-2">
-							<span>Get in Touch</span>
-							<MessageCircle class="h-5 w-5" />
-						</div>
-					</Button>
-				</a>
+				<VintageButton href="/contact" variant="coral" size="lg">
+					<span>Get in Touch</span>
+					<ArrowRight class="h-5 w-5" />
+				</VintageButton>
 			</div>
 		</div>
 	</section>

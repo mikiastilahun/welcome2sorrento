@@ -1,14 +1,15 @@
 <script lang="ts">
 	import type { ContactPage } from '$lib/sanity/queries';
+	import { PostcardFrame, VintageButton } from '$lib/components/ui/decorative';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
-	import Button from '$lib/components/ui/button/button.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import * as Accordion from '$lib/components/ui/accordion';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import {
 		Mail,
 		Phone,
@@ -20,9 +21,9 @@
 		Twitter,
 		Clock,
 		Sparkles,
-		CheckCircle
+		Plane
 	} from '@lucide/svelte';
-	import { onMount } from 'svelte';
+	import { reveal } from '$lib/actions/reveal';
 
 	interface Props {
 		data: {
@@ -77,27 +78,33 @@
 		service: 'general'
 	});
 
-	onMount(() => {
-		const handleScroll = () => {
-			const reveals = document.querySelectorAll('.scroll-reveal');
-			reveals.forEach((element) => {
-				const elementTop = element.getBoundingClientRect().top;
-				const elementVisible = 150;
-				if (elementTop < window.innerHeight - elementVisible) {
-					element.classList.add('revealed');
-				}
-			});
-		};
+	let isSubmitting = $state(false);
+	let isSuccess = $state(false);
 
-		window.addEventListener('scroll', handleScroll);
-		handleScroll();
-
-		return () => window.removeEventListener('scroll', handleScroll);
-	});
-
-	function handleSubmit(e: Event) {
+	async function handleSubmit(e: Event) {
 		e.preventDefault();
+		isSubmitting = true;
+		
+		// Simulate submission
+		await new Promise(resolve => setTimeout(resolve, 1500));
+		
 		console.log('Form submitted:', formData);
+		isSuccess = true;
+		isSubmitting = false;
+		
+		// Reset form
+		formData = {
+			name: '',
+			email: '',
+			phone: '',
+			subject: '',
+			message: '',
+			service: 'general'
+		};
+		
+		setTimeout(() => {
+			isSuccess = false;
+		}, 3000);
 	}
 </script>
 
@@ -112,244 +119,219 @@
 
 <div class="-mt-24">
 	<!-- Hero Section -->
-	<section class="relative flex h-[60vh] items-center justify-center overflow-hidden pt-24">
-		<div class="absolute inset-0 z-0">
-			<img
-				src="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=1920&q=80"
-				alt="Contact us"
-				class="h-full w-full object-cover"
-			/>
-			<div class="absolute inset-0 bg-(--charcoal)/50"></div>
-		</div>
-
-		<div class="relative z-10 container mx-auto px-4 text-center text-white sm:px-6 lg:px-8">
-			<div class="animate-fade-in-up">
-				<h1 class="heading-serif mb-6 text-5xl font-semibold sm:text-6xl lg:text-7xl">
-					{contactData.title || 'Get in Touch'}
-				</h1>
-				<p class="mx-auto max-w-3xl text-xl font-light text-white/90 sm:text-2xl">
-					{contactData.subtitle || "We're here to help plan your perfect Sorrento experience"}
-				</p>
-			</div>
-		</div>
-	</section>
+	<PageHeader
+		title={contactData.title || 'Get in Touch'}
+		subtitle={contactData.subtitle || "We're here to help plan your perfect Sorrento experience"}
+		image="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=1920&q=80"
+		label="Contattaci"
+	/>
 
 	<!-- Contact Form & Info -->
-	<section class="relative bg-[color:var(--warm-white)] py-32">
+	<section class="texture-grain relative bg-[var(--warm-white)] py-24">
+		<!-- Decorative tile border -->
+		<div class="absolute top-0 right-0 left-0">
+			<div class="mx-auto max-w-7xl px-4">
+				<div class="border-tile-decorative"></div>
+			</div>
+		</div>
+
 		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-3">
 				<!-- Contact Form -->
-				<div class="scroll-reveal lg:col-span-2">
-					<Card class="border-[color:var(--sand)] shadow-lg">
+				<div class="scroll-reveal lg:col-span-2" use:reveal>
+					<Card class="border-[var(--sand)] shadow-mediterranean-lg">
 						<CardHeader class="px-8 pt-8 pb-6 sm:px-12 sm:pt-12">
-							<CardTitle
-								class="heading-serif mb-4 text-3xl text-[color:var(--charcoal)] sm:text-4xl"
-								>Send Us a Message</CardTitle
-							>
-							<p class="text-lg text-[color:var(--stone)]">
-								Fill out the form below and we'll get back to you within 24 hours
-							</p>
+							<!-- Envelope icon with animation -->
+							<div class="mb-6 flex items-center gap-4">
+								<div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] shadow-lg">
+									{#if isSuccess}
+										<Plane class="h-7 w-7 text-white animate-paper-airplane" />
+									{:else}
+										<Mail class="h-7 w-7 text-white" />
+									{/if}
+								</div>
+								<div>
+									<CardTitle class="heading-serif text-3xl text-[var(--charcoal)]">
+										{isSuccess ? 'Message Sent!' : 'Send Us a Message'}
+									</CardTitle>
+									<p class="text-[var(--stone)]">
+										{isSuccess ? 'We\'ll get back to you soon' : 'We\'ll respond within 24 hours'}
+									</p>
+								</div>
+							</div>
 						</CardHeader>
 						<CardContent class="px-8 pb-8 sm:px-12 sm:pb-12">
-							<form onsubmit={handleSubmit} class="space-y-6">
-								<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+							{#if !isSuccess}
+								<form onsubmit={handleSubmit} class="space-y-6">
+									<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+										<div class="space-y-2">
+											<Label for="name" class="text-base font-medium text-[var(--charcoal)]">Name *</Label>
+											<Input
+												id="name"
+												type="text"
+												placeholder="Your full name"
+												bind:value={formData.name}
+												required
+												class="h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
+											/>
+										</div>
+										<div class="space-y-2">
+											<Label for="email" class="text-base font-medium text-[var(--charcoal)]">Email *</Label>
+											<Input
+												id="email"
+												type="email"
+												placeholder="your@email.com"
+												bind:value={formData.email}
+												required
+												class="h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
+											/>
+										</div>
+									</div>
+
+									<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+										<div class="space-y-2">
+											<Label for="phone" class="text-base font-medium text-[var(--charcoal)]">Phone</Label>
+											<Input
+												id="phone"
+												type="tel"
+												placeholder="+1 234 567 8900"
+												bind:value={formData.phone}
+												class="h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
+											/>
+										</div>
+										<div class="space-y-2">
+											<Label for="service" class="text-base font-medium text-[var(--charcoal)]">I'm interested in</Label>
+											<select
+												id="service"
+												bind:value={formData.service}
+												class="flex h-12 w-full rounded-xl border border-[var(--sand)] bg-[var(--warm-white)] px-4 py-2 text-base transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-2 focus-visible:ring-[var(--azure)]/20 focus-visible:outline-none"
+											>
+												<option value="general">General Inquiry</option>
+												<option value="booking">Booking Service</option>
+												<option value="restaurant">Restaurant Reservations</option>
+												<option value="accommodation">Accommodation Help</option>
+												<option value="tours">Tours & Activities</option>
+												<option value="itinerary">Custom Itinerary</option>
+											</select>
+										</div>
+									</div>
+
 									<div class="space-y-2">
-										<Label for="name" class="text-base font-medium text-[color:var(--charcoal)]"
-											>Name *</Label
-										>
+										<Label for="subject" class="text-base font-medium text-[var(--charcoal)]">Subject *</Label>
 										<Input
-											id="name"
+											id="subject"
 											type="text"
-											placeholder="Your full name"
-											bind:value={formData.name}
+											placeholder="What can we help you with?"
+											bind:value={formData.subject}
 											required
-											class="h-12 border-[color:var(--stone)] transition-colors focus-visible:border-[color:var(--azure)] focus-visible:ring-[color:var(--azure)]"
+											class="h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
 										/>
 									</div>
+
 									<div class="space-y-2">
-										<Label for="email" class="text-base font-medium text-[color:var(--charcoal)]"
-											>Email *</Label
-										>
-										<Input
-											id="email"
-											type="email"
-											placeholder="your@email.com"
-											bind:value={formData.email}
+										<Label for="message" class="text-base font-medium text-[var(--charcoal)]">Message *</Label>
+										<Textarea
+											id="message"
+											placeholder="Tell us about your travel plans, dates, preferences, or any questions you have..."
+											bind:value={formData.message}
 											required
-											class="h-12 border-[color:var(--stone)] transition-colors focus-visible:border-[color:var(--azure)] focus-visible:ring-[color:var(--azure)]"
+											rows={6}
+											class="resize-none rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
 										/>
 									</div>
-								</div>
 
-								<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-									<div class="space-y-2">
-										<Label for="phone" class="text-base font-medium text-[color:var(--charcoal)]"
-											>Phone</Label
-										>
-										<Input
-											id="phone"
-											type="tel"
-											placeholder="+1 234 567 8900"
-											bind:value={formData.phone}
-											class="h-12 border-[color:var(--stone)] transition-colors focus-visible:border-[color:var(--azure)] focus-visible:ring-[color:var(--azure)]"
-										/>
+									<VintageButton type="submit" variant="azure" size="lg" class="w-full" disabled={isSubmitting}>
+										{#if isSubmitting}
+											<span class="animate-pulse">Sending...</span>
+										{:else}
+											<Send class="h-5 w-5" />
+											<span>Send Message</span>
+										{/if}
+									</VintageButton>
+
+									<p class="text-center text-sm text-[var(--stone)]">
+										We respect your privacy. Your information is secure and will never be shared.
+									</p>
+								</form>
+							{:else}
+								<div class="py-12 text-center">
+									<div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--olive)]/10">
+										<svg class="h-10 w-10 text-[var(--olive)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+										</svg>
 									</div>
-									<div class="space-y-2">
-										<Label for="service" class="text-base font-medium text-[color:var(--charcoal)]"
-											>I'm interested in</Label
-										>
-										<select
-											id="service"
-											bind:value={formData.service}
-											class="flex h-12 w-full rounded-lg border border-[color:var(--stone)] bg-white px-4 py-2 text-base transition-colors focus-visible:border-[color:var(--azure)] focus-visible:ring-2 focus-visible:ring-[color:var(--azure)]/20 focus-visible:outline-none"
-										>
-											<option value="general">General Inquiry</option>
-											<option value="booking">Booking Service</option>
-											<option value="restaurant">Restaurant Reservations</option>
-											<option value="accommodation">Accommodation Help</option>
-											<option value="tours">Tours & Activities</option>
-											<option value="itinerary">Custom Itinerary</option>
-										</select>
-									</div>
+									<h3 class="heading-serif mb-2 text-2xl font-semibold text-[var(--charcoal)]">Grazie Mille!</h3>
+									<p class="text-[var(--stone)]">Your message has been sent successfully. We'll be in touch soon!</p>
 								</div>
-
-								<div class="space-y-2">
-									<Label for="subject" class="text-base font-medium text-[color:var(--charcoal)]"
-										>Subject *</Label
-									>
-									<Input
-										id="subject"
-										type="text"
-										placeholder="What can we help you with?"
-										bind:value={formData.subject}
-										required
-										class="h-12 border-[color:var(--stone)] transition-colors focus-visible:border-[color:var(--azure)] focus-visible:ring-[color:var(--azure)]"
-									/>
-								</div>
-
-								<div class="space-y-2">
-									<Label for="message" class="text-base font-medium text-[color:var(--charcoal)]"
-										>Message *</Label
-									>
-									<Textarea
-										id="message"
-										placeholder="Tell us about your travel plans, dates, preferences, or any questions you have..."
-										bind:value={formData.message}
-										required
-										rows={6}
-										class="resize-none border-[color:var(--stone)] transition-colors focus-visible:border-[color:var(--azure)] focus-visible:ring-[color:var(--azure)]"
-									/>
-								</div>
-
-								<Button
-									type="submit"
-									size="lg"
-									class="h-14 w-full bg-[color:var(--azure)] text-lg text-white transition-all duration-200 ease-out hover:bg-[color:var(--deep-azure)] hover:shadow-lg hover:brightness-110"
-								>
-									<span class="flex items-center justify-center space-x-2">
-										<Send class="h-5 w-5" />
-										<span>Send Message</span>
-									</span>
-								</Button>
-
-								<p class="text-center text-sm text-[color:var(--stone)]">
-									We respect your privacy. Your information is secure and will never be shared.
-								</p>
-							</form>
+							{/if}
 						</CardContent>
 					</Card>
 				</div>
 
 				<!-- Contact Information -->
-				<div class="scroll-reveal space-y-6" style="transition-delay: 0.2s">
+				<div class="scroll-reveal space-y-6" style="transition-delay: 200ms" use:reveal>
 					<!-- Direct Contact -->
-					<Card class="border-[color:var(--sand)] shadow-lg">
-						<CardContent class="p-8">
-							<h3 class="heading-serif mb-6 text-2xl font-semibold text-[color:var(--charcoal)]">
-								Contact Information
-							</h3>
-							<div class="space-y-6">
-								{#if contactData.contactInfo?.email}
-									<div
-										class="group flex cursor-pointer items-start space-x-4 rounded-lg p-4 transition-colors duration-200 ease-out hover:bg-[color:var(--cream)]"
-									>
-										<div
-											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--azure)] transition-transform duration-200 ease-out group-hover:scale-105"
-										>
-											<Mail class="h-6 w-6 text-white" />
-										</div>
-										<div>
-											<div class="mb-1 text-lg font-semibold text-[color:var(--charcoal)]">
-												Email
-											</div>
-											<a
-												href="mailto:{contactData.contactInfo.email}"
-												class="text-sm text-[color:var(--stone)] transition-colors hover:text-[color:var(--azure)]"
-											>
-												{contactData.contactInfo.email}
-											</a>
-										</div>
+					<PostcardFrame showStamp stampText="POSTA">
+						<h3 class="heading-serif mb-6 text-xl font-semibold text-[var(--charcoal)]">
+							Contact Information
+						</h3>
+						<div class="space-y-4">
+							{#if contactData.contactInfo?.email}
+								<a
+									href="mailto:{contactData.contactInfo.email}"
+									class="group flex items-start space-x-4 rounded-lg p-3 transition-colors duration-200 ease-out hover:bg-[var(--cream)]"
+								>
+									<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] transition-transform duration-200 ease-out group-hover:scale-105">
+										<Mail class="h-5 w-5 text-white" />
 									</div>
-								{/if}
+									<div>
+										<div class="mb-0.5 text-sm font-semibold text-[var(--charcoal)]">Email</div>
+										<span class="text-sm text-[var(--stone)] transition-colors group-hover:text-[var(--azure)]">
+											{contactData.contactInfo.email}
+										</span>
+									</div>
+								</a>
+							{/if}
 
-								{#if contactData.contactInfo?.phone || contactData.contactInfo?.whatsapp}
-									<div
-										class="group flex cursor-pointer items-start space-x-4 rounded-lg p-4 transition-colors duration-200 ease-out hover:bg-[color:var(--cream)]"
-									>
-										<div
-											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--olive)] transition-transform duration-200 ease-out group-hover:scale-105"
-										>
-											<Phone class="h-6 w-6 text-white" />
-										</div>
-										<div>
-											<div class="mb-1 text-lg font-semibold text-[color:var(--charcoal)]">
-												WhatsApp
-											</div>
-											<p class="mb-1 text-sm text-[color:var(--stone)]">
-												Available for booking inquiries
-											</p>
-											<a
-												href="tel:{contactData.contactInfo.whatsapp ||
-													contactData.contactInfo.phone}"
-												class="text-sm font-medium text-[color:var(--azure)] hover:underline"
-											>
-												{contactData.contactInfo.whatsapp || contactData.contactInfo.phone}
-											</a>
-										</div>
+							{#if contactData.contactInfo?.phone || contactData.contactInfo?.whatsapp}
+								<a
+									href="tel:{contactData.contactInfo.whatsapp || contactData.contactInfo.phone}"
+									class="group flex items-start space-x-4 rounded-lg p-3 transition-colors duration-200 ease-out hover:bg-[var(--cream)]"
+								>
+									<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--olive)] to-[oklch(0.45_0.1_125)] transition-transform duration-200 ease-out group-hover:scale-105">
+										<Phone class="h-5 w-5 text-white" />
 									</div>
-								{/if}
+									<div>
+										<div class="mb-0.5 text-sm font-semibold text-[var(--charcoal)]">WhatsApp</div>
+										<span class="text-sm font-medium text-[var(--azure)]">
+											{contactData.contactInfo.whatsapp || contactData.contactInfo.phone}
+										</span>
+									</div>
+								</a>
+							{/if}
 
-								{#if contactData.contactInfo?.address}
-									<div
-										class="group flex items-start space-x-4 rounded-lg p-4 transition-colors duration-200 ease-out hover:bg-[color:var(--cream)]"
-									>
-										<div
-											class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[color:var(--terracotta)] transition-transform duration-200 ease-out group-hover:scale-105"
-										>
-											<MapPin class="h-6 w-6 text-white" />
-										</div>
-										<div>
-											<div class="mb-1 text-lg font-semibold text-[color:var(--charcoal)]">
-												Location
-											</div>
-											<p class="text-sm text-[color:var(--stone)]">
-												{contactData.contactInfo.address}
-											</p>
-										</div>
+							{#if contactData.contactInfo?.address}
+								<div class="flex items-start space-x-4 rounded-lg p-3">
+									<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--terracotta)] to-[oklch(0.55_0.15_35)]">
+										<MapPin class="h-5 w-5 text-white" />
 									</div>
-								{/if}
-							</div>
-						</CardContent>
-					</Card>
+									<div>
+										<div class="mb-0.5 text-sm font-semibold text-[var(--charcoal)]">Location</div>
+										<p class="text-sm text-[var(--stone)]">{contactData.contactInfo.address}</p>
+									</div>
+								</div>
+							{/if}
+						</div>
+					</PostcardFrame>
 
 					<!-- Response Time -->
-					<Card class="border-[color:var(--azure)] bg-[color:var(--azure)] shadow-lg">
-						<CardContent class="p-8 text-white">
+					<Card class="border-[var(--azure)] bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] shadow-lg">
+						<CardContent class="p-6 text-white">
 							<div class="mb-4 flex items-center space-x-4">
-								<div class="flex h-14 w-14 items-center justify-center rounded-lg bg-white/20">
-									<Clock class="h-7 w-7" />
+								<div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+									<Clock class="h-6 w-6" />
 								</div>
-								<h3 class="heading-serif text-2xl font-semibold">Quick Response</h3>
+								<h3 class="heading-serif text-xl font-semibold">Quick Response</h3>
 							</div>
 							<p class="leading-relaxed text-white/90">
 								We typically respond within 24 hours. For urgent booking requests, WhatsApp is the
@@ -360,13 +342,13 @@
 
 					<!-- Social Media -->
 					{#if contactData.socialMedia}
-						<Card class="border-[color:var(--sand)] shadow-lg">
-							<CardContent class="p-8">
-								<h3 class="heading-serif mb-4 text-2xl font-semibold text-[color:var(--charcoal)]">
+						<Card class="border-[var(--sand)] shadow-mediterranean">
+							<CardContent class="p-6">
+								<h3 class="heading-serif mb-4 text-xl font-semibold text-[var(--charcoal)]">
 									Follow Us
 								</h3>
-								<p class="mb-6 text-[color:var(--stone)]">
-									Stay updated with the latest Sorrento tips and travel inspiration
+								<p class="mb-4 text-sm text-[var(--stone)]">
+									Stay updated with the latest Sorrento tips
 								</p>
 								<div class="flex space-x-3">
 									{#if contactData.socialMedia.facebook}
@@ -374,9 +356,9 @@
 											href={contactData.socialMedia.facebook}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--azure)] text-white shadow-md transition-all duration-200 ease-out hover:scale-105 hover:shadow-lg hover:brightness-110"
+											class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] text-white shadow-md transition-all duration-200 ease-out hover:scale-110 hover:shadow-lg"
 										>
-											<Facebook class="h-6 w-6" />
+											<Facebook class="h-5 w-5" />
 										</a>
 									{/if}
 									{#if contactData.socialMedia.instagram}
@@ -384,9 +366,9 @@
 											href={contactData.socialMedia.instagram}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--terracotta)] text-white shadow-md transition-all duration-200 ease-out hover:scale-105 hover:shadow-lg hover:brightness-110"
+											class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--coral)] to-[var(--terracotta)] text-white shadow-md transition-all duration-200 ease-out hover:scale-110 hover:shadow-lg"
 										>
-											<Instagram class="h-6 w-6" />
+											<Instagram class="h-5 w-5" />
 										</a>
 									{/if}
 									{#if contactData.socialMedia.twitter}
@@ -394,9 +376,9 @@
 											href={contactData.socialMedia.twitter}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="flex h-14 w-14 items-center justify-center rounded-lg bg-[color:var(--olive)] text-white shadow-md transition-all duration-200 ease-out hover:scale-105 hover:shadow-lg hover:brightness-110"
+											class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--olive)] to-[oklch(0.45_0.1_125)] text-white shadow-md transition-all duration-200 ease-out hover:scale-110 hover:shadow-lg"
 										>
-											<Twitter class="h-6 w-6" />
+											<Twitter class="h-5 w-5" />
 										</a>
 									{/if}
 								</div>
@@ -409,33 +391,51 @@
 	</section>
 
 	<!-- FAQ Section -->
-	<section class="relative bg-white py-32">
-		<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+	<section class="relative bg-white py-24">
+		<!-- Wave decoration at top -->
+		<div class="absolute top-0 right-0 left-0">
+			<svg
+				class="h-12 w-full"
+				viewBox="0 0 1200 60"
+				preserveAspectRatio="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M0,60 C200,20 400,50 600,30 C800,10 1000,40 1200,20 L1200,0 L0,0 Z"
+					fill="var(--warm-white)"
+				></path>
+			</svg>
+		</div>
+
+		<div class="container mx-auto px-4 pt-8 sm:px-6 lg:px-8">
 			<div class="mx-auto max-w-3xl">
-				<div class="scroll-reveal mb-12 text-center">
-					<h2
-						class="heading-serif mb-6 text-4xl font-semibold text-[color:var(--charcoal)] sm:text-5xl"
-					>
+				<div class="scroll-reveal mb-12 text-center" use:reveal>
+					<div class="mb-4 flex items-center justify-center gap-3">
+						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase">FAQ</span>
+						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
+					</div>
+					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
 						Common Questions
 					</h2>
-					<p class="text-lg text-[color:var(--stone)]">
+					<p class="text-lg text-[var(--stone)]">
 						Find quick answers to frequently asked questions
 					</p>
 				</div>
 
-				<div class="scroll-reveal">
+				<div class="scroll-reveal" use:reveal>
 					<Accordion.Root type="single" class="space-y-4">
 						{#each contactData.faqs || defaultContent.faqs as faq, index}
 							<Accordion.Item
 								value="item-{index}"
-								class="rounded-lg border border-[color:var(--sand)] bg-white px-6 shadow-sm"
+								class="rounded-xl border border-[var(--sand)] bg-white px-6 shadow-mediterranean transition-all hover:shadow-mediterranean-lg"
 							>
 								<Accordion.Trigger
-									class="py-5 text-left font-semibold text-[color:var(--charcoal)] transition-colors duration-200 ease-out hover:text-[color:var(--azure)]"
+									class="py-5 text-left font-semibold text-[var(--charcoal)] transition-colors duration-200 ease-out hover:text-[var(--azure)]"
 								>
 									{faq.question}
 								</Accordion.Trigger>
-								<Accordion.Content class="pb-5 leading-relaxed text-[color:var(--stone)]">
+								<Accordion.Content class="pb-5 leading-relaxed text-[var(--stone)]">
 									{faq.answer}
 								</Accordion.Content>
 							</Accordion.Item>

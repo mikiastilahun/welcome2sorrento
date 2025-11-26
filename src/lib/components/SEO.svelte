@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { siteConfig } from '$lib/config';
 
 	interface Props {
 		title?: string;
@@ -13,17 +14,17 @@
 	}
 
 	let {
-		title = 'Welcome2Sorrento - Your Ultimate Guide to Sorrento and the Amalfi Coast',
-		description = 'Discover the magic of Sorrento and the breathtaking Amalfi Coast. Find the best restaurants, hotels, activities, and hidden gems. Your complete travel guide created by locals.',
-		keywords = 'Sorrento, Amalfi Coast, Italy, travel guide, tourism, restaurants, hotels, Capri, Naples, Italian coast, vacation',
-		image = '/og-image.jpg',
+		title = `${siteConfig.name} - Your Ultimate Guide to Sorrento and the Amalfi Coast`,
+		description = siteConfig.description,
+		keywords = siteConfig.keywords,
+		image = siteConfig.ogImage,
 		type = 'website',
-		author = 'Welcome2Sorrento',
+		author = siteConfig.name,
 		publishedTime,
 		modifiedTime
 	}: Props = $props();
 
-	const siteName = 'Welcome2Sorrento';
+	const siteName = siteConfig.name;
 	const twitterHandle = '@welcome2sorrento';
 
 	// Get current URL

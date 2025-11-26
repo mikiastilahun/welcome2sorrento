@@ -4,6 +4,13 @@
 	import Logo from '$lib/components/Logo.svelte';
 	import { Menu, X, ChevronDown } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import type { Destination } from '$lib/sanity/queries';
+
+	interface Props {
+		destinations?: Destination[];
+	}
+
+	let { destinations = [] }: Props = $props();
 
 	let mobileMenuOpen = $state(false);
 	let scrolled = $state(false);
@@ -31,7 +38,12 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
-	const navLinks = [
+	const surroundingSubmenu = destinations.map(dest => ({
+		name: dest.name,
+		href: `/surrounding/${dest.slug.current}`
+	}));
+
+	const navLinks = $derived([
 		{ name: 'Home', href: '/' },
 		{
 			name: 'Sorrento',
@@ -45,19 +57,12 @@
 		{
 			name: 'Surrounding',
 			href: '/surrounding',
-			submenu: [
-				{ name: 'Capri', href: '/surrounding/capri' },
-				{ name: 'Amalfi Coast', href: '/surrounding/amalfi' },
-				{ name: 'Naples', href: '/surrounding/naples' },
-				{ name: 'Procida', href: '/surrounding/procida' },
-				{ name: 'Ischia', href: '/surrounding/ischia' },
-				{ name: 'Salerno', href: '/surrounding/salerno' }
-			]
+			submenu: surroundingSubmenu.length > 0 ? surroundingSubmenu : []
 		},
 		{ name: 'Blog', href: '/blog' },
 		{ name: 'About', href: '/about' },
 		{ name: 'Contact', href: '/contact' }
-	];
+	]);
 </script>
 
 <nav

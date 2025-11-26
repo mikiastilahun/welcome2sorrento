@@ -32,17 +32,9 @@
 		{ name: 'Contact Us', href: '/contact' }
 	];
 
-	const destinations = [
-		{ name: 'Capri Island', href: '/surrounding/capri' },
-		{ name: 'Amalfi Coast', href: '/surrounding/amalfi' },
-		{ name: 'Naples', href: '/surrounding/naples' },
-		{ name: 'Procida', href: '/surrounding/procida' },
-		{ name: 'Ischia', href: '/surrounding/ischia' }
-	];
-
 	function handleQuickSubscribe(e: Event) {
 		e.preventDefault();
-		console.log('Quick subscribe:', email);
+		// TODO: Implement newsletter subscription
 		email = '';
 	}
 </script>
@@ -211,23 +203,6 @@
 
 				<!-- Popular Destinations -->
 				<div class="space-y-6 lg:col-span-3">
-					<h4 class="font-serif text-lg font-bold tracking-wider text-white">Top Destinations</h4>
-					<ul class="space-y-3">
-						{#each destinations as dest}
-							<li>
-								<a
-									href={dest.href}
-									class="group flex items-center space-x-2 text-white/70 transition-all duration-200 hover:translate-x-1 hover:text-white"
-								>
-									<MapPin
-										class="h-3 w-3 text-[var(--azure)] transition-transform group-hover:scale-125"
-									/>
-									<span>{dest.name}</span>
-								</a>
-							</li>
-						{/each}
-					</ul>
-
 					<!-- Quick Subscribe with vintage style -->
 					<div class="pt-6">
 						<h5 class="mb-3 font-serif text-sm font-semibold tracking-wider text-white/80">

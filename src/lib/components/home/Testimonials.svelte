@@ -8,29 +8,6 @@
 
 	let { testimonials }: Props = $props();
 
-	const fallbackTestimonials = [
-		{
-			text: 'Welcome2Sorrento made our trip absolutely unforgettable. The local recommendations and insider tips helped us discover places we never would have found on our own.',
-			name: 'Sarah Parker',
-			location: 'London, UK'
-		},
-		{
-			text: 'An incredible resource for planning our Italian adventure. Every restaurant and hidden gem recommendation was spot on. Grazie mille!',
-			name: 'Marco Rossi',
-			location: 'New York, USA'
-		},
-		{
-			text: 'The attention to detail in their guides is remarkable. We felt like locals exploring Sorrento rather than tourists. Highly recommend!',
-			name: 'Emma Chen',
-			location: 'Sydney, Australia'
-		},
-		{
-			text: 'From the stunning coastal views to the authentic trattorias, everything was perfectly curated. Our honeymoon was magical thanks to their suggestions.',
-			name: 'James & Sophie',
-			location: 'Toronto, Canada'
-		}
-	];
-
 	const displayTestimonials =
 		testimonials.length > 0
 			? testimonials.map((t) => ({
@@ -39,12 +16,13 @@
 					location: 'location' in t ? t.location : '',
 					photo: 'photo' in t ? t.photo : null
 				}))
-			: fallbackTestimonials;
+			: [];
 
 	// Duplicate for seamless infinite scroll
 	const marqueeItems = [...displayTestimonials, ...displayTestimonials];
 </script>
 
+{#if displayTestimonials.length > 0}
 <section class="relative overflow-hidden bg-[var(--sand)] py-24">
 	<!-- Decorative elements -->
 	<div class="pointer-events-none absolute inset-0">
@@ -234,3 +212,4 @@
 		</div>
 	</div>
 </section>
+{/if}

@@ -30,53 +30,6 @@
 
 	let { data }: Props = $props();
 
-	// Default content for fallback
-	const defaultContent = {
-		title: 'About Welcome2Sorrento',
-		subtitle: 'Sharing our love for Sorrento with travelers from around the world',
-		story: {
-			title: 'A Love Story with Sorrento',
-			paragraphs: [
-				'Welcome2Sorrento was born from a simple love story – between two people and between them and this magical corner of Italy. Created and maintained by an Italian/British couple who have made the Sorrento Peninsula their home, this website is our way of sharing the insider knowledge, hidden gems, and authentic experiences that make this region so special.',
-				"After years of living here, exploring every beach, dining at countless restaurants, and discovering secret viewpoints known only to locals, we realized we had accumulated a treasure trove of information that could help travelers experience Sorrento the way it's meant to be experienced – authentically, deeply, and memorably.",
-				"We're not just guidebook writers or tourism professionals – we're locals who genuinely love this place and want to help you fall in love with it too."
-			]
-		},
-		services: [
-			{
-				title: 'Local Expertise',
-				description:
-					'We live here year-round and know Sorrento inside out – from hidden beaches to the best morning cappuccino',
-				icon: 'MapPin'
-			},
-			{
-				title: 'Honest Reviews',
-				description:
-					"No sponsored content or paid placements – just genuine recommendations we'd give our friends",
-				icon: 'Heart'
-			},
-			{
-				title: 'Personal Touch',
-				description:
-					"We're real people who respond to every message and genuinely care about your experience",
-				icon: 'Users'
-			},
-			{
-				title: 'Always Updated',
-				description:
-					'Living here means we know immediately when a new restaurant opens or when things change',
-				icon: 'Sparkles'
-			}
-		],
-		seo: {
-			metaTitle: 'About Us - Our Story & Services | Welcome2Sorrento',
-			metaDescription:
-				'Learn about Welcome2Sorrento - created by an Italian/British couple who love the Sorrento Peninsula. Discover our WhatsApp booking service.'
-		},
-		mission:
-			'We are a team of local experts who are passionate about sharing the beauty of Sorrento with the world.'
-	};
-
 	// Map icon names to components
 	const iconMap: Record<string, any> = {
 		MapPin,
@@ -89,7 +42,7 @@
 		Award
 	};
 
-	const aboutData = data.aboutPage || defaultContent;
+	const aboutData = data.aboutPage || {} as AboutPage;
 	const colorAccents = ['azure', 'terracotta', 'olive', 'coral'];
 </script>
 
@@ -149,10 +102,6 @@
 					<div class="space-y-6 text-lg leading-relaxed text-[var(--stone)]">
 						{#if aboutData.story?.paragraphs}
 							<PortableTextRenderer value={aboutData.story.paragraphs as PortableTextBlock[]} />
-						{:else if defaultContent.story.paragraphs}
-							{#each defaultContent.story.paragraphs as paragraph}
-								<p>{paragraph}</p>
-							{/each}
 						{/if}
 
 						{#if aboutData.mission}
@@ -196,7 +145,8 @@
 			</div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-				{#each aboutData.services || defaultContent.services as service, index}
+				{#if aboutData.services}
+				{#each aboutData.services as service, index}
 					{@const IconComponent = iconMap[service.icon || 'MapPin'] || MapPin}
 					{@const accentColor = colorAccents[index % 4]}
 					<div class="scroll-reveal polaroid-hover" style="transition-delay: {index * 100}ms" use:reveal>
@@ -223,6 +173,7 @@
 						</PostcardFrame>
 					</div>
 				{/each}
+				{/if}
 			</div>
 		</div>
 	</section>
@@ -328,34 +279,7 @@
 			</div>
 
 			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
-				{#each [{ name: 'Emma Thompson', location: 'Manchester, UK', text: 'The booking service was a game-changer. They secured us a table at a restaurant that was supposedly fully booked and arranged a private boat tour that was the highlight of our trip.', color: 'azure' }, { name: 'James Chen', location: 'San Francisco, USA', text: 'Having local experts plan our itinerary made such a difference. We experienced Sorrento like locals, not tourists. Worth every penny!', color: 'terracotta' }, { name: 'Sophie Martin', location: 'Paris, France', text: 'The WhatsApp support during our trip was incredible. When our ferry was cancelled, they immediately arranged alternative transport. Highly recommend!', color: 'olive' }] as testimonial, index}
-					<div class="scroll-reveal" style="transition-delay: {index * 100}ms" use:reveal>
-						<Card class="group relative h-full border-[var(--sand)] p-8 shadow-mediterranean transition-all duration-300 hover:-translate-y-1 hover:shadow-mediterranean-lg">
-							<!-- Vintage quote mark -->
-							<div class="absolute -top-2 -left-2 font-serif text-6xl leading-none text-[var(--{testimonial.color})] opacity-20">"</div>
-							
-							<CardContent class="relative p-0">
-								<div class="mb-4 flex space-x-1">
-									{#each Array(5) as _}
-										<Star class="h-5 w-5 fill-[var(--azure)] text-[var(--azure)]" />
-									{/each}
-								</div>
-								<p class="mb-6 font-serif text-lg leading-relaxed text-[var(--stone)] italic">
-									"{testimonial.text}"
-								</p>
-								<div class="flex items-center space-x-3">
-									<div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--{testimonial.color})] to-[var(--{testimonial.color})] font-bold text-white shadow-md">
-										{testimonial.name.split(' ').map((n) => n[0]).join('')}
-									</div>
-									<div>
-										<div class="font-semibold text-[var(--charcoal)]">{testimonial.name}</div>
-										<div class="text-sm text-[var(--stone)]">{testimonial.location}</div>
-									</div>
-								</div>
-							</CardContent>
-						</Card>
-					</div>
-				{/each}
+				
 			</div>
 		</div>
 	</section>

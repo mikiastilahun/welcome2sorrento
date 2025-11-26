@@ -10,33 +10,6 @@
 	}
 
 	let { featuredDestinations }: Props = $props();
-
-	const fallbackDestinations = [
-		{
-			name: 'Capri',
-			description: 'The jewel of the Mediterranean',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Clear-Water-large-768x1024.jpeg',
-			link: '/surrounding/capri',
-			tag: 'Island Paradise'
-		},
-		{
-			name: 'Amalfi Coast',
-			description: 'Dramatic cliffs and colorful villages',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Positano-marianna-berno-683x1024.jpg',
-			link: '/surrounding/amalfi',
-			tag: 'Coastal Beauty'
-		},
-		{
-			name: 'Naples',
-			description: 'Vibrant culture and authentic pizza',
-			image:
-				'https://welcome2sorrento.com/wp-content/uploads/2024/12/Marina-della-Lobra-scaled.jpeg',
-			link: '/surrounding/naples',
-			tag: 'Cultural Hub'
-		}
-	];
 </script>
 
 <section class="relative overflow-hidden bg-[var(--cream)] py-24">
@@ -98,150 +71,71 @@
 		</div>
 
 		<div class="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-			{#if featuredDestinations.length === 0}
-				{#each fallbackDestinations as destination, index}
-					<div
-						class="scroll-reveal"
-						style="transition-delay: {index * 100}ms"
-						use:reveal
-					>
-						<a href={destination.link} class="group block">
-							<Card
-								class="luggage-tag-card relative h-full overflow-hidden border-[var(--sand)] py-0 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-mediterranean-lg"
-							>
-								<!-- Luggage Tag Decoration -->
-								<div class="absolute top-3 right-3 z-20">
-									<!-- Tag hole -->
+			{#each featuredDestinations as destination, index}
+				<div
+					class="scroll-reveal"
+					style="transition-delay: {index * 100}ms"
+					use:reveal
+				>
+					<a href="/surrounding/{destination.slug.current}" class="group block">
+						<Card
+							class="luggage-tag-card relative h-full overflow-hidden border-[var(--sand)] py-0 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-mediterranean-lg"
+						>
+							<!-- Luggage Tag Decoration -->
+							<div class="absolute top-3 right-3 z-20">
+								<div
+									class="relative flex h-8 w-8 items-center justify-center rounded-full bg-[var(--terracotta)] shadow-md"
+								>
 									<div
-										class="relative flex h-8 w-8 items-center justify-center rounded-full bg-[var(--terracotta)] shadow-md"
+										class="h-3 w-3 rounded-full border-2 border-[var(--cream)] bg-[var(--cream)]"
+									></div>
+								</div>
+								<div
+									class="absolute -top-3 left-1/2 h-4 w-0.5 -translate-x-1/2 bg-[var(--charcoal)]/60"
+								></div>
+							</div>
+
+							<div class="relative aspect-[4/5] overflow-hidden bg-[var(--sand)]">
+								<img
+									src={destination.cardImage?.asset?.url ||
+										'https://welcome2sorrento.com/wp-content/uploads/2024/12/Clear-Water-large-768x1024.jpeg'}
+									alt={destination.name}
+									class="h-full w-full object-cover transition-transform duration-700 ease-in-out will-change-transform group-hover:scale-110"
+								/>
+								<div
+									class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/80 via-[var(--charcoal)]/30 to-transparent"
+								></div>
+								<div class="absolute right-0 bottom-0 left-0 p-6">
+									<div
+										class="mb-3 inline-block rounded-sm bg-white/20 px-3 py-1 text-xs font-medium tracking-wider text-white uppercase backdrop-blur-sm"
 									>
-										<div
-											class="h-3 w-3 rounded-full border-2 border-[var(--cream)] bg-[var(--cream)]"
-										></div>
+										Day Trip
 									</div>
-									<!-- String -->
+									<h3 class="heading-serif mb-2 text-3xl font-semibold text-white">
+										{destination.name}
+									</h3>
+									<p class="mb-4 text-sm text-white/90">
+										{destination.subtitle || destination.shortDescription || ''}
+									</p>
 									<div
-										class="absolute -top-3 left-1/2 h-4 w-0.5 -translate-x-1/2 bg-[var(--charcoal)]/60"
-									></div>
-								</div>
-
-								<div class="relative aspect-[4/5] overflow-hidden bg-[var(--sand)]">
-									<img
-										src={destination.image}
-										alt={destination.name}
-										class="h-full w-full object-cover transition-transform duration-700 ease-in-out will-change-transform group-hover:scale-110"
-									/>
-
-									<!-- Gradient overlay -->
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/80 via-[var(--charcoal)]/30 to-transparent"
-									></div>
-
-									<!-- Content overlay -->
-									<div class="absolute right-0 bottom-0 left-0 p-6">
-										<!-- Tag label -->
-										<div
-											class="mb-3 inline-block rounded-sm bg-white/20 px-3 py-1 text-xs font-medium tracking-wider text-white uppercase backdrop-blur-sm"
-										>
-											{destination.tag}
-										</div>
-
-										<h3 class="heading-serif mb-2 text-3xl font-semibold text-white">
-											{destination.name}
-										</h3>
-										<p class="mb-4 text-sm text-white/90">
-											{destination.description}
-										</p>
-
-										<!-- Explore link -->
-										<div
-											class="flex items-center gap-2 font-serif text-sm tracking-wider text-[var(--coral)] transition-all duration-200 group-hover:translate-x-2"
-										>
-											<span>Discover More</span>
-											<ArrowRight class="h-4 w-4" />
-										</div>
-									</div>
-
-									<!-- Decorative stamp -->
-									<div class="absolute top-4 left-4 opacity-60">
-										<div
-											class="rounded border-2 border-white/40 px-2 py-1 text-[0.6rem] font-bold tracking-widest text-white uppercase"
-										>
-											Italia
-										</div>
-									</div>
-								</div>
-							</Card>
-						</a>
-					</div>
-				{/each}
-			{:else}
-				{#each featuredDestinations as destination, index}
-					<div
-						class="scroll-reveal"
-						style="transition-delay: {index * 100}ms"
-						use:reveal
-					>
-						<a href="/surrounding/{destination.slug.current}" class="group block">
-							<Card
-								class="luggage-tag-card relative h-full overflow-hidden border-[var(--sand)] py-0 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-mediterranean-lg"
-							>
-								<!-- Luggage Tag Decoration -->
-								<div class="absolute top-3 right-3 z-20">
-									<div
-										class="relative flex h-8 w-8 items-center justify-center rounded-full bg-[var(--terracotta)] shadow-md"
+										class="flex items-center gap-2 font-serif text-sm tracking-wider text-[var(--coral)] transition-all duration-200 group-hover:translate-x-2"
 									>
-										<div
-											class="h-3 w-3 rounded-full border-2 border-[var(--cream)] bg-[var(--cream)]"
-										></div>
-									</div>
-									<div
-										class="absolute -top-3 left-1/2 h-4 w-0.5 -translate-x-1/2 bg-[var(--charcoal)]/60"
-									></div>
-								</div>
-
-								<div class="relative aspect-[4/5] overflow-hidden bg-[var(--sand)]">
-									<img
-										src={destination.cardImage?.asset?.url ||
-											'https://welcome2sorrento.com/wp-content/uploads/2024/12/Clear-Water-large-768x1024.jpeg'}
-										alt={destination.name}
-										class="h-full w-full object-cover transition-transform duration-700 ease-in-out will-change-transform group-hover:scale-110"
-									/>
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/80 via-[var(--charcoal)]/30 to-transparent"
-									></div>
-									<div class="absolute right-0 bottom-0 left-0 p-6">
-										<div
-											class="mb-3 inline-block rounded-sm bg-white/20 px-3 py-1 text-xs font-medium tracking-wider text-white uppercase backdrop-blur-sm"
-										>
-											Day Trip
-										</div>
-										<h3 class="heading-serif mb-2 text-3xl font-semibold text-white">
-											{destination.name}
-										</h3>
-										<p class="mb-4 text-sm text-white/90">
-											{destination.subtitle || destination.shortDescription || ''}
-										</p>
-										<div
-											class="flex items-center gap-2 font-serif text-sm tracking-wider text-[var(--coral)] transition-all duration-200 group-hover:translate-x-2"
-										>
-											<span>Discover More</span>
-											<ArrowRight class="h-4 w-4" />
-										</div>
-									</div>
-									<div class="absolute top-4 left-4 opacity-60">
-										<div
-											class="rounded border-2 border-white/40 px-2 py-1 text-[0.6rem] font-bold tracking-widest text-white uppercase"
-										>
-											Italia
-										</div>
+										<span>Discover More</span>
+										<ArrowRight class="h-4 w-4" />
 									</div>
 								</div>
-							</Card>
-						</a>
-					</div>
-				{/each}
-			{/if}
+								<div class="absolute top-4 left-4 opacity-60">
+									<div
+										class="rounded border-2 border-white/40 px-2 py-1 text-[0.6rem] font-bold tracking-widest text-white uppercase"
+									>
+										Italia
+									</div>
+								</div>
+							</div>
+						</Card>
+					</a>
+				</div>
+			{/each}
 		</div>
 
 		<div class="scroll-reveal text-center" use:reveal>

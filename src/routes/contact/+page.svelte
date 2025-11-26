@@ -33,41 +33,7 @@
 
 	let { data }: Props = $props();
 
-	// Default content for fallback
-	const defaultContent = {
-		title: 'Get in Touch',
-		subtitle: "We're here to help plan your perfect Sorrento experience",
-		contactInfo: {
-			email: 'margheroba@email.com',
-			phone: '+39 123 456 789',
-			whatsapp: '+39 123 456 789',
-			address: 'Based in Sorrento, Italy'
-		},
-		faqs: [
-			{
-				question: "What's included in the booking service?",
-				answer:
-					'We handle restaurant reservations, accommodation booking, tour arrangements, transportation, and provide real-time support during your trip.'
-			},
-			{
-				question: 'How much does the service cost?',
-				answer:
-					'We charge a fixed, transparent fee based on the complexity of your needs. Contact us for a personalized quote.'
-			},
-			{
-				question: 'How far in advance should I book?',
-				answer:
-					'For peak season (June-August), we recommend 2-3 months. For other times, 3-4 weeks is usually sufficient.'
-			},
-			{
-				question: 'Do you only help with Sorrento?',
-				answer:
-					'We cover Sorrento and the entire surrounding area including Capri, the Amalfi Coast, Naples, Pompeii, and more.'
-			}
-		]
-	};
-
-	const contactData = data.contactPage || defaultContent;
+	const contactData = data.contactPage || {} as ContactPage;
 
 	let formData = $state({
 		name: '',
@@ -88,7 +54,6 @@
 		// Simulate submission
 		await new Promise(resolve => setTimeout(resolve, 1500));
 		
-		console.log('Form submitted:', formData);
 		isSuccess = true;
 		isSubmitting = false;
 		
@@ -425,21 +390,23 @@
 
 				<div class="scroll-reveal" use:reveal>
 					<Accordion.Root type="single" class="space-y-4">
-						{#each contactData.faqs || defaultContent.faqs as faq, index}
-							<Accordion.Item
-								value="item-{index}"
-								class="rounded-xl border border-[var(--sand)] bg-white px-6 shadow-mediterranean transition-all hover:shadow-mediterranean-lg"
-							>
-								<Accordion.Trigger
-									class="py-5 text-left font-semibold text-[var(--charcoal)] transition-colors duration-200 ease-out hover:text-[var(--azure)]"
+						{#if contactData.faqs}
+							{#each contactData.faqs as faq, index}
+								<Accordion.Item
+									value="item-{index}"
+									class="rounded-xl border border-[var(--sand)] bg-white px-6 shadow-mediterranean transition-all hover:shadow-mediterranean-lg"
 								>
-									{faq.question}
-								</Accordion.Trigger>
-								<Accordion.Content class="pb-5 leading-relaxed text-[var(--stone)]">
-									{faq.answer}
-								</Accordion.Content>
-							</Accordion.Item>
-						{/each}
+									<Accordion.Trigger
+										class="py-5 text-left font-semibold text-[var(--charcoal)] transition-colors duration-200 ease-out hover:text-[var(--azure)]"
+									>
+										{faq.question}
+									</Accordion.Trigger>
+									<Accordion.Content class="pb-5 leading-relaxed text-[var(--stone)]">
+										{faq.answer}
+									</Accordion.Content>
+								</Accordion.Item>
+							{/each}
+						{/if}
 					</Accordion.Root>
 				</div>
 			</div>

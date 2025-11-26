@@ -4,8 +4,12 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import BackToTop from '$lib/components/BackToTop.svelte';
 	import SEO from '$lib/components/SEO.svelte';
+	import { inject } from '@vercel/analytics';
+	import { dev } from '$app/environment';
 
-	let { children } = $props();
+	inject({ mode: dev ? 'development' : 'production' });
+
+	let { children, data } = $props();
 </script>
 
 <SEO />
@@ -21,7 +25,7 @@
 </svelte:head>
 
 <div class="flex min-h-screen flex-col">
-	<Navigation />
+	<Navigation destinations={data.navDestinations} />
 
 	<main class="grow">
 		{@render children()}

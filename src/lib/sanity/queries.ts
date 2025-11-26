@@ -528,12 +528,12 @@ export interface Destination {
 	_id: string;
 	name: string;
 	slug: Slug;
-	subtitle: string;
+	subtitle?: string;
 	heroImage?: SanityImage;
 	cardImage?: SanityImage;
 	gallery?: SanityImage[];
-	shortDescription: string;
-	introduction: PortableTextBlock[];
+	shortDescription?: string;
+	introduction?: SanityBlock[];
 	attractions?: Array<{
 		name: string;
 		description: string;
@@ -738,6 +738,22 @@ export interface SiteSettings {
 	}>;
 }
 
+// Sanity block content structure
+export interface SanityBlockChild {
+	_key: string;
+	_type: string;
+	text?: string;
+	marks?: string[];
+}
+
+export interface SanityBlock {
+	_key: string;
+	_type: string;
+	style?: string;
+	children?: SanityBlockChild[];
+	markDefs?: unknown[];
+}
+
 export interface AboutPage {
 	_type: 'aboutPage';
 	_id: string;
@@ -745,7 +761,7 @@ export interface AboutPage {
 	subtitle?: string;
 	story?: {
 		title?: string;
-		paragraphs?: PortableTextBlock[];
+		content?: SanityBlock[];
 	};
 	mission?: string;
 	services?: Array<{

@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { urlFor } from '$lib/sanity/image';
 	import type { Destination } from '$lib/sanity/queries';
-	import PortableTextRenderer from '$lib/components/PortableTextRenderer.svelte';
 	import { PostcardFrame, VintageButton } from '$lib/components/ui/decorative';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
@@ -46,13 +44,13 @@
 
 <svelte:head>
 	<title>{destination.name} Travel Guide | Welcome2Sorrento</title>
-	<meta name="description" content={destination.excerpt} />
+	<meta name="description" content={destination.shortDescription || ''} />
 </svelte:head>
 
 <div class="-mt-24">
 	<PageHeader
 		title={destination.name}
-		subtitle={destination.tagline || ''}
+		subtitle={destination.subtitle || ''}
 		image={destination.heroImage?.asset?.url ||
 			'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80'}
 		label="Destinazione"
@@ -86,8 +84,18 @@
 				</div>
 
 				<div class="prose prose-lg mx-auto max-w-none text-[var(--stone)]">
-					{#if destination.description}
-						<PortableTextRenderer value={destination.description} />
+					{#if destination.introduction && destination.introduction.length > 0}
+						{#each destination.introduction as block}
+							{#if block._type === 'block' && block.children}
+								<p>
+									{#each block.children as child}
+										{#if child._type === 'span'}
+											{child.text}
+										{/if}
+									{/each}
+								</p>
+							{/if}
+						{/each}
 					{/if}
 				</div>
 
@@ -102,7 +110,7 @@
 	</section>
 
 	<!-- How to Get There -->
-	{#if destination.transport && destination.transport.length > 0}
+	{#if destination.howToGetThere?.fromSorrento?.options && destination.howToGetThere.fromSorrento.options.length > 0}
 		<section class="relative bg-white py-24">
 			<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
@@ -122,7 +130,7 @@
 				</div>
 
 				<div class="mx-auto grid max-w-5xl gap-8 md:grid-cols-2 lg:grid-cols-3">
-					{#each destination.transport as option, index}
+					{#each destination.howToGetThere.fromSorrento.options as option, index}
 						{@const TransportIcon = getTransportIcon(option.type)}
 						{@const accentColor = transportColors[index % 3]}
 						<div
@@ -143,7 +151,7 @@
 										{option.type}
 									</h3>
 									<p class="mb-4 text-sm text-[var(--stone)]">
-										{option.description}
+										{option.details || ''}
 									</p>
 									<div class="space-y-2 border-t border-[var(--sand)] pt-4">
 										<div class="flex items-center justify-between text-sm">
@@ -170,7 +178,7 @@
 	{/if}
 
 	<!-- Must-See Attractions -->
-	{#if destination.mustSee && destination.mustSee.length > 0}
+	{#if destination.attractions && destination.attractions.length > 0}
 		<section class="relative overflow-hidden bg-[var(--cream)] py-24">
 			<!-- Wave decoration at top -->
 			<div class="absolute top-0 right-0 left-0">
@@ -203,7 +211,7 @@
 				</div>
 
 				<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-					{#each destination.mustSee as attraction, index}
+					{#each destination.attractions as attraction, index}
 						{@const accentColors = ['azure', 'terracotta', 'olive', 'coral']}
 						{@const accentColor = accentColors[index % 4]}
 						<div class="scroll-reveal" style="transition-delay: {index * 100}ms" use:reveal>
@@ -252,7 +260,7 @@
 	{/if}
 
 	<!-- Visitor Tips -->
-	{#if destination.tips && destination.tips.length > 0}
+	{#if destination.planningTips && destination.planningTips.length > 0}
 		<section class="relative bg-white py-24">
 			<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
@@ -272,7 +280,7 @@
 				</div>
 
 				<div class="mx-auto max-w-4xl space-y-6">
-					{#each destination.tips as tip, index}
+					{#each destination.planningTips as tip, index}
 						<div
 							class="scroll-reveal polaroid-hover"
 							style="transition-delay: {index * 100}ms"
@@ -285,7 +293,10 @@
 									>
 										<Lightbulb class="h-5 w-5 text-white" />
 									</div>
-									<p class="text-lg text-[var(--stone)]">{tip}</p>
+									<div>
+										<h4 class="font-semibold text-[var(--charcoal)]">{tip.title}</h4>
+										<p class="text-lg text-[var(--stone)]">{tip.description}</p>
+									</div>
 								</div>
 							</PostcardFrame>
 						</div>

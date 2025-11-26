@@ -1,7 +1,5 @@
 <script lang="ts">
 	import type { AboutPage } from '$lib/sanity/queries';
-	import { urlFor } from '$lib/sanity/image';
-	import PortableTextRenderer from '$lib/components/PortableTextRenderer.svelte';
 	import { PostcardFrame, VintageButton } from '$lib/components/ui/decorative';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
@@ -20,7 +18,6 @@
 		ArrowRight
 	} from '@lucide/svelte';
 	import { reveal } from '$lib/actions/reveal';
-	import type { PortableTextBlock } from '@portabletext/types';
 
 	interface Props {
 		data: {
@@ -103,8 +100,18 @@
 					</PostcardFrame>
 
 					<div class="space-y-6 text-lg leading-relaxed text-[var(--stone)]">
-						{#if aboutData.story?.paragraphs}
-							<PortableTextRenderer value={aboutData.story.paragraphs as PortableTextBlock[]} />
+						{#if aboutData.story?.content && aboutData.story.content.length > 0}
+							{#each aboutData.story.content as block}
+								{#if block._type === 'block' && block.children}
+									<p>
+										{#each block.children as child}
+											{#if child._type === 'span'}
+												{child.text}
+											{/if}
+										{/each}
+									</p>
+								{/if}
+							{/each}
 						{/if}
 
 						{#if aboutData.mission}

@@ -35,7 +35,9 @@
 			{/if}
 		</div>
 		<!-- Gradient overlays -->
-		<div class="absolute inset-0 bg-gradient-to-b from-[var(--charcoal)]/40 via-[var(--charcoal)]/50 to-[var(--charcoal)]/70"></div>
+		<div
+			class="absolute inset-0 bg-gradient-to-b from-[var(--charcoal)]/40 via-[var(--charcoal)]/50 to-[var(--charcoal)]/70"
+		></div>
 		<div class="absolute inset-0 bg-gradient-to-r from-[var(--deep-azure)]/20 to-transparent"></div>
 		<!-- Film grain -->
 		<div class="film-grain pointer-events-none absolute inset-0"></div>
@@ -51,7 +53,7 @@
 	<div class="relative z-10 flex grow items-center justify-center">
 		<div class="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
 			<!-- Postcard-style frame -->
-			<div 
+			<div
 				class="stagger-reveal mx-auto max-w-4xl rounded-xl border border-white/10 bg-black/20 p-8 text-center text-white backdrop-blur-sm md:p-12"
 				style="box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 20px 60px rgba(0,0,0,0.3), inset 0 0 80px rgba(255,255,255,0.02);"
 			>
@@ -63,17 +65,32 @@
 				</div>
 				<div class="pointer-events-none absolute top-4 right-4 h-6 w-6 opacity-40">
 					<svg viewBox="0 0 24 24" fill="none" class="h-full w-full text-[var(--{categoryColor})]">
-						<path d="M22 2v8M22 2h-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<path
+							d="M22 2v8M22 2h-8"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+						/>
 					</svg>
 				</div>
 				<div class="pointer-events-none absolute bottom-4 left-4 h-6 w-6 opacity-40">
 					<svg viewBox="0 0 24 24" fill="none" class="h-full w-full text-[var(--{categoryColor})]">
-						<path d="M2 22v-8M2 22h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<path
+							d="M2 22v-8M2 22h8"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+						/>
 					</svg>
 				</div>
 				<div class="pointer-events-none absolute right-4 bottom-4 h-6 w-6 opacity-40">
 					<svg viewBox="0 0 24 24" fill="none" class="h-full w-full text-[var(--{categoryColor})]">
-						<path d="M22 22v-8M22 22h-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<path
+							d="M22 22v-8M22 22h-8"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+						/>
 					</svg>
 				</div>
 
@@ -85,7 +102,7 @@
 					{post.title}
 				</h1>
 
-				<p class="mx-auto mb-8 max-w-3xl text-lg font-light leading-relaxed text-white/90">
+				<p class="mx-auto mb-8 max-w-3xl text-lg leading-relaxed font-light text-white/90">
 					{post.excerpt}
 				</p>
 
@@ -122,9 +139,7 @@
 			preserveAspectRatio="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<path
-				d="M0,60 C200,20 400,50 600,30 C800,10 1000,40 1200,20 L1200,60 L0,60 Z"
-				fill="white"
+			<path d="M0,60 C200,20 400,50 600,30 C800,10 1000,40 1200,20 L1200,60 L0,60 Z" fill="white"
 			></path>
 		</svg>
 	</div>

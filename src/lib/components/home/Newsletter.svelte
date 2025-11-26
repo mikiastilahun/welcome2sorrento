@@ -46,13 +46,13 @@
 	<!-- Background decorative elements -->
 	<div class="pointer-events-none absolute inset-0">
 		<!-- Floating envelopes -->
-		<div class="absolute top-20 left-[10%] animate-float opacity-10">
+		<div class="animate-float absolute top-20 left-[10%] opacity-10">
 			<Mail class="h-16 w-16 text-[var(--azure)]" />
 		</div>
-		<div class="absolute top-40 right-[15%] animate-float-delayed opacity-10">
+		<div class="animate-float-delayed absolute top-40 right-[15%] opacity-10">
 			<Mail class="h-12 w-12 text-[var(--terracotta)]" />
 		</div>
-		<div class="absolute bottom-32 left-[20%] animate-float-slow opacity-10">
+		<div class="animate-float-slow absolute bottom-32 left-[20%] opacity-10">
 			<Send class="h-10 w-10 text-[var(--olive)]" />
 		</div>
 
@@ -62,16 +62,16 @@
 		</div>
 	</div>
 
-	<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+	<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="scroll-reveal mx-auto max-w-2xl" use:reveal>
 			<!-- Envelope-style card -->
 			<div
-				class="relative rounded-2xl border border-[var(--sand)] bg-white p-8 shadow-mediterranean-lg transition-all duration-300 md:p-12"
+				class="shadow-mediterranean-lg relative rounded-2xl border border-[var(--sand)] bg-white p-8 transition-all duration-300 md:p-12"
 				class:envelope-open={isFocused}
 			>
 				<!-- Envelope flap decoration -->
 				<div
-					class="absolute -top-1 right-0 left-0 h-16 overflow-hidden transition-transform duration-500 origin-bottom"
+					class="absolute -top-1 right-0 left-0 h-16 origin-bottom overflow-hidden transition-transform duration-500"
 					class:open-flap={isFocused}
 				>
 					<div
@@ -107,9 +107,7 @@
 						<div class="h-px w-8 bg-[var(--azure)]"></div>
 					</div>
 
-					<h2
-						class="heading-serif mb-4 text-3xl font-semibold text-[var(--charcoal)] sm:text-4xl"
-					>
+					<h2 class="heading-serif mb-4 text-3xl font-semibold text-[var(--charcoal)] sm:text-4xl">
 						{#if isSuccess}
 							<span class="text-[var(--olive)]">Grazie Mille!</span>
 						{:else}

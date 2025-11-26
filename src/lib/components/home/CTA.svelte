@@ -15,9 +15,13 @@
 			/>
 		</div>
 		<!-- Gradient overlays -->
-		<div class="absolute inset-0 bg-gradient-to-r from-[var(--charcoal)]/90 to-[var(--charcoal)]/70"></div>
-		<div class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/80 via-transparent to-[var(--charcoal)]/60"></div>
-		
+		<div
+			class="absolute inset-0 bg-gradient-to-r from-[var(--charcoal)]/90 to-[var(--charcoal)]/70"
+		></div>
+		<div
+			class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/80 via-transparent to-[var(--charcoal)]/60"
+		></div>
+
 		<!-- Film grain overlay -->
 		<div class="film-grain pointer-events-none absolute inset-0"></div>
 	</div>
@@ -52,7 +56,7 @@
 		</svg>
 	</div>
 
-	<div class="container relative z-10 mx-auto px-4 text-center sm:px-6 lg:px-8">
+	<div class="relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8">
 		<div class="scroll-reveal mx-auto max-w-4xl" use:reveal>
 			<!-- Decorative frame -->
 			<div
@@ -112,7 +116,7 @@
 					</div>
 
 					<h2
-						class="heading-serif mb-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+						class="heading-serif mb-6 text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl"
 					>
 						Ready for Your
 						<span class="relative inline-block text-[var(--coral)]">
@@ -134,7 +138,9 @@
 						</span>
 					</h2>
 
-					<p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed font-light text-white/90 sm:text-xl">
+					<p
+						class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed font-light text-white/90 sm:text-xl"
+					>
 						Let us help you plan the perfect trip with our personalized booking service. From hidden
 						trattorias to breathtaking coastal views, we'll make your Sorrento dreams come true.
 					</p>

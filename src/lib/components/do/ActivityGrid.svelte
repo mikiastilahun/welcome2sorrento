@@ -111,7 +111,8 @@
 									>
 								{:else if activity.bestFor}
 									<span class="text-sm text-(--stone)"
-										>Best for: <span class="font-medium text-foreground">{activity.bestFor}</span></span
+										>Best for: <span class="font-medium text-foreground">{activity.bestFor}</span
+										></span
 									>
 								{:else}
 									<span></span>
@@ -124,4 +125,3 @@
 		</div>
 	</div>
 </section>
-

@@ -27,7 +27,7 @@
 
 <div
 	class={cn(
-		'postcard-container relative rounded-lg p-4 shadow-mediterranean transition-all duration-300',
+		'postcard-container shadow-mediterranean relative rounded-lg p-4 transition-all duration-300',
 		variantStyles[variant],
 		className
 	)}
@@ -62,7 +62,7 @@
 	<!-- Optional vintage stamp -->
 	{#if showStamp}
 		<div
-			class="absolute -top-3 -right-3 z-20 animate-stamp rounded bg-[var(--coral)] px-3 py-2 shadow-lg"
+			class="animate-stamp absolute -top-3 -right-3 z-20 rounded bg-[var(--coral)] px-3 py-2 shadow-lg"
 			style="transform: rotate(-12deg);"
 		>
 			<!-- Stamp perforated edge effect -->
@@ -112,4 +112,3 @@
 			inset 0 0 40px rgba(0, 0, 0, 0.02);
 	}
 </style>
-

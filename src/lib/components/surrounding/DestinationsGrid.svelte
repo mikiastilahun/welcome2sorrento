@@ -28,12 +28,14 @@
 		</svg>
 	</div>
 
-	<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+	<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 		<!-- Section header -->
 		<div class="scroll-reveal mb-16 text-center" use:reveal>
 			<div class="mb-4 flex items-center justify-center gap-3">
 				<div class="h-px w-8 bg-[var(--azure)]"></div>
-				<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase">Explore</span>
+				<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase"
+					>Explore</span
+				>
 				<div class="h-px w-8 bg-[var(--azure)]"></div>
 			</div>
 			<h2 class="heading-serif mb-4 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -49,15 +51,21 @@
 				{@const accentColor = accentColors[index % 6]}
 				<div class="scroll-reveal" style="transition-delay: {index * 100}ms" use:reveal>
 					<a href={destination.link} class="group block h-full">
-						<Card class="relative h-full overflow-hidden border-[var(--sand)] pt-0 shadow-mediterranean transition-all duration-300 hover:-translate-y-2 hover:shadow-mediterranean-lg">
+						<Card
+							class="shadow-mediterranean hover:shadow-mediterranean-lg relative h-full overflow-hidden border-[var(--sand)] pt-0 transition-all duration-300 hover:-translate-y-2"
+						>
 							<!-- Luggage tag decoration -->
 							<div class="absolute -top-1 right-6 z-30 flex rotate-12 flex-col items-center">
 								<div class="h-2 w-4 rounded-t bg-[var(--{accentColor})]"></div>
-								<div class="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--{accentColor})] shadow-sm">
+								<div
+									class="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--{accentColor})] shadow-sm"
+								>
 									<div class="h-2 w-2 rounded-full bg-white/50"></div>
 								</div>
 								<div class="h-4 w-0.5 bg-[var(--{accentColor})]/50"></div>
-								<div class="rounded bg-white/90 px-3 py-1.5 text-center text-[10px] font-bold tracking-wider text-[var(--{accentColor})] shadow-md uppercase backdrop-blur-sm">
+								<div
+									class="rounded bg-white/90 px-3 py-1.5 text-center text-[10px] font-bold tracking-wider text-[var(--{accentColor})] uppercase shadow-md backdrop-blur-sm"
+								>
 									Day Trip
 								</div>
 							</div>
@@ -71,18 +79,26 @@
 									class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-110"
 								/>
 								<!-- Gradient overlay -->
-								<div class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/70 via-[var(--charcoal)]/30 to-transparent"></div>
-								
+								<div
+									class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/70 via-[var(--charcoal)]/30 to-transparent"
+								></div>
+
 								<!-- Italia stamp -->
 								<div class="absolute top-4 left-4 z-10 rotate-[-5deg] opacity-80">
-									<div class="rounded border-2 border-dashed border-white/50 bg-white/10 px-3 py-1 backdrop-blur-sm">
-										<span class="font-serif text-xs font-bold tracking-[0.2em] text-white uppercase">ITALIA</span>
+									<div
+										class="rounded border-2 border-dashed border-white/50 bg-white/10 px-3 py-1 backdrop-blur-sm"
+									>
+										<span class="font-serif text-xs font-bold tracking-[0.2em] text-white uppercase"
+											>ITALIA</span
+										>
 									</div>
 								</div>
 
 								<!-- Title Overlay -->
 								<div class="absolute right-0 bottom-0 left-0 p-6 text-white">
-									<h3 class="heading-serif mb-1 text-2xl font-semibold transition-colors group-hover:text-[var(--coral)]">
+									<h3
+										class="heading-serif mb-1 text-2xl font-semibold transition-colors group-hover:text-[var(--coral)]"
+									>
 										{destination.name}
 									</h3>
 									<p class="text-sm text-white/90">{destination.tagline}</p>
@@ -99,7 +115,9 @@
 
 								{#if destination.highlights && destination.highlights.length > 0}
 									<div class="mb-6">
-										<h4 class="mb-3 text-sm font-semibold tracking-wide text-[var(--{accentColor})] uppercase">
+										<h4
+											class="mb-3 text-sm font-semibold tracking-wide text-[var(--{accentColor})] uppercase"
+										>
 											Top Highlights
 										</h4>
 										<div class="space-y-2">
@@ -131,7 +149,9 @@
 								{/if}
 
 								<!-- Explore link -->
-								<div class="mt-4 flex items-center font-serif tracking-wide text-[var(--azure)] transition-all duration-200 group-hover:translate-x-2">
+								<div
+									class="mt-4 flex items-center font-serif tracking-wide text-[var(--azure)] transition-all duration-200 group-hover:translate-x-2"
+								>
 									<span>Explore</span>
 									<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
 								</div>

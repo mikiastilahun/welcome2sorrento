@@ -20,4 +20,3 @@ export async function load({ params }) {
 		throw error(404, 'Blog post not found');
 	}
 }
-

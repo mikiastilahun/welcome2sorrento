@@ -14,34 +14,46 @@
 				class="h-full w-full object-cover"
 			/>
 		</div>
-		<div class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"></div>
+		<div
+			class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"
+		></div>
 		<div class="film-grain pointer-events-none absolute inset-0"></div>
 	</div>
 
 	<!-- Decorative compass -->
-	<div class="pointer-events-none absolute top-1/2 left-8 hidden -translate-y-1/2 opacity-10 lg:block">
-		<Compass class="h-40 w-40 text-white animate-compass-point" />
+	<div
+		class="pointer-events-none absolute top-1/2 left-8 hidden -translate-y-1/2 opacity-10 lg:block"
+	>
+		<Compass class="animate-compass-point h-40 w-40 text-white" />
 	</div>
-	<div class="pointer-events-none absolute top-1/2 right-8 hidden -translate-y-1/2 opacity-10 lg:block">
-		<Compass class="h-40 w-40 text-white animate-compass-point" style="animation-delay: -1s;" />
+	<div
+		class="pointer-events-none absolute top-1/2 right-8 hidden -translate-y-1/2 opacity-10 lg:block"
+	>
+		<Compass class="animate-compass-point h-40 w-40 text-white" style="animation-delay: -1s;" />
 	</div>
 
-	<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8" use:reveal>
+	<div
+		class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8"
+		use:reveal
+	>
 		<div class="mx-auto max-w-3xl text-white">
 			<!-- Section label -->
 			<div class="mb-4 flex items-center justify-center gap-3">
 				<div class="h-px w-8 bg-white/50"></div>
-				<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase">Plan Your Trip</span>
+				<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase"
+					>Plan Your Trip</span
+				>
 				<div class="h-px w-8 bg-white/50"></div>
 			</div>
-			
+
 			<h2 class="heading-serif mb-6 text-3xl font-semibold sm:text-4xl lg:text-5xl">
 				Plan Your Perfect Day Trips
 			</h2>
-			<p class="mb-10 text-lg text-white/90 leading-relaxed">
-				Let us help you arrange transportation, tours, and tickets for unforgettable excursions around the stunning Bay of Naples
+			<p class="mb-10 text-lg leading-relaxed text-white/90">
+				Let us help you arrange transportation, tours, and tickets for unforgettable excursions
+				around the stunning Bay of Naples
 			</p>
-			
+
 			<VintageButton href="/contact" variant="coral" size="lg">
 				<span>Contact us for trip planning</span>
 				<ArrowRight class="h-5 w-5" />

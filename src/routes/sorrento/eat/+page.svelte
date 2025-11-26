@@ -48,14 +48,14 @@
 	/>
 
 	<Intro />
-	
+
 	<CategoryFilter {categories} bind:selectedCategory />
-	
+
 	<RestaurantGrid {filteredRestaurants} {selectedCategory} />
-	
+
 	<LocalSpecialties />
-	
+
 	<DiningTips />
-	
+
 	<CTA />
 </div>

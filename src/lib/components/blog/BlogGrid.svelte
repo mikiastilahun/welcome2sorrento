@@ -39,13 +39,17 @@
 		</svg>
 	</div>
 
-	<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+	<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 		{#if filteredPosts.length === 0}
 			<div class="py-20 text-center">
-				<div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--cream)]">
+				<div
+					class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--cream)]"
+				>
 					<BookOpen class="h-10 w-10 text-[var(--stone)]" />
 				</div>
-				<h3 class="heading-serif mb-3 text-2xl font-semibold text-[var(--charcoal)]">No Posts Found</h3>
+				<h3 class="heading-serif mb-3 text-2xl font-semibold text-[var(--charcoal)]">
+					No Posts Found
+				</h3>
 				<p class="text-[var(--stone)]">
 					{selectedCategory === 'All'
 						? 'No blog posts have been published yet. Check back soon!'
@@ -58,9 +62,13 @@
 					{@const accentColor = getCategoryColor(post.category)}
 					<div class="scroll-reveal" style="transition-delay: {index * 100}ms" use:reveal>
 						<a href="/blog/{post.slug.current}" class="group block h-full">
-							<Card class="relative flex h-full flex-col overflow-hidden border-[var(--sand)] pt-0 shadow-mediterranean transition-all duration-300 hover:-translate-y-2 hover:shadow-mediterranean-lg">
+							<Card
+								class="shadow-mediterranean hover:shadow-mediterranean-lg relative flex h-full flex-col overflow-hidden border-[var(--sand)] pt-0 transition-all duration-300 hover:-translate-y-2"
+							>
 								<!-- Vintage number badge -->
-								<div class="pointer-events-none absolute -top-2 -left-2 z-20 select-none font-serif text-7xl font-bold text-[var(--{accentColor})] opacity-10">
+								<div
+									class="pointer-events-none absolute -top-2 -left-2 z-20 font-serif text-7xl font-bold select-none text-[var(--{accentColor})] opacity-10"
+								>
 									0{index + 1}
 								</div>
 
@@ -72,26 +80,34 @@
 										class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-110"
 									/>
 									<!-- Gradient overlay -->
-									<div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+									<div
+										class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
+									></div>
 
 									<div class="absolute top-4 left-4">
 										<Badge class="border-0 bg-[var(--{accentColor})] text-white shadow-lg">
 											{formatCategory(post.category)}
 										</Badge>
 									</div>
-									<div class="absolute right-4 bottom-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-[var(--charcoal)] shadow-md backdrop-blur-sm">
+									<div
+										class="absolute right-4 bottom-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-[var(--charcoal)] shadow-md backdrop-blur-sm"
+									>
 										{post.readTime}
 									</div>
 								</div>
 
 								<CardContent class="flex grow flex-col p-6">
-									<h3 class="heading-serif mb-3 text-xl font-semibold text-[var(--charcoal)] transition-colors duration-200 ease-out group-hover:text-[var(--azure)]">
+									<h3
+										class="heading-serif mb-3 text-xl font-semibold text-[var(--charcoal)] transition-colors duration-200 ease-out group-hover:text-[var(--azure)]"
+									>
 										{post.title}
 									</h3>
 									<p class="mb-6 grow text-sm leading-relaxed text-[var(--stone)]">
 										{post.excerpt}
 									</p>
-									<div class="flex flex-wrap items-center gap-3 border-t border-[var(--sand)] pt-4 text-xs text-[var(--stone)]">
+									<div
+										class="flex flex-wrap items-center gap-3 border-t border-[var(--sand)] pt-4 text-xs text-[var(--stone)]"
+									>
 										<div class="flex items-center space-x-2">
 											<Calendar class="h-3 w-3" />
 											<span>
@@ -104,11 +120,15 @@
 										</div>
 										<span class="font-medium">{post.author}</span>
 									</div>
-									
+
 									<!-- Read more link -->
-									<div class="mt-4 flex items-center font-serif tracking-wide text-[var(--azure)] transition-all duration-200 group-hover:translate-x-2">
+									<div
+										class="mt-4 flex items-center font-serif tracking-wide text-[var(--azure)] transition-all duration-200 group-hover:translate-x-2"
+									>
 										<span>Read More</span>
-										<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+										<ArrowRight
+											class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+										/>
 									</div>
 								</CardContent>
 

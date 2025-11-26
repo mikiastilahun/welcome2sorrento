@@ -33,7 +33,7 @@
 
 	let { data }: Props = $props();
 
-	const contactData = data.contactPage || {} as ContactPage;
+	const contactData = data.contactPage || ({} as ContactPage);
 
 	let formData = $state({
 		name: '',
@@ -50,13 +50,13 @@
 	async function handleSubmit(e: Event) {
 		e.preventDefault();
 		isSubmitting = true;
-		
+
 		// Simulate submission
-		await new Promise(resolve => setTimeout(resolve, 1500));
-		
+		await new Promise((resolve) => setTimeout(resolve, 1500));
+
 		isSuccess = true;
 		isSubmitting = false;
-		
+
 		// Reset form
 		formData = {
 			name: '',
@@ -66,7 +66,7 @@
 			message: '',
 			service: 'general'
 		};
-		
+
 		setTimeout(() => {
 			isSuccess = false;
 		}, 3000);
@@ -104,13 +104,15 @@
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-3">
 				<!-- Contact Form -->
 				<div class="scroll-reveal lg:col-span-2" use:reveal>
-					<Card class="border-[var(--sand)] shadow-mediterranean-lg">
+					<Card class="shadow-mediterranean-lg border-[var(--sand)]">
 						<CardHeader class="px-8 pt-8 pb-6 sm:px-12 sm:pt-12">
 							<!-- Envelope icon with animation -->
 							<div class="mb-6 flex items-center gap-4">
-								<div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] shadow-lg">
+								<div
+									class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] shadow-lg"
+								>
 									{#if isSuccess}
-										<Plane class="h-7 w-7 text-white animate-paper-airplane" />
+										<Plane class="animate-paper-airplane h-7 w-7 text-white" />
 									{:else}
 										<Mail class="h-7 w-7 text-white" />
 									{/if}
@@ -120,7 +122,7 @@
 										{isSuccess ? 'Message Sent!' : 'Send Us a Message'}
 									</CardTitle>
 									<p class="text-[var(--stone)]">
-										{isSuccess ? 'We\'ll get back to you soon' : 'We\'ll respond within 24 hours'}
+										{isSuccess ? "We'll get back to you soon" : "We'll respond within 24 hours"}
 									</p>
 								</div>
 							</div>
@@ -130,7 +132,9 @@
 								<form onsubmit={handleSubmit} class="space-y-6">
 									<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
 										<div class="space-y-2">
-											<Label for="name" class="text-base font-medium text-[var(--charcoal)]">Name *</Label>
+											<Label for="name" class="text-base font-medium text-[var(--charcoal)]"
+												>Name *</Label
+											>
 											<Input
 												id="name"
 												type="text"
@@ -141,7 +145,9 @@
 											/>
 										</div>
 										<div class="space-y-2">
-											<Label for="email" class="text-base font-medium text-[var(--charcoal)]">Email *</Label>
+											<Label for="email" class="text-base font-medium text-[var(--charcoal)]"
+												>Email *</Label
+											>
 											<Input
 												id="email"
 												type="email"
@@ -155,7 +161,9 @@
 
 									<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
 										<div class="space-y-2">
-											<Label for="phone" class="text-base font-medium text-[var(--charcoal)]">Phone</Label>
+											<Label for="phone" class="text-base font-medium text-[var(--charcoal)]"
+												>Phone</Label
+											>
 											<Input
 												id="phone"
 												type="tel"
@@ -165,7 +173,9 @@
 											/>
 										</div>
 										<div class="space-y-2">
-											<Label for="service" class="text-base font-medium text-[var(--charcoal)]">I'm interested in</Label>
+											<Label for="service" class="text-base font-medium text-[var(--charcoal)]"
+												>I'm interested in</Label
+											>
 											<select
 												id="service"
 												bind:value={formData.service}
@@ -182,7 +192,9 @@
 									</div>
 
 									<div class="space-y-2">
-										<Label for="subject" class="text-base font-medium text-[var(--charcoal)]">Subject *</Label>
+										<Label for="subject" class="text-base font-medium text-[var(--charcoal)]"
+											>Subject *</Label
+										>
 										<Input
 											id="subject"
 											type="text"
@@ -194,7 +206,9 @@
 									</div>
 
 									<div class="space-y-2">
-										<Label for="message" class="text-base font-medium text-[var(--charcoal)]">Message *</Label>
+										<Label for="message" class="text-base font-medium text-[var(--charcoal)]"
+											>Message *</Label
+										>
 										<Textarea
 											id="message"
 											placeholder="Tell us about your travel plans, dates, preferences, or any questions you have..."
@@ -205,7 +219,13 @@
 										/>
 									</div>
 
-									<VintageButton type="submit" variant="azure" size="lg" class="w-full" disabled={isSubmitting}>
+									<VintageButton
+										type="submit"
+										variant="azure"
+										size="lg"
+										class="w-full"
+										disabled={isSubmitting}
+									>
 										{#if isSubmitting}
 											<span class="animate-pulse">Sending...</span>
 										{:else}
@@ -220,13 +240,29 @@
 								</form>
 							{:else}
 								<div class="py-12 text-center">
-									<div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--olive)]/10">
-										<svg class="h-10 w-10 text-[var(--olive)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+									<div
+										class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--olive)]/10"
+									>
+										<svg
+											class="h-10 w-10 text-[var(--olive)]"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M5 13l4 4L19 7"
+											/>
 										</svg>
 									</div>
-									<h3 class="heading-serif mb-2 text-2xl font-semibold text-[var(--charcoal)]">Grazie Mille!</h3>
-									<p class="text-[var(--stone)]">Your message has been sent successfully. We'll be in touch soon!</p>
+									<h3 class="heading-serif mb-2 text-2xl font-semibold text-[var(--charcoal)]">
+										Grazie Mille!
+									</h3>
+									<p class="text-[var(--stone)]">
+										Your message has been sent successfully. We'll be in touch soon!
+									</p>
 								</div>
 							{/if}
 						</CardContent>
@@ -246,12 +282,16 @@
 									href="mailto:{contactData.contactInfo.email}"
 									class="group flex items-start space-x-4 rounded-lg p-3 transition-colors duration-200 ease-out hover:bg-[var(--cream)]"
 								>
-									<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] transition-transform duration-200 ease-out group-hover:scale-105">
+									<div
+										class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] transition-transform duration-200 ease-out group-hover:scale-105"
+									>
 										<Mail class="h-5 w-5 text-white" />
 									</div>
 									<div>
 										<div class="mb-0.5 text-sm font-semibold text-[var(--charcoal)]">Email</div>
-										<span class="text-sm text-[var(--stone)] transition-colors group-hover:text-[var(--azure)]">
+										<span
+											class="text-sm text-[var(--stone)] transition-colors group-hover:text-[var(--azure)]"
+										>
 											{contactData.contactInfo.email}
 										</span>
 									</div>
@@ -263,7 +303,9 @@
 									href="tel:{contactData.contactInfo.whatsapp || contactData.contactInfo.phone}"
 									class="group flex items-start space-x-4 rounded-lg p-3 transition-colors duration-200 ease-out hover:bg-[var(--cream)]"
 								>
-									<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--olive)] to-[oklch(0.45_0.1_125)] transition-transform duration-200 ease-out group-hover:scale-105">
+									<div
+										class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--olive)] to-[oklch(0.45_0.1_125)] transition-transform duration-200 ease-out group-hover:scale-105"
+									>
 										<Phone class="h-5 w-5 text-white" />
 									</div>
 									<div>
@@ -277,7 +319,9 @@
 
 							{#if contactData.contactInfo?.address}
 								<div class="flex items-start space-x-4 rounded-lg p-3">
-									<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--terracotta)] to-[oklch(0.55_0.15_35)]">
+									<div
+										class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--terracotta)] to-[oklch(0.55_0.15_35)]"
+									>
 										<MapPin class="h-5 w-5 text-white" />
 									</div>
 									<div>
@@ -290,10 +334,14 @@
 					</PostcardFrame>
 
 					<!-- Response Time -->
-					<Card class="border-[var(--azure)] bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] shadow-lg">
+					<Card
+						class="border-[var(--azure)] bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] shadow-lg"
+					>
 						<CardContent class="p-6 text-white">
 							<div class="mb-4 flex items-center space-x-4">
-								<div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+								<div
+									class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm"
+								>
 									<Clock class="h-6 w-6" />
 								</div>
 								<h3 class="heading-serif text-xl font-semibold">Quick Response</h3>
@@ -307,7 +355,7 @@
 
 					<!-- Social Media -->
 					{#if contactData.socialMedia}
-						<Card class="border-[var(--sand)] shadow-mediterranean">
+						<Card class="shadow-mediterranean border-[var(--sand)]">
 							<CardContent class="p-6">
 								<h3 class="heading-serif mb-4 text-xl font-semibold text-[var(--charcoal)]">
 									Follow Us
@@ -377,7 +425,9 @@
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase">FAQ</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase"
+							>FAQ</span
+						>
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
 					</div>
 					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -394,7 +444,7 @@
 							{#each contactData.faqs as faq, index}
 								<Accordion.Item
 									value="item-{index}"
-									class="rounded-xl border border-[var(--sand)] bg-white px-6 shadow-mediterranean transition-all hover:shadow-mediterranean-lg"
+									class="shadow-mediterranean hover:shadow-mediterranean-lg rounded-xl border border-[var(--sand)] bg-white px-6 transition-all"
 								>
 									<Accordion.Trigger
 										class="py-5 text-left font-semibold text-[var(--charcoal)] transition-colors duration-200 ease-out hover:text-[var(--azure)]"

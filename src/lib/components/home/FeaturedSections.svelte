@@ -88,7 +88,7 @@
 		</svg>
 	</div>
 
-	<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+	<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="scroll-reveal mb-16 text-center" use:reveal>
 			<!-- Section label -->
 			<div class="mb-4 flex items-center justify-center gap-3">
@@ -112,11 +112,7 @@
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-3">
 			{#each featuredSections as section, index}
 				{@const Icon = section.icon}
-				<div
-					class="scroll-reveal"
-					style="transition-delay: {index * 150}ms"
-					use:reveal
-				>
+				<div class="scroll-reveal" style="transition-delay: {index * 150}ms" use:reveal>
 					<a href={section.link} class="group block">
 						<Card
 							class="tilt-card relative h-full overflow-hidden border-[var(--sand)] pt-0 transition-all duration-300 ease-out"
@@ -126,7 +122,7 @@
 						>
 							<!-- Vintage Number Badge -->
 							<div
-								class="vintage-badge pointer-events-none absolute -top-2 -left-2 z-20 select-none font-serif text-7xl font-bold opacity-10"
+								class="vintage-badge pointer-events-none absolute -top-2 -left-2 z-20 font-serif text-7xl font-bold opacity-10 select-none"
 								style="color: {section.accent};"
 							>
 								{section.number}

@@ -15,13 +15,14 @@ import {
 export async function load() {
 	try {
 		// Fetch multiple datasets in parallel
-		const [featuredPosts, testimonials, destinations, specialties, siteSettings] = await Promise.all([
-			client.fetch<BlogPost[]>(featuredBlogPostsQuery),
-			client.fetch<Testimonial[]>(featuredTestimonialsQuery),
-			client.fetch<Destination[]>(destinationsQuery),
-			client.fetch<LocalSpecialty[]>(localSpecialtiesQuery),
-			client.fetch<SiteSettings>(siteSettingsQuery)
-		]);
+		const [featuredPosts, testimonials, destinations, specialties, siteSettings] =
+			await Promise.all([
+				client.fetch<BlogPost[]>(featuredBlogPostsQuery),
+				client.fetch<Testimonial[]>(featuredTestimonialsQuery),
+				client.fetch<Destination[]>(destinationsQuery),
+				client.fetch<LocalSpecialty[]>(localSpecialtiesQuery),
+				client.fetch<SiteSettings>(siteSettingsQuery)
+			]);
 
 		return {
 			featuredPosts,
@@ -42,4 +43,3 @@ export async function load() {
 		};
 	}
 }
-

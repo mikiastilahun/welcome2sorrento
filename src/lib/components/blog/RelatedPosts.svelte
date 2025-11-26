@@ -65,9 +65,7 @@
 								</p>
 								<div class="flex items-center text-sm text-[color:var(--azure)]">
 									<span>Read More</span>
-									<ArrowRight
-										class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2"
-									/>
+									<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
 								</div>
 							</CardContent>
 						</Card>
@@ -77,4 +75,3 @@
 		</div>
 	</section>
 {/if}
-

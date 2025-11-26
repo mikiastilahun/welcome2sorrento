@@ -101,7 +101,7 @@
 	</div>
 
 	<!-- Hero Content - Postcard Style -->
-	<div class="container relative z-20 mx-auto px-4 text-center text-white sm:px-6 lg:px-8">
+	<div class="relative z-20 container mx-auto px-4 text-center text-white sm:px-6 lg:px-8">
 		<div
 			class="mx-auto max-w-4xl rounded-xl border border-white/10 bg-black/20 p-8 backdrop-blur-sm md:p-12"
 			style="
@@ -159,7 +159,7 @@
 				</div>
 
 				<h1
-					class="heading-serif mb-6 text-5xl font-semibold leading-tight tracking-tight sm:text-6xl lg:text-7xl"
+					class="heading-serif mb-6 text-5xl leading-tight font-semibold tracking-tight sm:text-6xl lg:text-7xl"
 				>
 					Discover
 					<span

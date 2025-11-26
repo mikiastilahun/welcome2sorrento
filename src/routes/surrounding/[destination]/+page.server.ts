@@ -20,4 +20,3 @@ export async function load({ params }) {
 		throw error(404, 'Destination not found');
 	}
 }
-

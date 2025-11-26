@@ -31,4 +31,3 @@ export function reveal(node: HTMLElement, options: { threshold?: number; once?: 
 		}
 	};
 }
-

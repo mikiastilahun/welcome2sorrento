@@ -14,19 +14,28 @@
 				class="h-full w-full object-cover"
 			/>
 		</div>
-		<div class="absolute inset-0 bg-gradient-to-r from-[var(--olive)]/95 to-[oklch(0.45_0.1_125)]/90"></div>
+		<div
+			class="absolute inset-0 bg-gradient-to-r from-[var(--olive)]/95 to-[oklch(0.45_0.1_125)]/90"
+		></div>
 		<div class="film-grain pointer-events-none absolute inset-0"></div>
 	</div>
 
 	<!-- Decorative compass -->
-	<div class="pointer-events-none absolute top-1/2 left-8 hidden -translate-y-1/2 opacity-10 lg:block">
-		<Compass class="h-40 w-40 text-white animate-compass-point" />
+	<div
+		class="pointer-events-none absolute top-1/2 left-8 hidden -translate-y-1/2 opacity-10 lg:block"
+	>
+		<Compass class="animate-compass-point h-40 w-40 text-white" />
 	</div>
-	<div class="pointer-events-none absolute top-1/2 right-8 hidden -translate-y-1/2 opacity-10 lg:block">
-		<Compass class="h-40 w-40 text-white animate-compass-point" style="animation-delay: -1s;" />
+	<div
+		class="pointer-events-none absolute top-1/2 right-8 hidden -translate-y-1/2 opacity-10 lg:block"
+	>
+		<Compass class="animate-compass-point h-40 w-40 text-white" style="animation-delay: -1s;" />
 	</div>
 
-	<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8" use:reveal>
+	<div
+		class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8"
+		use:reveal
+	>
 		<div class="mx-auto max-w-3xl text-white">
 			<!-- Section label -->
 			<div class="mb-4 flex items-center justify-center gap-3">
@@ -34,7 +43,7 @@
 				<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase">Avventura</span>
 				<div class="h-px w-8 bg-white/50"></div>
 			</div>
-			
+
 			<h2 class="heading-serif mb-6 text-4xl font-semibold sm:text-5xl">
 				Ready to Book Your Activities?
 			</h2>

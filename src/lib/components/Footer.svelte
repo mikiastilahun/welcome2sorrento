@@ -74,13 +74,13 @@
 						</a>
 					</div>
 
-				<!-- Animated Ciao greeting -->
-				<div
-					class="inline-flex items-center gap-2"
-					role="presentation"
-					onmouseenter={() => (isHovering = true)}
-					onmouseleave={() => (isHovering = false)}
-				>
+					<!-- Animated Ciao greeting -->
+					<div
+						class="inline-flex items-center gap-2"
+						role="presentation"
+						onmouseenter={() => (isHovering = true)}
+						onmouseleave={() => (isHovering = false)}
+					>
 						<span
 							class="font-serif text-2xl font-semibold text-[var(--coral)] {isHovering
 								? 'animate-ciao'
@@ -88,7 +88,9 @@
 						>
 							Ciao!
 						</span>
-						<span class="text-lg {isHovering ? 'animate-wave' : ''}" role="img" aria-label="wave">👋</span>
+						<span class="text-lg {isHovering ? 'animate-wave' : ''}" role="img" aria-label="wave"
+							>👋</span
+						>
 					</div>
 
 					<p class="max-w-md text-lg leading-relaxed text-white/70">
@@ -232,13 +234,17 @@
 
 			<!-- Decorative divider with Italian motif -->
 			<div class="mb-8 flex items-center">
-				<div class="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+				<div
+					class="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+				></div>
 				<div class="mx-4 flex items-center gap-2">
 					<div class="h-2 w-2 rotate-45 bg-[oklch(0.45_0.12_145)]"></div>
 					<div class="h-2 w-2 rotate-45 bg-white/50"></div>
 					<div class="h-2 w-2 rotate-45 bg-[oklch(0.55_0.2_25)]"></div>
 				</div>
-				<div class="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+				<div
+					class="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+				></div>
 			</div>
 
 			<!-- Bottom Bar -->
@@ -279,12 +285,7 @@
 
 		<!-- Decorative Sorrento coastline silhouette -->
 		<div class="pointer-events-none absolute right-0 bottom-0 left-0 h-24 opacity-[0.03]">
-			<svg
-				class="h-full w-full"
-				viewBox="0 0 1200 100"
-				preserveAspectRatio="none"
-				fill="white"
-			>
+			<svg class="h-full w-full" viewBox="0 0 1200 100" preserveAspectRatio="none" fill="white">
 				<path
 					d="M0,100 L0,80 C50,75 100,85 150,70 C200,55 250,60 300,50 C350,40 400,45 450,35 C500,25 550,30 600,20 C650,10 700,15 750,25 C800,35 850,30 900,40 C950,50 1000,45 1050,55 C1100,65 1150,60 1200,70 L1200,100 Z"
 				/>

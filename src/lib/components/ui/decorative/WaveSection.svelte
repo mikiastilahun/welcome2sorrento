@@ -21,13 +21,13 @@
 	}: Props = $props();
 </script>
 
-<section
-	class={cn('relative', className)}
-	style="background-color: {backgroundColor};"
->
+<section class={cn('relative', className)} style="background-color: {backgroundColor};">
 	<!-- Top Wave -->
 	{#if wavePosition === 'top' || wavePosition === 'both'}
-		<div class="absolute top-0 left-0 w-full overflow-hidden leading-none" style="transform: rotate(180deg);">
+		<div
+			class="absolute top-0 left-0 w-full overflow-hidden leading-none"
+			style="transform: rotate(180deg);"
+		>
 			<svg
 				class="relative block h-[60px] w-full"
 				data-name="Layer 1"
@@ -68,4 +68,3 @@
 		</div>
 	{/if}
 </section>
-

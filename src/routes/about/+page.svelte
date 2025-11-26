@@ -42,7 +42,7 @@
 		Award
 	};
 
-	const aboutData = data.aboutPage || {} as AboutPage;
+	const aboutData = data.aboutPage || ({} as AboutPage);
 	const colorAccents = ['azure', 'terracotta', 'olive', 'coral'];
 </script>
 
@@ -59,7 +59,8 @@
 	<!-- Hero Section -->
 	<PageHeader
 		title={aboutData.title || 'About Welcome2Sorrento'}
-		subtitle={aboutData.subtitle || 'Sharing our love for Sorrento with travelers from around the world'}
+		subtitle={aboutData.subtitle ||
+			'Sharing our love for Sorrento with travelers from around the world'}
 		image="https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=1920&q=80"
 		label="La Nostra Storia"
 	/>
@@ -79,7 +80,9 @@
 					<!-- Section label -->
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase">Our Story</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase"
+							>Our Story</span
+						>
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
 					</div>
 					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -105,7 +108,9 @@
 						{/if}
 
 						{#if aboutData.mission}
-							<p class="mt-8 rounded-lg border-l-4 border-[var(--azure)] bg-[var(--cream)] p-4 font-semibold text-[var(--charcoal)] italic">
+							<p
+								class="mt-8 rounded-lg border-l-4 border-[var(--azure)] bg-[var(--cream)] p-4 font-semibold text-[var(--charcoal)] italic"
+							>
 								"{aboutData.mission}"
 							</p>
 						{/if}
@@ -129,11 +134,13 @@
 			</svg>
 		</div>
 
-		<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mb-16 text-center" use:reveal>
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-[var(--azure)]"></div>
-					<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase">Why Us</span>
+					<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase"
+						>Why Us</span
+					>
 					<div class="h-px w-8 bg-[var(--azure)]"></div>
 				</div>
 				<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -146,33 +153,42 @@
 
 			<div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
 				{#if aboutData.services}
-				{#each aboutData.services as service, index}
-					{@const IconComponent = iconMap[service.icon || 'MapPin'] || MapPin}
-					{@const accentColor = colorAccents[index % 4]}
-					<div class="scroll-reveal polaroid-hover" style="transition-delay: {index * 100}ms" use:reveal>
-						<PostcardFrame variant={index === 1 ? 'cream' : 'default'}>
-							<Card class="border-0 bg-transparent shadow-none">
-								<CardContent class="p-4 text-center">
-									<!-- Vintage number -->
-									<div class="absolute -top-2 -left-2 font-serif text-5xl font-bold text-[var(--{accentColor})] opacity-10">
-										0{index + 1}
-									</div>
-									<div
-										class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--{accentColor})] to-[var(--{accentColor === 'azure' ? 'deep-azure' : accentColor})] shadow-lg transition-transform duration-200 ease-out group-hover:scale-105"
-									>
-										<IconComponent class="h-8 w-8 text-white" />
-									</div>
-									<h3 class="heading-serif mb-3 text-xl font-semibold text-[var(--charcoal)]">
-										{service.title}
-									</h3>
-									<p class="text-sm leading-relaxed text-[var(--stone)]">
-										{service.description}
-									</p>
-								</CardContent>
-							</Card>
-						</PostcardFrame>
-					</div>
-				{/each}
+					{#each aboutData.services as service, index}
+						{@const IconComponent = iconMap[service.icon || 'MapPin'] || MapPin}
+						{@const accentColor = colorAccents[index % 4]}
+						<div
+							class="scroll-reveal polaroid-hover"
+							style="transition-delay: {index * 100}ms"
+							use:reveal
+						>
+							<PostcardFrame variant={index === 1 ? 'cream' : 'default'}>
+								<Card class="border-0 bg-transparent shadow-none">
+									<CardContent class="p-4 text-center">
+										<!-- Vintage number -->
+										<div
+											class="absolute -top-2 -left-2 font-serif text-5xl font-bold text-[var(--{accentColor})] opacity-10"
+										>
+											0{index + 1}
+										</div>
+										<div
+											class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--{accentColor})] to-[var(--{accentColor ===
+											'azure'
+												? 'deep-azure'
+												: accentColor})] shadow-lg transition-transform duration-200 ease-out group-hover:scale-105"
+										>
+											<IconComponent class="h-8 w-8 text-white" />
+										</div>
+										<h3 class="heading-serif mb-3 text-xl font-semibold text-[var(--charcoal)]">
+											{service.title}
+										</h3>
+										<p class="text-sm leading-relaxed text-[var(--stone)]">
+											{service.description}
+										</p>
+									</CardContent>
+								</Card>
+							</PostcardFrame>
+						</div>
+					{/each}
 				{/if}
 			</div>
 		</div>
@@ -188,9 +204,7 @@
 				preserveAspectRatio="none"
 				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path
-					d="M0,60 C300,20 600,50 900,30 C1050,20 1100,40 1200,30 L1200,0 L0,0 Z"
-					fill="white"
+				<path d="M0,60 C300,20 600,50 900,30 C1050,20 1100,40 1200,30 L1200,0 L0,0 Z" fill="white"
 				></path>
 			</svg>
 		</div>
@@ -200,7 +214,9 @@
 				<div class="mb-12 text-center">
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase">Services</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase"
+							>Services</span
+						>
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
 					</div>
 					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -211,7 +227,7 @@
 					</p>
 				</div>
 
-				<Card class="overflow-hidden border-[var(--sand)] py-0 shadow-mediterranean-lg">
+				<Card class="shadow-mediterranean-lg overflow-hidden border-[var(--sand)] py-0">
 					<div class="grid grid-cols-1 lg:grid-cols-2">
 						<div class="relative h-96 overflow-hidden lg:h-auto">
 							<img
@@ -219,9 +235,13 @@
 								alt="WhatsApp booking service"
 								class="h-full w-full object-cover"
 							/>
-							<div class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/60 to-transparent"></div>
+							<div
+								class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/60 to-transparent"
+							></div>
 							<div class="absolute right-8 bottom-8 left-8 text-white">
-								<div class="mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+								<div
+									class="mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm"
+								>
 									<Phone class="h-8 w-8" />
 								</div>
 								<h3 class="heading-serif text-3xl font-semibold">Available 24/7</h3>
@@ -238,14 +258,18 @@
 								Focus on anticipating your Italian getaway while we take care of the rest.
 							</p>
 
-							<h4 class="mb-4 flex items-center space-x-2 text-xl font-semibold text-[var(--charcoal)]">
+							<h4
+								class="mb-4 flex items-center space-x-2 text-xl font-semibold text-[var(--charcoal)]"
+							>
 								<Star class="h-5 w-5 text-[var(--azure)]" />
 								<span>What We Handle:</span>
 							</h4>
 							<ul class="mb-8 space-y-3">
 								{#each ['Restaurant reservations at the best tables', 'Hotel and accommodation booking assistance', 'Activity and tour arrangements', 'Transportation coordination', 'Customized itinerary planning', 'Real-time support via WhatsApp'] as item, index}
 									<li class="flex items-start space-x-3" style="animation-delay: {index * 50}ms">
-										<div class="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--azure)]">
+										<div
+											class="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--azure)]"
+										>
 											<CheckCircle class="h-4 w-4 text-white" />
 										</div>
 										<span class="leading-relaxed text-[var(--stone)]">{item}</span>
@@ -270,7 +294,9 @@
 			<div class="scroll-reveal mb-16 text-center" use:reveal>
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-[var(--coral)]"></div>
-					<span class="font-serif text-sm tracking-[0.2em] text-[var(--coral)] uppercase">Testimonials</span>
+					<span class="font-serif text-sm tracking-[0.2em] text-[var(--coral)] uppercase"
+						>Testimonials</span
+					>
 					<div class="h-px w-8 bg-[var(--coral)]"></div>
 				</div>
 				<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -278,9 +304,7 @@
 				</h2>
 			</div>
 
-			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
-				
-			</div>
+			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3"></div>
 		</div>
 	</section>
 
@@ -295,15 +319,22 @@
 					class="h-full w-full object-cover"
 				/>
 			</div>
-			<div class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"></div>
+			<div
+				class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"
+			></div>
 			<div class="film-grain pointer-events-none absolute inset-0"></div>
 		</div>
 
-		<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8" use:reveal>
+		<div
+			class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8"
+			use:reveal
+		>
 			<div class="mx-auto max-w-3xl text-white">
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-white/50"></div>
-					<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase">Get Started</span>
+					<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase"
+						>Get Started</span
+					>
 					<div class="h-px w-8 bg-white/50"></div>
 				</div>
 				<h2 class="heading-serif mb-6 text-4xl font-semibold sm:text-5xl">

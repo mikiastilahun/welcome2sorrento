@@ -102,7 +102,9 @@
 				<div class="mb-12 text-center">
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase">Welcome</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase"
+							>Welcome</span
+						>
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
 					</div>
 					<h2 class="heading-serif mb-4 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -154,11 +156,13 @@
 			</svg>
 		</div>
 
-		<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mb-16 text-center" use:reveal>
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-[var(--azure)]"></div>
-					<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase">Explore</span>
+					<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase"
+						>Explore</span
+					>
 					<div class="h-px w-8 bg-[var(--azure)]"></div>
 				</div>
 				<h2 class="heading-serif mb-4 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -174,9 +178,13 @@
 					{@const Icon = section.icon}
 					<div class="scroll-reveal" style="transition-delay: {index * 150}ms" use:reveal>
 						<a href={section.link} class="group block h-full">
-							<Card class="relative flex h-full flex-col overflow-hidden border-[var(--sand)] pt-0 shadow-mediterranean transition-all duration-300 hover:-translate-y-2 hover:shadow-mediterranean-lg">
+							<Card
+								class="shadow-mediterranean hover:shadow-mediterranean-lg relative flex h-full flex-col overflow-hidden border-[var(--sand)] pt-0 transition-all duration-300 hover:-translate-y-2"
+							>
 								<!-- Vintage number badge -->
-								<div class="pointer-events-none absolute -top-2 -left-2 z-20 select-none font-serif text-7xl font-bold text-[var(--{section.accent})] opacity-10">
+								<div
+									class="pointer-events-none absolute -top-2 -left-2 z-20 font-serif text-7xl font-bold select-none text-[var(--{section.accent})] opacity-10"
+								>
 									{section.number}
 								</div>
 
@@ -187,7 +195,9 @@
 										class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
 									/>
 									<!-- Gradient overlay -->
-									<div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+									<div
+										class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"
+									></div>
 								</div>
 
 								<CardHeader class="relative">
@@ -199,7 +209,9 @@
 									</div>
 
 									<div class="pt-6">
-										<CardTitle class="heading-serif text-2xl text-[var(--charcoal)] transition-colors group-hover:text-[var(--azure)]">
+										<CardTitle
+											class="heading-serif text-2xl text-[var(--charcoal)] transition-colors group-hover:text-[var(--azure)]"
+										>
 											{section.title}
 										</CardTitle>
 										<CardDescription class="text-[var(--stone)]">
@@ -220,9 +232,13 @@
 											</div>
 										{/each}
 									</div>
-									<div class="flex items-center font-serif tracking-wide text-[var(--azure)] transition-all duration-200 group-hover:translate-x-2">
+									<div
+										class="flex items-center font-serif tracking-wide text-[var(--azure)] transition-all duration-200 group-hover:translate-x-2"
+									>
 										<span>Explore {section.title}</span>
-										<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+										<ArrowRight
+											class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+										/>
 									</div>
 								</CardContent>
 
@@ -249,9 +265,7 @@
 				preserveAspectRatio="none"
 				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path
-					d="M0,60 C300,20 600,50 900,30 C1050,20 1100,40 1200,30 L1200,0 L0,0 Z"
-					fill="white"
+				<path d="M0,60 C300,20 600,50 900,30 C1050,20 1100,40 1200,30 L1200,0 L0,0 Z" fill="white"
 				></path>
 			</svg>
 		</div>
@@ -261,7 +275,9 @@
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase">Tips</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase"
+							>Tips</span
+						>
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
 					</div>
 					<h2 class="heading-serif mb-4 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -271,10 +287,16 @@
 
 				<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 					{#each tips as tip, index}
-						<div class="scroll-reveal polaroid-hover" style="transition-delay: {index * 100}ms" use:reveal>
+						<div
+							class="scroll-reveal polaroid-hover"
+							style="transition-delay: {index * 100}ms"
+							use:reveal
+						>
 							<PostcardFrame variant={index % 2 === 0 ? 'default' : 'cream'}>
 								<div class="flex items-start gap-4">
-									<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--olive)]">
+									<div
+										class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--olive)]"
+									>
 										<Lightbulb class="h-5 w-5 text-white" />
 									</div>
 									<div>
@@ -301,11 +323,16 @@
 					class="h-full w-full object-cover"
 				/>
 			</div>
-			<div class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"></div>
+			<div
+				class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"
+			></div>
 			<div class="film-grain pointer-events-none absolute inset-0"></div>
 		</div>
 
-		<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8" use:reveal>
+		<div
+			class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8"
+			use:reveal
+		>
 			<div class="mx-auto max-w-3xl text-white">
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-white/50"></div>
@@ -316,7 +343,8 @@
 					Need Help Planning Your Visit?
 				</h2>
 				<p class="mb-10 text-xl text-white/90">
-					Our personalized WhatsApp booking service makes planning your perfect Sorrento experience easy
+					Our personalized WhatsApp booking service makes planning your perfect Sorrento experience
+					easy
 				</p>
 				<VintageButton href="/contact" variant="coral" size="lg">
 					<span>Get in Touch</span>

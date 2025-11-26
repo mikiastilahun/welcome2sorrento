@@ -72,10 +72,14 @@
 				<div class="mb-8 text-center">
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--azure)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase">About</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase"
+							>About</span
+						>
 						<div class="h-px w-8 bg-[var(--azure)]"></div>
 					</div>
-					<div class="inline-flex items-center space-x-2 rounded-full border border-[var(--azure)]/20 bg-[var(--azure)]/10 px-4 py-2">
+					<div
+						class="inline-flex items-center space-x-2 rounded-full border border-[var(--azure)]/20 bg-[var(--azure)]/10 px-4 py-2"
+					>
 						<Sparkles class="h-5 w-5 text-[var(--azure)]" />
 						<span class="text-sm font-semibold text-[var(--azure)]">About {destination.name}</span>
 					</div>
@@ -104,7 +108,9 @@
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase">Transport</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase"
+							>Transport</span
+						>
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
 					</div>
 					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -119,13 +125,21 @@
 					{#each destination.transport as option, index}
 						{@const TransportIcon = getTransportIcon(option.type)}
 						{@const accentColor = transportColors[index % 3]}
-						<div class="scroll-reveal polaroid-hover" style="transition-delay: {index * 100}ms" use:reveal>
+						<div
+							class="scroll-reveal polaroid-hover"
+							style="transition-delay: {index * 100}ms"
+							use:reveal
+						>
 							<PostcardFrame variant={index === 1 ? 'cream' : 'default'}>
 								<div class="text-center">
-									<div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--{accentColor})] to-[var(--{accentColor})] shadow-lg">
+									<div
+										class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--{accentColor})] to-[var(--{accentColor})] shadow-lg"
+									>
 										<TransportIcon class="h-8 w-8 text-white" />
 									</div>
-									<h3 class="heading-serif mb-2 text-xl font-semibold text-[var(--charcoal)] capitalize">
+									<h3
+										class="heading-serif mb-2 text-xl font-semibold text-[var(--charcoal)] capitalize"
+									>
 										{option.type}
 									</h3>
 									<p class="mb-4 text-sm text-[var(--stone)]">
@@ -134,7 +148,9 @@
 									<div class="space-y-2 border-t border-[var(--sand)] pt-4">
 										<div class="flex items-center justify-between text-sm">
 											<span class="text-[var(--stone)]">Duration</span>
-											<span class="flex items-center space-x-1 font-semibold text-[var(--{accentColor})]">
+											<span
+												class="flex items-center space-x-1 font-semibold text-[var(--{accentColor})]"
+											>
 												<Clock class="h-4 w-4" />
 												<span>{option.duration}</span>
 											</span>
@@ -164,9 +180,7 @@
 					preserveAspectRatio="none"
 					xmlns="http://www.w3.org/2000/svg"
 				>
-					<path
-						d="M0,60 C300,20 600,50 900,30 C1050,20 1100,40 1200,30 L1200,0 L0,0 Z"
-						fill="white"
+					<path d="M0,60 C300,20 600,50 900,30 C1050,20 1100,40 1200,30 L1200,0 L0,0 Z" fill="white"
 					></path>
 				</svg>
 			</div>
@@ -175,7 +189,9 @@
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--coral)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--coral)] uppercase">Must See</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--coral)] uppercase"
+							>Must See</span
+						>
 						<div class="h-px w-8 bg-[var(--coral)]"></div>
 					</div>
 					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -191,9 +207,13 @@
 						{@const accentColors = ['azure', 'terracotta', 'olive', 'coral']}
 						{@const accentColor = accentColors[index % 4]}
 						<div class="scroll-reveal" style="transition-delay: {index * 100}ms" use:reveal>
-							<Card class="group relative h-full overflow-hidden border-[var(--sand)] pt-0 shadow-mediterranean transition-all duration-300 hover:-translate-y-2 hover:shadow-mediterranean-lg">
+							<Card
+								class="group shadow-mediterranean hover:shadow-mediterranean-lg relative h-full overflow-hidden border-[var(--sand)] pt-0 transition-all duration-300 hover:-translate-y-2"
+							>
 								<!-- Vintage number badge -->
-								<div class="pointer-events-none absolute -top-2 -left-2 z-20 select-none font-serif text-7xl font-bold text-[var(--{accentColor})] opacity-10">
+								<div
+									class="pointer-events-none absolute -top-2 -left-2 z-20 font-serif text-7xl font-bold select-none text-[var(--{accentColor})] opacity-10"
+								>
 									0{index + 1}
 								</div>
 
@@ -205,10 +225,14 @@
 											class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-110"
 										/>
 									{/if}
-									<div class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/70 via-[var(--charcoal)]/30 to-transparent"></div>
+									<div
+										class="absolute inset-0 bg-gradient-to-t from-[var(--charcoal)]/70 via-[var(--charcoal)]/30 to-transparent"
+									></div>
 								</div>
 								<CardContent class="p-6">
-									<h3 class="heading-serif mb-2 text-xl font-semibold text-[var(--charcoal)] transition-colors group-hover:text-[var(--azure)]">
+									<h3
+										class="heading-serif mb-2 text-xl font-semibold text-[var(--charcoal)] transition-colors group-hover:text-[var(--azure)]"
+									>
 										{attraction.name}
 									</h3>
 									<p class="text-[var(--stone)]">{attraction.description}</p>
@@ -234,7 +258,9 @@
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase">Tips</span>
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase"
+							>Tips</span
+						>
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
 					</div>
 					<h2 class="heading-serif mb-6 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
@@ -247,10 +273,16 @@
 
 				<div class="mx-auto max-w-4xl space-y-6">
 					{#each destination.tips as tip, index}
-						<div class="scroll-reveal polaroid-hover" style="transition-delay: {index * 100}ms" use:reveal>
+						<div
+							class="scroll-reveal polaroid-hover"
+							style="transition-delay: {index * 100}ms"
+							use:reveal
+						>
 							<PostcardFrame variant={index % 2 === 0 ? 'default' : 'cream'}>
 								<div class="flex items-start gap-4">
-									<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--terracotta)]">
+									<div
+										class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--terracotta)]"
+									>
 										<Lightbulb class="h-5 w-5 text-white" />
 									</div>
 									<p class="text-lg text-[var(--stone)]">{tip}</p>
@@ -269,24 +301,32 @@
 		<div class="absolute inset-0">
 			<div class="animate-ken-burns h-full w-full">
 				<img
-					src={destination.heroImage?.asset?.url || 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80'}
+					src={destination.heroImage?.asset?.url ||
+						'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80'}
 					alt={destination.name}
 					class="h-full w-full object-cover"
 				/>
 			</div>
-			<div class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"></div>
+			<div
+				class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"
+			></div>
 			<div class="film-grain pointer-events-none absolute inset-0"></div>
 		</div>
 
-		<div class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8" use:reveal>
+		<div
+			class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8"
+			use:reveal
+		>
 			<div class="mx-auto max-w-3xl text-white">
 				<!-- Section label -->
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-white/50"></div>
-					<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase">Explore More</span>
+					<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase"
+						>Explore More</span
+					>
 					<div class="h-px w-8 bg-white/50"></div>
 				</div>
-				
+
 				<h2 class="heading-serif mb-6 text-4xl font-semibold sm:text-5xl">
 					Explore More of the Amalfi Coast Region
 				</h2>

@@ -61,7 +61,7 @@
 >
 	{#each elements as element (element.id)}
 		<div
-			class="absolute animate-float"
+			class="animate-float absolute"
 			style="
 				left: {element.x}%;
 				top: {element.y}%;
@@ -164,4 +164,3 @@
 		</div>
 	{/each}
 </div>
-

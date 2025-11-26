@@ -78,4 +78,3 @@ ${blogPosts
 	.join('\n')}
 </urlset>`;
 }
-

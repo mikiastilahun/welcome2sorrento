@@ -16,10 +16,12 @@
 				<!-- Section label -->
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-[var(--terracotta)]"></div>
-					<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase">Day Trips</span>
+					<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase"
+						>Day Trips</span
+					>
 					<div class="h-px w-8 bg-[var(--terracotta)]"></div>
 				</div>
-				
+
 				<h2 class="heading-serif mb-6 text-3xl font-semibold text-[var(--charcoal)] sm:text-4xl">
 					Your Perfect <span class="text-[var(--azure)]">Base</span>
 				</h2>

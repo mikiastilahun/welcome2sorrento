@@ -21,9 +21,7 @@
 			preserveAspectRatio="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<path
-				d="M0,60 C200,20 400,50 600,30 C800,10 1000,40 1200,20 L1200,0 L0,0 Z"
-				fill="white"
+			<path d="M0,60 C200,20 400,50 600,30 C800,10 1000,40 1200,20 L1200,0 L0,0 Z" fill="white"
 			></path>
 		</svg>
 	</div>
@@ -49,7 +47,7 @@
 		</svg>
 	</div>
 
-	<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+	<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="scroll-reveal mb-16 text-center" use:reveal>
 			<!-- Section label -->
 			<div class="mb-4 flex items-center justify-center gap-3">
@@ -72,14 +70,10 @@
 
 		<div class="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 			{#each featuredDestinations as destination, index}
-				<div
-					class="scroll-reveal"
-					style="transition-delay: {index * 100}ms"
-					use:reveal
-				>
+				<div class="scroll-reveal" style="transition-delay: {index * 100}ms" use:reveal>
 					<a href="/surrounding/{destination.slug.current}" class="group block">
 						<Card
-							class="luggage-tag-card relative h-full overflow-hidden border-[var(--sand)] py-0 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-mediterranean-lg"
+							class="luggage-tag-card hover:shadow-mediterranean-lg relative h-full overflow-hidden border-[var(--sand)] py-0 transition-all duration-300 ease-out hover:-translate-y-2"
 						>
 							<!-- Luggage Tag Decoration -->
 							<div class="absolute top-3 right-3 z-20">

@@ -38,7 +38,7 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
-	const surroundingSubmenu = destinations.map(dest => ({
+	const surroundingSubmenu = destinations.map((dest) => ({
 		name: dest.name,
 		href: `/surrounding/${dest.slug.current}`
 	}));
@@ -91,20 +91,13 @@
 					class="ml-2 hidden opacity-0 transition-all duration-300 group-hover:opacity-100 lg:block"
 				>
 					<svg
-						class="h-6 w-6 animate-wave"
+						class="animate-wave h-6 w-6"
 						viewBox="0 0 24 24"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
 					>
 						<ellipse cx="12" cy="12" rx="8" ry="6" fill="oklch(0.92 0.15 100)" />
-						<ellipse
-							cx="18"
-							cy="7"
-							rx="2"
-							ry="3"
-							fill="var(--olive)"
-							transform="rotate(30 18 7)"
-						/>
+						<ellipse cx="18" cy="7" rx="2" ry="3" fill="var(--olive)" transform="rotate(30 18 7)" />
 					</svg>
 				</div>
 			</a>
@@ -114,12 +107,9 @@
 				{#each navLinks as link}
 					{@const isActive = $page.url.pathname.startsWith(link.href) && link.href !== '/'}
 					{@const isExactActive = $page.url.pathname === link.href}
-					{@const textColor =
-						scrolled || !isHeroSection ? 'text-[var(--charcoal)]' : 'text-white'}
+					{@const textColor = scrolled || !isHeroSection ? 'text-[var(--charcoal)]' : 'text-white'}
 					{@const hoverColor =
-						scrolled || !isHeroSection
-							? 'hover:text-[var(--azure)]'
-							: 'hover:text-[var(--coral)]'}
+						scrolled || !isHeroSection ? 'hover:text-[var(--azure)]' : 'hover:text-[var(--coral)]'}
 
 					{#if link.submenu}
 						<div class="group relative">
@@ -137,7 +127,10 @@
 								/>
 								{#if isActive}
 									<div
-										class="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full {scrolled || !isHeroSection ? 'bg-[var(--azure)]' : 'bg-[var(--coral)]'}"
+										class="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full {scrolled ||
+										!isHeroSection
+											? 'bg-[var(--azure)]'
+											: 'bg-[var(--coral)]'}"
 									></div>
 								{/if}
 							</a>
@@ -145,7 +138,7 @@
 								class="invisible absolute top-full left-0 mt-2 w-56 translate-y-2 opacity-0 transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
 							>
 								<div
-									class="overflow-hidden rounded-xl border border-[var(--sand)] bg-white/95 p-2 shadow-mediterranean backdrop-blur-lg"
+									class="shadow-mediterranean overflow-hidden rounded-xl border border-[var(--sand)] bg-white/95 p-2 backdrop-blur-lg"
 								>
 									{#each link.submenu as sublink}
 										<a
@@ -153,7 +146,7 @@
 											class="block rounded-lg px-4 py-3 text-sm transition-all duration-200 {$page
 												.url.pathname === sublink.href
 												? 'bg-[var(--cream)] font-semibold text-[var(--azure)]'
-												: 'text-[var(--charcoal)] hover:bg-[var(--cream)] hover:translate-x-1'}"
+												: 'text-[var(--charcoal)] hover:translate-x-1 hover:bg-[var(--cream)]'}"
 										>
 											{sublink.name}
 										</a>
@@ -173,7 +166,10 @@
 							<span>{link.name}</span>
 							{#if isExactActive}
 								<div
-									class="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full {scrolled || !isHeroSection ? 'bg-[var(--azure)]' : 'bg-[var(--coral)]'}"
+									class="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full {scrolled ||
+									!isHeroSection
+										? 'bg-[var(--azure)]'
+										: 'bg-[var(--coral)]'}"
 								></div>
 							{/if}
 						</a>
@@ -183,7 +179,8 @@
 				<!-- CTA Button -->
 				<a href="/contact" class="ml-4">
 					<Button
-						class="btn-nav rounded-lg px-8 py-3 transition-all duration-200 hover:shadow-md {scrolled || !isHeroSection
+						class="btn-nav rounded-lg px-8 py-3 transition-all duration-200 hover:shadow-md {scrolled ||
+						!isHeroSection
 							? 'bg-[var(--azure)] text-white hover:brightness-110'
 							: 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30'}"
 					>
@@ -195,7 +192,8 @@
 			<!-- Mobile Menu Button -->
 			<button
 				onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-				class="rounded-lg p-2 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--azure)] lg:hidden {scrolled || !isHeroSection
+				class="rounded-lg p-2 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--azure)] lg:hidden {scrolled ||
+				!isHeroSection
 					? 'text-[var(--charcoal)] hover:bg-[var(--cream)]'
 					: 'text-white hover:bg-white/20'}"
 				aria-label="Toggle menu"
@@ -212,7 +210,7 @@
 	<!-- Mobile Menu -->
 	{#if mobileMenuOpen}
 		<div
-			class="animate-in slide-in-from-top-2 fade-in-0 border-t border-[var(--sand)] bg-white/95 shadow-mediterranean backdrop-blur-lg duration-200 lg:hidden"
+			class="shadow-mediterranean animate-in border-t border-[var(--sand)] bg-white/95 backdrop-blur-lg duration-200 fade-in-0 slide-in-from-top-2 lg:hidden"
 		>
 			<div class="container mx-auto px-4 py-4">
 				<div class="space-y-1">

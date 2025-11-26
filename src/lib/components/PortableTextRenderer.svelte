@@ -31,7 +31,8 @@
 				`<a href="${value.href}" class="text-[color:var(--purple-lavender)] underline hover:text-[color:var(--deep-purple)] transition-colors" target="_blank" rel="noopener noreferrer">${children}</a>`
 		},
 		list: {
-			bullet: ({ children }: { children: any }) => `<ul class="mb-4 ml-6 list-disc space-y-2">${children}</ul>`,
+			bullet: ({ children }: { children: any }) =>
+				`<ul class="mb-4 ml-6 list-disc space-y-2">${children}</ul>`,
 			number: ({ children }: { children: any }) =>
 				`<ol class="mb-4 ml-6 list-decimal space-y-2">${children}</ol>`
 		},
@@ -49,4 +50,3 @@
 		<PortableText {value} {components} />
 	</div>
 {/if}
-

@@ -48,15 +48,9 @@
 			<!-- Feature Cards - Polaroid Style -->
 			<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
 				<!-- Card 1: Local Insights -->
-				<div
-					class="scroll-reveal polaroid-hover"
-					style="transition-delay: 100ms;"
-					use:reveal
-				>
+				<div class="scroll-reveal polaroid-hover" style="transition-delay: 100ms;" use:reveal>
 					<PostcardFrame showStamp={false}>
-						<Card
-							class="border-0 bg-transparent shadow-none"
-						>
+						<Card class="border-0 bg-transparent shadow-none">
 							<CardContent class="p-4 text-center">
 								<div
 									class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] shadow-lg"
@@ -75,15 +69,9 @@
 				</div>
 
 				<!-- Card 2: Hidden Gems -->
-				<div
-					class="scroll-reveal polaroid-hover"
-					style="transition-delay: 200ms;"
-					use:reveal
-				>
+				<div class="scroll-reveal polaroid-hover" style="transition-delay: 200ms;" use:reveal>
 					<PostcardFrame showStamp variant="cream">
-						<Card
-							class="border-0 bg-transparent shadow-none"
-						>
+						<Card class="border-0 bg-transparent shadow-none">
 							<CardContent class="p-4 text-center">
 								<div
 									class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--coral)] to-[var(--terracotta)] shadow-lg"
@@ -102,15 +90,9 @@
 				</div>
 
 				<!-- Card 3: Expert Curation -->
-				<div
-					class="scroll-reveal polaroid-hover"
-					style="transition-delay: 300ms;"
-					use:reveal
-				>
+				<div class="scroll-reveal polaroid-hover" style="transition-delay: 300ms;" use:reveal>
 					<PostcardFrame showStamp={false}>
-						<Card
-							class="border-0 bg-transparent shadow-none"
-						>
+						<Card class="border-0 bg-transparent shadow-none">
 							<CardContent class="p-4 text-center">
 								<div
 									class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--olive)] to-[oklch(0.45_0.1_125)] shadow-lg"
@@ -151,9 +133,7 @@
 			preserveAspectRatio="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<path
-				d="M0,30 C300,60 600,0 900,30 C1050,45 1150,30 1200,30 L1200,60 L0,60 Z"
-				fill="white"
+			<path d="M0,30 C300,60 600,0 900,30 C1050,45 1150,30 1200,30 L1200,60 L0,60 Z" fill="white"
 			></path>
 		</svg>
 	</div>

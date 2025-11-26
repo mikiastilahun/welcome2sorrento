@@ -9,12 +9,16 @@
 	let { categories, selectedCategory = $bindable() }: Props = $props();
 </script>
 
-<section class="sticky top-0 z-40 border-b border-[var(--sand)] bg-white/95 py-6 shadow-mediterranean backdrop-blur-md">
+<section
+	class="shadow-mediterranean sticky top-0 z-40 border-b border-[var(--sand)] bg-white/95 py-6 backdrop-blur-md"
+>
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<!-- Section label -->
 		<div class="mb-4 flex items-center justify-center gap-3">
 			<div class="h-px w-8 bg-[var(--azure)]"></div>
-			<span class="font-serif text-xs tracking-[0.2em] text-[var(--azure)] uppercase">Categories</span>
+			<span class="font-serif text-xs tracking-[0.2em] text-[var(--azure)] uppercase"
+				>Categories</span
+			>
 			<div class="h-px w-8 bg-[var(--azure)]"></div>
 		</div>
 

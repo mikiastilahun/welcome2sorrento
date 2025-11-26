@@ -10,4 +10,3 @@
 		class="text-[var(--azure)]">S</span
 	>
 </div>
-

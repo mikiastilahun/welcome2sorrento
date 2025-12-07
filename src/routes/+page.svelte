@@ -8,7 +8,6 @@
 	} from '$lib/sanity/queries';
 	import SEO from '$lib/components/SEO.svelte';
 	import Hero from '$lib/components/home/Hero.svelte';
-	import Intro from '$lib/components/home/Intro.svelte';
 	import FeaturedSections from '$lib/components/home/FeaturedSections.svelte';
 	import Destinations from '$lib/components/home/Destinations.svelte';
 	import Testimonials from '$lib/components/home/Testimonials.svelte';
@@ -41,7 +40,6 @@
 
 <div class="relative -mt-24">
 	<Hero />
-	<Intro />
 	<FeaturedSections siteSettings={data.siteSettings} />
 	<Destinations featuredDestinations={data.featuredDestinations} />
 	<Testimonials testimonials={data.testimonials} />

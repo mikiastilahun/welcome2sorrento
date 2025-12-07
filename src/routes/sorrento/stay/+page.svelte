@@ -3,8 +3,6 @@
 	import Intro from '$lib/components/stay/Intro.svelte';
 	import CategoryFilter from '$lib/components/stay/CategoryFilter.svelte';
 	import AccommodationGrid from '$lib/components/stay/AccommodationGrid.svelte';
-	import NeighborhoodGuide from '$lib/components/stay/NeighborhoodGuide.svelte';
-	import BookingTips from '$lib/components/stay/BookingTips.svelte';
 	import CTA from '$lib/components/stay/CTA.svelte';
 	import type { Accommodation } from '$lib/sanity/queries';
 
@@ -42,7 +40,6 @@
 		title="Where to Stay in Sorrento"
 		subtitle="From luxury clifftop hotels to charming family-run B&Bs"
 		image="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80"
-		label="Alloggio"
 	/>
 
 	<Intro />
@@ -50,10 +47,6 @@
 	<CategoryFilter {types} bind:selectedType />
 
 	<AccommodationGrid {filteredAccommodations} {selectedType} />
-
-	<NeighborhoodGuide />
-
-	<BookingTips />
 
 	<CTA />
 </div>

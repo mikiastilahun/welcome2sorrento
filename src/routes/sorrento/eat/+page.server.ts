@@ -1,17 +1,21 @@
 import { client } from '$lib/sanity/client';
-import { restaurantsQuery, type Restaurant } from '$lib/sanity/queries';
+import { restaurantsQuery, eatPageQuery, type Restaurant, type EatPage } from '$lib/sanity/queries';
 
 export async function load() {
 	try {
-		const restaurants = await client.fetch<Restaurant[]>(restaurantsQuery);
+		const [restaurants, pageData] = await Promise.all([
+			client.fetch<Restaurant[]>(restaurantsQuery),
+			client.fetch<EatPage>(eatPageQuery)
+		]);
 		return {
-			restaurants
+			restaurants,
+			pageData
 		};
 	} catch (error) {
-		console.error('Error fetching restaurants:', error);
-		// Return empty array if Sanity is not configured yet
+		console.error('Error fetching eat page data:', error);
 		return {
-			restaurants: []
+			restaurants: [],
+			pageData: null
 		};
 	}
 }

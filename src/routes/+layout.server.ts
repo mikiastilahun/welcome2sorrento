@@ -1,16 +1,32 @@
 import { client } from '$lib/sanity/client';
-import { destinationsQuery, type Destination } from '$lib/sanity/queries';
+import {
+	destinationsQuery,
+	siteSettingsQuery,
+	errorPageQuery,
+	type Destination,
+	type SiteSettings,
+	type ErrorPage
+} from '$lib/sanity/queries';
 
 export async function load() {
 	try {
-		const destinations = await client.fetch<Destination[]>(destinationsQuery);
+		const [destinations, siteSettings, errorPage] = await Promise.all([
+			client.fetch<Destination[]>(destinationsQuery),
+			client.fetch<SiteSettings>(siteSettingsQuery),
+			client.fetch<ErrorPage>(errorPageQuery)
+		]);
+
 		return {
-			navDestinations: destinations
+			navDestinations: destinations,
+			siteSettings,
+			errorPage
 		};
 	} catch (error) {
-		console.error('Error fetching destinations for navigation:', error);
+		console.error('Error fetching layout data:', error);
 		return {
-			navDestinations: []
+			navDestinations: [],
+			siteSettings: null,
+			errorPage: null
 		};
 	}
 }

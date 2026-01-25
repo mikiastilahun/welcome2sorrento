@@ -4,15 +4,33 @@
 	import CategoryFilter from '$lib/components/stay/CategoryFilter.svelte';
 	import AccommodationGrid from '$lib/components/stay/AccommodationGrid.svelte';
 	import CTA from '$lib/components/stay/CTA.svelte';
-	import type { Accommodation } from '$lib/sanity/queries';
+	import SEO from '$lib/components/SEO.svelte';
+	import type { Accommodation, StayPage } from '$lib/sanity/queries';
 
 	interface Props {
 		data: {
 			accommodations: Accommodation[];
+			pageData: StayPage | null;
 		};
 	}
 
 	let { data }: Props = $props();
+	const pageData = data.pageData;
+
+	// SEO from CMS
+	const seoTitle =
+		pageData?.seo?.metaTitle ||
+		'Where to Stay in Sorrento - Hotels, B&Bs & Apartments | Welcome2Sorrento';
+	const seoDescription =
+		pageData?.seo?.metaDescription ||
+		'Find your perfect accommodation in Sorrento - luxury hotels, boutique B&Bs, and charming apartments with stunning views.';
+	const seoKeywords = pageData?.seo?.keywords || '';
+
+	// Header from CMS
+	const headerTitle = pageData?.header?.heading || 'Where to Stay in Sorrento';
+	const headerSubtitle =
+		pageData?.header?.subheading || 'From luxury clifftop hotels to charming family-run B&Bs';
+	const headerImage = pageData?.header?.heroImage?.asset?.url || '';
 
 	// Get unique types from accommodations
 	const allTypes = $derived(Array.from(new Set(data.accommodations.map((a) => a.type))).sort());
@@ -27,26 +45,22 @@
 	);
 </script>
 
+<SEO title={seoTitle} description={seoDescription} keywords={seoKeywords} />
+
 <svelte:head>
-	<title>Where to Stay in Sorrento - Hotels, B&Bs & Apartments | Welcome2Sorrento</title>
-	<meta
-		name="description"
-		content="Find your perfect accommodation in Sorrento - luxury hotels, boutique B&Bs, and charming apartments with stunning views."
-	/>
+	<title>{seoTitle}</title>
 </svelte:head>
 
 <div class="-mt-24">
-	<PageHeader
-		title="Where to Stay in Sorrento"
-		subtitle="From luxury clifftop hotels to charming family-run B&Bs"
-		image="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80"
-	/>
+	{#if headerImage}
+		<PageHeader title={headerTitle} subtitle={headerSubtitle} image={headerImage} />
+	{/if}
 
-	<Intro />
+	<Intro {pageData} />
 
 	<CategoryFilter {types} bind:selectedType />
 
 	<AccommodationGrid {filteredAccommodations} {selectedType} />
 
-	<CTA />
+	<CTA {pageData} />
 </div>

@@ -1,25 +1,43 @@
 <script lang="ts">
-	import type { Activity } from '$lib/sanity/queries';
+	import type { Activity, DoPage } from '$lib/sanity/queries';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Intro from '$lib/components/do/Intro.svelte';
 	import CategoryFilter from '$lib/components/do/CategoryFilter.svelte';
 	import ActivityGrid from '$lib/components/do/ActivityGrid.svelte';
 	import CTA from '$lib/components/do/CTA.svelte';
+	import SEO from '$lib/components/SEO.svelte';
 
 	interface Props {
 		data: {
 			activities: Activity[];
+			pageData: DoPage | null;
 		};
 	}
 
 	let { data }: Props = $props();
+	const pageData = data.pageData;
+
+	// SEO from CMS
+	const seoTitle =
+		pageData?.seo?.metaTitle ||
+		'Things to Do in Sorrento - Activities & Attractions | Welcome2Sorrento';
+	const seoDescription =
+		pageData?.seo?.metaDescription ||
+		'Discover the best activities and attractions in Sorrento - boat tours, cooking classes, beaches, hiking, and more.';
+	const seoKeywords = pageData?.seo?.keywords || '';
+
+	// Header from CMS
+	const headerTitle = pageData?.header?.heading || 'Things to Do in Sorrento';
+	const headerSubtitle =
+		pageData?.header?.subheading || 'Unforgettable experiences and adventures await';
+	const headerImage = pageData?.header?.heroImage?.asset?.url || '';
 
 	// Use CMS activities
 	const displayActivities = data.activities;
 
 	// Extract unique categories from activities
 	const categoriesFromData = Array.from(
-		new Set(displayActivities.map((a: any) => a.category).filter(Boolean))
+		new Set(displayActivities.map((a) => a.category).filter(Boolean))
 	).sort();
 
 	const categories = ['All', ...categoriesFromData];
@@ -28,30 +46,26 @@
 	const filteredActivities = $derived(
 		selectedCategory === 'All'
 			? displayActivities
-			: displayActivities.filter((a: any) => a.category === selectedCategory)
+			: displayActivities.filter((a) => a.category === selectedCategory)
 	);
 </script>
 
+<SEO title={seoTitle} description={seoDescription} keywords={seoKeywords} />
+
 <svelte:head>
-	<title>Things to Do in Sorrento - Activities & Attractions | Welcome2Sorrento</title>
-	<meta
-		name="description"
-		content="Discover the best activities and attractions in Sorrento - boat tours, cooking classes, beaches, hiking, and more."
-	/>
+	<title>{seoTitle}</title>
 </svelte:head>
 
 <div class="-mt-24">
-	<PageHeader
-		title="Things to Do in Sorrento"
-		subtitle="Unforgettable experiences and adventures await"
-		image="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=1920&q=80"
-	/>
+	{#if headerImage}
+		<PageHeader title={headerTitle} subtitle={headerSubtitle} image={headerImage} />
+	{/if}
 
-	<Intro />
+	<Intro {pageData} />
 
 	<CategoryFilter {categories} bind:selectedCategory />
 
 	<ActivityGrid {filteredActivities} />
 
-	<CTA />
+	<CTA {pageData} />
 </div>

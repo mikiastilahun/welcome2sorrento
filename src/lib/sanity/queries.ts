@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types';
-import type { ImageAsset, Slug } from '@sanity/types';
+import type { Slug } from '@sanity/types';
 import groq from 'groq';
 
 // Blog Post Queries
@@ -423,6 +423,674 @@ export const featuredTestimonialsQuery = groq`*[_type == "testimonial" && featur
   }
 }`;
 
+// ============================================
+// SITE SETTINGS QUERY (COMPREHENSIVE)
+// ============================================
+export const siteSettingsQuery = groq`*[_type == "siteSettings"][0] {
+  _id,
+  title,
+  siteDescription,
+  siteUrl,
+  
+  // Hero Section
+  heroSection {
+    heading,
+    subheading,
+    ctaText,
+    ctaLink,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  
+  // Intro Section
+  introSection {
+    heading,
+    description
+  },
+  introCards[] {
+    title,
+    description,
+    icon
+  },
+  
+  // Homepage Stats
+  homepageStats {
+    happyTravelers,
+    partnerHotels,
+    localGuides,
+    yearsExperience
+  },
+  
+  // Featured Sections
+  featuredSectionsHeading {
+    heading,
+    subheading
+  },
+  featuredSections {
+    eat {
+      title,
+      description,
+      image {
+        asset-> {
+          _id,
+          url
+        },
+        alt
+      }
+    },
+    stay {
+      title,
+      description,
+      image {
+        asset-> {
+          _id,
+          url
+        },
+        alt
+      }
+    },
+    do {
+      title,
+      description,
+      image {
+        asset-> {
+          _id,
+          url
+        },
+        alt
+      }
+    }
+  },
+  
+  // Destinations Section
+  destinationsSection {
+    heading,
+    subheading,
+    ctaText
+  },
+  
+  // Testimonials Section
+  testimonialsSection {
+    heading,
+    subheading
+  },
+  
+  // Newsletter
+  newsletter {
+    heading,
+    description,
+    buttonText,
+    successMessage,
+    placeholderText
+  },
+  
+  // Home CTA
+  homeCTA {
+    heading,
+    description,
+    primaryButtonText,
+    primaryButtonLink,
+    secondaryButtonText,
+    secondaryButtonLink,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  
+  // Navigation
+  navigation {
+    mainMenu[] {
+      label,
+      href,
+      submenu[] {
+        label,
+        href,
+        description
+      }
+    },
+    ctaButtonText,
+    ctaButtonLink
+  },
+  
+  // Footer
+  footer {
+    greeting,
+    description,
+    madeWithLove,
+    copyrightText,
+    quickLinks[] {
+      label,
+      href
+    },
+    services[] {
+      label,
+      href
+    },
+    quickLinksTitle,
+    servicesTitle,
+    subscribeTitle
+  },
+  
+  // Contact Info
+  contactInfo {
+    email,
+    phone,
+    whatsapp,
+    address,
+    availability
+  },
+  
+  // Social Media
+  socialMedia {
+    facebook,
+    instagram,
+    twitter,
+    youtube,
+    tiktok
+  },
+  
+  // SEO
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords,
+    ogImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    },
+    twitterHandle,
+    themeColor
+  },
+  
+  homePageSeo {
+    metaTitle,
+    metaDescription,
+    keywords
+  },
+  
+  // Sorrento Page Settings (legacy)
+  sorrentoPageStats {
+    restaurantCount,
+    accommodationCount,
+    activityCount
+  },
+  sorrentoIntro {
+    title,
+    description
+  },
+  insiderTips[] {
+    title,
+    description,
+    icon
+  }
+}`;
+
+// ============================================
+// PAGE-SPECIFIC QUERIES
+// ============================================
+
+// Sorrento Page Query
+export const sorrentoPageQuery = groq`*[_type == "sorrentoPage"][0] {
+  _id,
+  title,
+  header {
+    heading,
+    subheading,
+    heroImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  intro {
+    heading,
+    description,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  sections[] {
+    title,
+    subtitle,
+    description,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    },
+    link,
+    features
+  },
+  insiderTips[] {
+    title,
+    description,
+    icon
+  },
+  cta {
+    heading,
+    description,
+    buttonText,
+    buttonLink,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords
+  }
+}`;
+
+// Eat Page Query
+export const eatPageQuery = groq`*[_type == "eatPage"][0] {
+  _id,
+  title,
+  header {
+    heading,
+    subheading,
+    heroImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  introText,
+  specialtiesHeading,
+  localSpecialties[] {
+    name,
+    description,
+    icon
+  },
+  tipsHeading,
+  diningTips[] {
+    title,
+    description,
+    icon
+  },
+  cta {
+    heading,
+    description,
+    buttonText,
+    buttonLink,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords
+  }
+}`;
+
+// Stay Page Query
+export const stayPageQuery = groq`*[_type == "stayPage"][0] {
+  _id,
+  title,
+  header {
+    heading,
+    subheading,
+    heroImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  introText,
+  neighborhoodsHeading,
+  neighborhoods[] {
+    title,
+    description,
+    badge,
+    icon
+  },
+  tipsHeading,
+  bookingTips[] {
+    title,
+    description,
+    icon
+  },
+  cta {
+    heading,
+    description,
+    buttonText,
+    buttonLink,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords
+  }
+}`;
+
+// Do Page Query
+export const doPageQuery = groq`*[_type == "doPage"][0] {
+  _id,
+  title,
+  header {
+    heading,
+    subheading,
+    heroImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  introText,
+  categoriesHeading,
+  activityCategories[] {
+    title,
+    description,
+    icon
+  },
+  cta {
+    heading,
+    description,
+    buttonText,
+    buttonLink,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords
+  }
+}`;
+
+// Surrounding Page Query
+export const surroundingPageQuery = groq`*[_type == "surroundingPage"][0] {
+  _id,
+  title,
+  header {
+    heading,
+    subheading,
+    heroImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  introText,
+  cta {
+    heading,
+    description,
+    buttonText,
+    buttonLink,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords
+  }
+}`;
+
+// Blog Page Query
+export const blogPageQuery = groq`*[_type == "blogPage"][0] {
+  _id,
+  title,
+  header {
+    label,
+    heading,
+    subheading,
+    heroImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  introText,
+  newsletterCTA {
+    heading,
+    description,
+    buttonText,
+    placeholderText
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords
+  }
+}`;
+
+// About Page Query
+export const aboutPageQuery = groq`*[_type == "aboutPage"][0] {
+  _id,
+  title,
+  subtitle,
+  heroImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
+  story {
+    title,
+    content,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  mission,
+  servicesSection {
+    heading,
+    description,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  services[] {
+    title,
+    description,
+    icon
+  },
+  team[] {
+    name,
+    role,
+    bio,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  values[] {
+    title,
+    description,
+    icon
+  },
+  cta {
+    heading,
+    description,
+    buttonText,
+    buttonLink,
+    backgroundImage {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    }
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords
+  }
+}`;
+
+// Contact Page Query
+export const contactPageQuery = groq`*[_type == "contactPage"][0] {
+  _id,
+  title,
+  subtitle,
+  heroImage {
+    asset-> {
+      _id,
+      url
+    },
+    alt
+  },
+  serviceOptions,
+  formLabels {
+    nameLabel,
+    emailLabel,
+    serviceLabel,
+    messageLabel,
+    submitButtonText,
+    successMessage
+  },
+  contactInfo {
+    email,
+    phone,
+    whatsapp,
+    address
+  },
+  businessHours {
+    weekdays,
+    weekends
+  },
+  faqs[] {
+    question,
+    answer
+  },
+  socialMedia {
+    facebook,
+    instagram,
+    twitter,
+    linkedin
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    keywords
+  }
+}`;
+
+// Privacy Page Query
+export const privacyPageQuery = groq`*[_type == "privacyPage"][0] {
+  _id,
+  title,
+  subtitle,
+  lastUpdated,
+  content,
+  seo {
+    metaTitle,
+    metaDescription
+  }
+}`;
+
+// Terms Page Query
+export const termsPageQuery = groq`*[_type == "termsPage"][0] {
+  _id,
+  title,
+  subtitle,
+  lastUpdated,
+  content,
+  seo {
+    metaTitle,
+    metaDescription
+  }
+}`;
+
+// Error Page Query
+export const errorPageQuery = groq`*[_type == "errorPage"][0] {
+  _id,
+  title,
+  error404 {
+    heading,
+    message
+  },
+  error500 {
+    heading,
+    message
+  },
+  errorDefault {
+    heading,
+    message
+  },
+  navigationTitle,
+  navigationCards[] {
+    label,
+    href,
+    icon
+  },
+  footerMessage
+}`;
+
+// ============================================
+// TYPE DEFINITIONS
+// ============================================
+
 // Image type with asset reference
 export interface SanityImage {
 	asset?: {
@@ -432,7 +1100,37 @@ export interface SanityImage {
 	alt?: string;
 }
 
-// Type Definitions
+// Sanity block content structure
+export interface SanityBlockChild {
+	_key: string;
+	_type: string;
+	text?: string;
+	marks?: string[];
+}
+
+export interface SanityBlock {
+	_key: string;
+	_type: string;
+	style?: string;
+	children?: SanityBlockChild[];
+	markDefs?: unknown[];
+}
+
+// Link type
+export interface NavLink {
+	label: string;
+	href: string;
+	description?: string;
+}
+
+// Navigation menu item
+export interface NavMenuItem {
+	label: string;
+	href: string;
+	submenu?: NavLink[];
+}
+
+// Blog Post
 export interface BlogPost {
 	_type: 'blogPost';
 	_id: string;
@@ -451,6 +1149,7 @@ export interface BlogPost {
 	relatedPosts?: BlogPost[];
 }
 
+// Restaurant
 export interface Restaurant {
 	_type: 'restaurant';
 	_id: string;
@@ -472,6 +1171,7 @@ export interface Restaurant {
 	featured?: boolean;
 }
 
+// Accommodation
 export interface Accommodation {
 	_type: 'accommodation';
 	_id: string;
@@ -496,6 +1196,7 @@ export interface Accommodation {
 	featured?: boolean;
 }
 
+// Activity
 export interface Activity {
 	_type: 'activity';
 	_id: string;
@@ -523,6 +1224,7 @@ export interface Activity {
 	featured?: boolean;
 }
 
+// Destination
 export interface Destination {
 	_type: 'destination';
 	_id: string;
@@ -569,6 +1271,7 @@ export interface Destination {
 	featured?: boolean;
 }
 
+// Local Specialty
 export interface LocalSpecialty {
 	_type: 'localSpecialty';
 	_id: string;
@@ -585,6 +1288,7 @@ export interface LocalSpecialty {
 	featured?: boolean;
 }
 
+// Testimonial
 export interface Testimonial {
 	_type: 'testimonial';
 	_id: string;
@@ -597,108 +1301,38 @@ export interface Testimonial {
 	featured?: boolean;
 }
 
-// Site Settings Queries
-export const siteSettingsQuery = groq`*[_type == "siteSettings"][0] {
-  _id,
-  title,
-  homepageStats,
-  featuredSections {
-    eat {
-      title,
-      description,
-      image {
-        asset-> {
-          _id,
-          url
-        },
-        alt
-      }
-    },
-    stay {
-      title,
-      description,
-      image {
-        asset-> {
-          _id,
-          url
-        },
-        alt
-      }
-    },
-    do {
-      title,
-      description,
-      image {
-        asset-> {
-          _id,
-          url
-        },
-        alt
-      }
-    }
-  },
-  heroSection {
-    title,
-    subtitle,
-    backgroundImage {
-      asset-> {
-        _id,
-        url
-      },
-      alt
-    }
-  },
-  sorrentoPageStats,
-  sorrentoIntro,
-  insiderTips
-}`;
-
-// About Page Queries
-export const aboutPageQuery = groq`*[_type == "aboutPage"][0] {
-  _id,
-  title,
-  subtitle,
-  story,
-  mission,
-  services,
-  team[] {
-    name,
-    role,
-    bio,
-    image {
-      asset-> {
-        _id,
-        url
-      },
-      alt
-    }
-  },
-  values,
-  seo
-}`;
-
-// Contact Page Queries
-export const contactPageQuery = groq`*[_type == "contactPage"][0] {
-  _id,
-  title,
-  subtitle,
-  contactInfo,
-  businessHours,
-  faqs,
-  socialMedia,
-  seo
-}`;
-
-// Type Definitions for New Content Types
+// Site Settings
 export interface SiteSettings {
 	_type: 'siteSettings';
 	_id: string;
 	title: string;
+	siteDescription?: string;
+	siteUrl?: string;
+	heroSection?: {
+		heading?: string;
+		subheading?: string;
+		ctaText?: string;
+		ctaLink?: string;
+		backgroundImage?: SanityImage;
+	};
+	introSection?: {
+		heading?: string;
+		description?: string;
+	};
+	introCards?: Array<{
+		title: string;
+		description: string;
+		icon?: string;
+	}>;
 	homepageStats?: {
 		happyTravelers?: string;
 		partnerHotels?: string;
 		localGuides?: string;
 		yearsExperience?: string;
+	};
+	featuredSectionsHeading?: {
+		heading?: string;
+		subheading?: string;
 	};
 	featuredSections?: {
 		eat?: {
@@ -717,10 +1351,73 @@ export interface SiteSettings {
 			image?: SanityImage;
 		};
 	};
-	heroSection?: {
-		title?: string;
-		subtitle?: string;
+	destinationsSection?: {
+		heading?: string;
+		subheading?: string;
+		ctaText?: string;
+	};
+	testimonialsSection?: {
+		heading?: string;
+		subheading?: string;
+	};
+	newsletter?: {
+		heading?: string;
+		description?: string;
+		buttonText?: string;
+		successMessage?: string;
+		placeholderText?: string;
+	};
+	homeCTA?: {
+		heading?: string;
+		description?: string;
+		primaryButtonText?: string;
+		primaryButtonLink?: string;
+		secondaryButtonText?: string;
+		secondaryButtonLink?: string;
 		backgroundImage?: SanityImage;
+	};
+	navigation?: {
+		mainMenu?: NavMenuItem[];
+		ctaButtonText?: string;
+		ctaButtonLink?: string;
+	};
+	footer?: {
+		greeting?: string;
+		description?: string;
+		madeWithLove?: string;
+		copyrightText?: string;
+		quickLinks?: NavLink[];
+		services?: NavLink[];
+		quickLinksTitle?: string;
+		servicesTitle?: string;
+		subscribeTitle?: string;
+	};
+	contactInfo?: {
+		email?: string;
+		phone?: string;
+		whatsapp?: string;
+		address?: string;
+		availability?: string;
+	};
+	socialMedia?: {
+		facebook?: string;
+		instagram?: string;
+		twitter?: string;
+		youtube?: string;
+		tiktok?: string;
+	};
+	seo?: {
+		metaTitle?: string;
+		metaDescription?: string;
+		keywords?: string;
+		ogImage?: SanityImage;
+		twitterHandle?: string;
+		themeColor?: string;
+	};
+	homePageSeo?: {
+		metaTitle?: string;
+		metaDescription?: string;
+		keywords?: string;
 	};
 	sorrentoPageStats?: {
 		restaurantCount?: number;
@@ -738,32 +1435,167 @@ export interface SiteSettings {
 	}>;
 }
 
-// Sanity block content structure
-export interface SanityBlockChild {
-	_key: string;
-	_type: string;
-	text?: string;
-	marks?: string[];
+// Page Header type (shared)
+export interface PageHeader {
+	heading?: string;
+	subheading?: string;
+	heroImage?: SanityImage;
+	label?: string; // For blog page
 }
 
-export interface SanityBlock {
-	_key: string;
-	_type: string;
-	style?: string;
-	children?: SanityBlockChild[];
-	markDefs?: unknown[];
+// CTA Section type (shared)
+export interface CTASection {
+	heading?: string;
+	description?: string;
+	buttonText?: string;
+	buttonLink?: string;
+	backgroundImage?: SanityImage;
 }
 
+// SEO type (shared)
+export interface SEOFields {
+	metaTitle?: string;
+	metaDescription?: string;
+	keywords?: string;
+}
+
+// Sorrento Page
+export interface SorrentoPage {
+	_type: 'sorrentoPage';
+	_id: string;
+	title: string;
+	header?: PageHeader;
+	intro?: {
+		heading?: string;
+		description?: string;
+		image?: SanityImage;
+	};
+	sections?: Array<{
+		title: string;
+		subtitle?: string;
+		description?: string;
+		image?: SanityImage;
+		link?: string;
+		features?: string[];
+	}>;
+	insiderTips?: Array<{
+		title: string;
+		description: string;
+		icon?: string;
+	}>;
+	cta?: CTASection;
+	seo?: SEOFields;
+}
+
+// Eat Page
+export interface EatPage {
+	_type: 'eatPage';
+	_id: string;
+	title: string;
+	header?: PageHeader;
+	introText?: string;
+	specialtiesHeading?: string;
+	localSpecialties?: Array<{
+		name: string;
+		description: string;
+		icon?: string;
+	}>;
+	tipsHeading?: string;
+	diningTips?: Array<{
+		title: string;
+		description: string;
+		icon?: string;
+	}>;
+	cta?: CTASection;
+	seo?: SEOFields;
+}
+
+// Stay Page
+export interface StayPage {
+	_type: 'stayPage';
+	_id: string;
+	title: string;
+	header?: PageHeader;
+	introText?: string;
+	neighborhoodsHeading?: string;
+	neighborhoods?: Array<{
+		title: string;
+		description: string;
+		badge?: string;
+		icon?: string;
+	}>;
+	tipsHeading?: string;
+	bookingTips?: Array<{
+		title: string;
+		description: string;
+		icon?: string;
+	}>;
+	cta?: CTASection;
+	seo?: SEOFields;
+}
+
+// Do Page
+export interface DoPage {
+	_type: 'doPage';
+	_id: string;
+	title: string;
+	header?: PageHeader;
+	introText?: string;
+	categoriesHeading?: string;
+	activityCategories?: Array<{
+		title: string;
+		description: string;
+		icon?: string;
+	}>;
+	cta?: CTASection;
+	seo?: SEOFields;
+}
+
+// Surrounding Page
+export interface SurroundingPage {
+	_type: 'surroundingPage';
+	_id: string;
+	title: string;
+	header?: PageHeader;
+	introText?: string;
+	cta?: CTASection;
+	seo?: SEOFields;
+}
+
+// Blog Page
+export interface BlogPage {
+	_type: 'blogPage';
+	_id: string;
+	title: string;
+	header?: PageHeader;
+	introText?: string;
+	newsletterCTA?: {
+		heading?: string;
+		description?: string;
+		buttonText?: string;
+		placeholderText?: string;
+	};
+	seo?: SEOFields;
+}
+
+// About Page
 export interface AboutPage {
 	_type: 'aboutPage';
 	_id: string;
 	title: string;
 	subtitle?: string;
+	heroImage?: SanityImage;
 	story?: {
 		title?: string;
 		content?: SanityBlock[];
+		image?: SanityImage;
 	};
 	mission?: string;
+	servicesSection?: {
+		heading?: string;
+		description?: string;
+		image?: SanityImage;
+	};
 	services?: Array<{
 		title: string;
 		description: string;
@@ -778,18 +1610,28 @@ export interface AboutPage {
 	values?: Array<{
 		title: string;
 		description: string;
+		icon?: string;
 	}>;
-	seo?: {
-		metaTitle?: string;
-		metaDescription?: string;
-	};
+	cta?: CTASection;
+	seo?: SEOFields;
 }
 
+// Contact Page
 export interface ContactPage {
 	_type: 'contactPage';
 	_id: string;
 	title: string;
 	subtitle?: string;
+	heroImage?: SanityImage;
+	serviceOptions?: string[];
+	formLabels?: {
+		nameLabel?: string;
+		emailLabel?: string;
+		serviceLabel?: string;
+		messageLabel?: string;
+		submitButtonText?: string;
+		successMessage?: string;
+	};
 	contactInfo?: {
 		email?: string;
 		phone?: string;
@@ -810,8 +1652,59 @@ export interface ContactPage {
 		twitter?: string;
 		linkedin?: string;
 	};
+	seo?: SEOFields;
+}
+
+// Privacy Page
+export interface PrivacyPage {
+	_type: 'privacyPage';
+	_id: string;
+	title: string;
+	subtitle?: string;
+	lastUpdated?: string;
+	content?: SanityBlock[];
 	seo?: {
 		metaTitle?: string;
 		metaDescription?: string;
 	};
+}
+
+// Terms Page
+export interface TermsPage {
+	_type: 'termsPage';
+	_id: string;
+	title: string;
+	subtitle?: string;
+	lastUpdated?: string;
+	content?: SanityBlock[];
+	seo?: {
+		metaTitle?: string;
+		metaDescription?: string;
+	};
+}
+
+// Error Page
+export interface ErrorPage {
+	_type: 'errorPage';
+	_id: string;
+	title: string;
+	error404?: {
+		heading?: string;
+		message?: string;
+	};
+	error500?: {
+		heading?: string;
+		message?: string;
+	};
+	errorDefault?: {
+		heading?: string;
+		message?: string;
+	};
+	navigationTitle?: string;
+	navigationCards?: Array<{
+		label: string;
+		href: string;
+		icon?: string;
+	}>;
+	footerMessage?: string;
 }

@@ -1,17 +1,21 @@
 import { client } from '$lib/sanity/client';
-import { blogPostsQuery, type BlogPost } from '$lib/sanity/queries';
+import { blogPostsQuery, blogPageQuery, type BlogPost, type BlogPage } from '$lib/sanity/queries';
 
 export async function load() {
 	try {
-		const posts = await client.fetch<BlogPost[]>(blogPostsQuery);
+		const [posts, pageData] = await Promise.all([
+			client.fetch<BlogPost[]>(blogPostsQuery),
+			client.fetch<BlogPage>(blogPageQuery)
+		]);
 		return {
-			posts
+			posts,
+			pageData
 		};
 	} catch (error) {
-		console.error('Error fetching blog posts:', error);
-		// Return empty array if Sanity is not configured yet
+		console.error('Error fetching blog page data:', error);
 		return {
-			posts: []
+			posts: [],
+			pageData: null
 		};
 	}
 }

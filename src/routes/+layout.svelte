@@ -25,12 +25,12 @@
 </svelte:head>
 
 <div class="flex min-h-screen flex-col">
-	<Navigation destinations={data.navDestinations} />
+	<Navigation destinations={data.navDestinations} siteSettings={data.siteSettings} />
 
 	<main class="grow">
 		{@render children()}
 	</main>
 
-	<Footer />
+	<Footer siteSettings={data.siteSettings} />
 	<BackToTop />
 </div>

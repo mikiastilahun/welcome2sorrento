@@ -2,23 +2,39 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import { FloatingElements } from '$lib/components/ui/decorative';
 	import { reveal } from '$lib/actions/reveal';
+	import type { BlogPage } from '$lib/sanity/queries';
+
+	interface Props {
+		pageData?: BlogPage | null;
+	}
+
+	let { pageData = null }: Props = $props();
+
+	// Get content from CMS
+	const label = pageData?.header?.label || 'Il Nostro Blog';
+	const heading = pageData?.header?.heading || 'Sorrento Travel Blog';
+	const subheading =
+		pageData?.header?.subheading ||
+		'Insider tips, local stories, and travel guides from the heart of the Amalfi Coast';
+	const heroImage = pageData?.header?.heroImage?.asset?.url || '';
+	const introText =
+		pageData?.introText ||
+		'Step into the daily rhythms of coastal life with visits to traditional boat workshops, secluded coves, and lemon groves. Enjoy immersive hikes, boating excursions, and local flavors that craft a Sorrento experience full of authentic charm and natural beauty. Find stories, tips, and inspiration for every traveler seeking their own unforgettable Sorrento adventure.';
 </script>
 
 <section class="relative flex min-h-[55vh] flex-col overflow-hidden pt-24">
 	<!-- Ken Burns animated background -->
 	<div class="absolute inset-0 z-0">
 		<div class="animate-ken-burns h-full w-full">
-			<img
-				src="https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=1920&q=80"
-				alt="Sorrento blog"
-				class="h-full w-full object-cover"
-			/>
+			{#if heroImage}
+				<img src={heroImage} alt="Sorrento blog" class="h-full w-full object-cover" />
+			{/if}
 		</div>
 		<!-- Gradient overlays -->
 		<div
-			class="absolute inset-0 bg-gradient-to-b from-[var(--charcoal)]/40 via-[var(--charcoal)]/50 to-[var(--charcoal)]/70"
+			class="from-[var(--charcoal)]/40 via-[var(--charcoal)]/50 to-[var(--charcoal)]/70 absolute inset-0 bg-gradient-to-b"
 		></div>
-		<div class="absolute inset-0 bg-gradient-to-r from-[var(--deep-azure)]/20 to-transparent"></div>
+		<div class="from-[var(--deep-azure)]/20 absolute inset-0 bg-gradient-to-r to-transparent"></div>
 		<!-- Film grain -->
 		<div class="film-grain pointer-events-none absolute inset-0"></div>
 	</div>
@@ -38,12 +54,12 @@
 				style="box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 20px 60px rgba(0,0,0,0.3), inset 0 0 80px rgba(255,255,255,0.02);"
 			>
 				<!-- Decorative corners -->
-				<div class="pointer-events-none absolute top-4 left-4 h-6 w-6 opacity-40">
+				<div class="pointer-events-none absolute left-4 top-4 h-6 w-6 opacity-40">
 					<svg viewBox="0 0 24 24" fill="none" class="h-full w-full text-[var(--coral)]">
 						<path d="M2 2v8M2 2h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
 					</svg>
 				</div>
-				<div class="pointer-events-none absolute top-4 right-4 h-6 w-6 opacity-40">
+				<div class="pointer-events-none absolute right-4 top-4 h-6 w-6 opacity-40">
 					<svg viewBox="0 0 24 24" fill="none" class="h-full w-full text-[var(--coral)]">
 						<path
 							d="M22 2v8M22 2h-8"
@@ -63,7 +79,7 @@
 						/>
 					</svg>
 				</div>
-				<div class="pointer-events-none absolute right-4 bottom-4 h-6 w-6 opacity-40">
+				<div class="pointer-events-none absolute bottom-4 right-4 h-6 w-6 opacity-40">
 					<svg viewBox="0 0 24 24" fill="none" class="h-full w-full text-[var(--coral)]">
 						<path
 							d="M22 22v-8M22 22h-8"
@@ -77,24 +93,24 @@
 				<!-- Label -->
 				<div class="mb-4 flex items-center justify-center gap-4">
 					<div class="h-px w-12 bg-gradient-to-r from-transparent to-[var(--coral)]"></div>
-					<span class="font-serif text-sm tracking-[0.3em] text-[var(--coral)] uppercase"
-						>Il Nostro Blog</span
+					<span class="font-serif text-sm uppercase tracking-[0.3em] text-[var(--coral)]"
+						>{label}</span
 					>
 					<div class="h-px w-12 bg-gradient-to-l from-transparent to-[var(--coral)]"></div>
 				</div>
 
 				<h1 class="heading-serif mb-4 text-4xl font-semibold text-white sm:text-5xl lg:text-6xl">
-					Sorrento Travel Blog
+					{heading}
 				</h1>
-				<p class="mx-auto max-w-3xl text-lg leading-relaxed font-light text-white/90 sm:text-xl">
-					Insider tips, local stories, and travel guides from the heart of the Amalfi Coast
+				<p class="mx-auto max-w-3xl text-lg font-light leading-relaxed text-white/90 sm:text-xl">
+					{subheading}
 				</p>
 			</div>
 		</div>
 	</div>
 
 	<!-- Wave decoration at bottom -->
-	<div class="absolute right-0 bottom-0 left-0 z-10">
+	<div class="absolute bottom-0 left-0 right-0 z-10">
 		<svg
 			class="h-16 w-full"
 			viewBox="0 0 1200 60"
@@ -111,7 +127,7 @@
 
 <section class="texture-grain relative bg-[var(--warm-white)] py-16">
 	<!-- Decorative tile border at top -->
-	<div class="absolute top-0 right-0 left-0">
+	<div class="absolute left-0 right-0 top-0">
 		<div class="mx-auto max-w-4xl px-4">
 			<div class="border-tile-decorative"></div>
 		</div>
@@ -120,11 +136,7 @@
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="scroll-reveal mx-auto max-w-4xl text-center" use:reveal>
 			<p class="text-xl leading-relaxed text-[var(--stone)]">
-				Step into the daily rhythms of coastal life with visits to traditional boat workshops,
-				secluded coves, and lemon groves. Enjoy immersive hikes, boating excursions, and local
-				flavors that craft a Sorrento experience full of authentic charm and natural beauty. Find
-				stories, tips, and inspiration for every traveler seeking their own unforgettable Sorrento
-				adventure.
+				{introText}
 			</p>
 
 			<!-- Decorative divider -->

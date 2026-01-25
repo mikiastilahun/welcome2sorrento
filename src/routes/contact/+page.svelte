@@ -10,6 +10,7 @@
 	import Label from '$lib/components/ui/label/label.svelte';
 	import * as Accordion from '$lib/components/ui/accordion';
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import SEO from '$lib/components/SEO.svelte';
 	import {
 		Mail,
 		Phone,
@@ -34,6 +35,24 @@
 	let { data }: Props = $props();
 
 	const contactData = data.contactPage || ({} as ContactPage);
+
+	// SEO from CMS
+	const seoTitle = contactData.seo?.metaTitle || 'Contact Us - Get in Touch | Welcome2Sorrento';
+	const seoDescription =
+		contactData.seo?.metaDescription ||
+		'Contact Welcome2Sorrento for travel planning, booking assistance, or any questions about Sorrento and the Amalfi Coast.';
+	const seoKeywords = contactData.seo?.keywords || '';
+
+	// Get images and options from CMS
+	const heroImage = contactData.heroImage?.asset?.url || '';
+	const serviceOptions = contactData.serviceOptions || [
+		'General Inquiry',
+		'Booking Service',
+		'Restaurant Reservations',
+		'Accommodation Help',
+		'Tours & Activities',
+		'Custom Itinerary'
+	];
 
 	let formData = $state({
 		name: '',
@@ -73,28 +92,27 @@
 	}
 </script>
 
+<SEO title={seoTitle} description={seoDescription} keywords={seoKeywords} />
+
 <svelte:head>
-	<title>{contactData.seo?.metaTitle || 'Contact Us - Get in Touch | Welcome2Sorrento'}</title>
-	<meta
-		name="description"
-		content={contactData.seo?.metaDescription ||
-			'Contact Welcome2Sorrento for travel planning, booking assistance, or any questions about Sorrento and the Amalfi Coast.'}
-	/>
+	<title>{seoTitle}</title>
 </svelte:head>
 
 <div class="-mt-24">
 	<!-- Hero Section -->
-	<PageHeader
-		title={contactData.title || 'Get in Touch'}
-		subtitle={contactData.subtitle || "We're here to help plan your perfect Sorrento experience"}
-		image="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=1920&q=80"
-		label="Contattaci"
-	/>
+	{#if heroImage}
+		<PageHeader
+			title={contactData.title || 'Get in Touch'}
+			subtitle={contactData.subtitle || "We're here to help plan your perfect Sorrento experience"}
+			image={heroImage}
+			label="Contattaci"
+		/>
+	{/if}
 
 	<!-- Contact Form & Info -->
 	<section class="texture-grain relative bg-[var(--warm-white)] py-24">
 		<!-- Decorative tile border -->
-		<div class="absolute top-0 right-0 left-0">
+		<div class="absolute left-0 right-0 top-0">
 			<div class="mx-auto max-w-7xl px-4">
 				<div class="border-tile-decorative"></div>
 			</div>
@@ -105,7 +123,7 @@
 				<!-- Contact Form -->
 				<div class="scroll-reveal lg:col-span-2" use:reveal>
 					<Card class="shadow-mediterranean-lg border-[var(--sand)]">
-						<CardHeader class="px-8 pt-8 pb-6 sm:px-12 sm:pt-12">
+						<CardHeader class="px-8 pb-6 pt-8 sm:px-12 sm:pt-12">
 							<!-- Envelope icon with animation -->
 							<div class="mb-6 flex items-center gap-4">
 								<div
@@ -141,7 +159,7 @@
 												placeholder="Your full name"
 												bind:value={formData.name}
 												required
-												class="h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
+												class="focus-visible:ring-[var(--azure)]/20 h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)]"
 											/>
 										</div>
 										<div class="space-y-2">
@@ -154,7 +172,7 @@
 												placeholder="your@email.com"
 												bind:value={formData.email}
 												required
-												class="h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
+												class="focus-visible:ring-[var(--azure)]/20 h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)]"
 											/>
 										</div>
 									</div>
@@ -169,7 +187,7 @@
 												type="tel"
 												placeholder="+1 234 567 8900"
 												bind:value={formData.phone}
-												class="h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
+												class="focus-visible:ring-[var(--azure)]/20 h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)]"
 											/>
 										</div>
 										<div class="space-y-2">
@@ -179,14 +197,12 @@
 											<select
 												id="service"
 												bind:value={formData.service}
-												class="flex h-12 w-full rounded-xl border border-[var(--sand)] bg-[var(--warm-white)] px-4 py-2 text-base transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-2 focus-visible:ring-[var(--azure)]/20 focus-visible:outline-none"
+												class="focus-visible:ring-[var(--azure)]/20 flex h-12 w-full rounded-xl border border-[var(--sand)] bg-[var(--warm-white)] px-4 py-2 text-base transition-colors focus-visible:border-[var(--azure)] focus-visible:outline-none focus-visible:ring-2"
 											>
-												<option value="general">General Inquiry</option>
-												<option value="booking">Booking Service</option>
-												<option value="restaurant">Restaurant Reservations</option>
-												<option value="accommodation">Accommodation Help</option>
-												<option value="tours">Tours & Activities</option>
-												<option value="itinerary">Custom Itinerary</option>
+												{#each serviceOptions as option, index}
+													<option value={option.toLowerCase().replace(/\s+/g, '-')}>{option}</option
+													>
+												{/each}
 											</select>
 										</div>
 									</div>
@@ -201,7 +217,7 @@
 											placeholder="What can we help you with?"
 											bind:value={formData.subject}
 											required
-											class="h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
+											class="focus-visible:ring-[var(--azure)]/20 h-12 rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)]"
 										/>
 									</div>
 
@@ -215,7 +231,7 @@
 											bind:value={formData.message}
 											required
 											rows={6}
-											class="resize-none rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)] focus-visible:ring-[var(--azure)]/20"
+											class="focus-visible:ring-[var(--azure)]/20 resize-none rounded-xl border-[var(--sand)] bg-[var(--warm-white)] transition-colors focus-visible:border-[var(--azure)]"
 										/>
 									</div>
 
@@ -241,7 +257,7 @@
 							{:else}
 								<div class="py-12 text-center">
 									<div
-										class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--olive)]/10"
+										class="bg-[var(--olive)]/10 mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
 									>
 										<svg
 											class="h-10 w-10 text-[var(--olive)]"
@@ -406,7 +422,7 @@
 	<!-- FAQ Section -->
 	<section class="relative bg-white py-24">
 		<!-- Wave decoration at top -->
-		<div class="absolute top-0 right-0 left-0">
+		<div class="absolute left-0 right-0 top-0">
 			<svg
 				class="h-12 w-full"
 				viewBox="0 0 1200 60"
@@ -425,7 +441,7 @@
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase"
+						<span class="font-serif text-sm uppercase tracking-[0.2em] text-[var(--terracotta)]"
 							>FAQ</span
 						>
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>

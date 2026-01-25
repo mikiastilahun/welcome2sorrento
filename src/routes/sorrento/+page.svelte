@@ -6,20 +6,65 @@
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import CardDescription from '$lib/components/ui/card/card-description.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import SEO from '$lib/components/SEO.svelte';
 	import { Utensils, Hotel, Sparkles, ArrowRight, Lightbulb } from '@lucide/svelte';
 	import { reveal } from '$lib/actions/reveal';
+	import type { SorrentoPage } from '$lib/sanity/queries';
 
-	const sections = [
+	interface Props {
+		data: {
+			pageData: SorrentoPage | null;
+		};
+	}
+
+	let { data }: Props = $props();
+	const pageData = data.pageData;
+
+	// SEO from CMS
+	const seoTitle = pageData?.seo?.metaTitle || 'Sorrento Guide - Eat, Stay & Do | Welcome2Sorrento';
+	const seoDescription =
+		pageData?.seo?.metaDescription ||
+		'Complete guide to Sorrento - discover the best restaurants, accommodations, and activities in this stunning Italian coastal town.';
+	const seoKeywords = pageData?.seo?.keywords || '';
+
+	// Header from CMS
+	const headerTitle = pageData?.header?.heading || 'Experience Sorrento';
+	const headerSubtitle =
+		pageData?.header?.subheading || 'Your comprehensive guide to the jewel of the Amalfi Coast';
+	const headerImage = pageData?.header?.heroImage?.asset?.url || '';
+
+	// Intro from CMS
+	const introHeading = pageData?.intro?.heading || 'Discover Sorrento';
+	const introDescription = pageData?.intro?.description || '';
+	const introImage = pageData?.intro?.image?.asset?.url || '';
+
+	// CTA from CMS
+	const ctaHeading = pageData?.cta?.heading || 'Need Help Planning Your Visit?';
+	const ctaDescription =
+		pageData?.cta?.description ||
+		'Our personalized WhatsApp booking service makes planning your perfect Sorrento experience easy';
+	const ctaButtonText = pageData?.cta?.buttonText || 'Get in Touch';
+	const ctaButtonLink = pageData?.cta?.buttonLink || '/contact';
+	const ctaBackgroundImage = pageData?.cta?.backgroundImage?.asset?.url || '';
+
+	// Icon components mapping
+	const iconMap: Record<string, typeof Utensils> = {
+		Utensils,
+		Hotel,
+		Sparkles
+	};
+
+	const accentColors = ['terracotta', 'azure', 'olive'];
+
+	// Sections from CMS or defaults
+	const defaultSections = [
 		{
 			title: 'Eat',
 			subtitle: 'Authentic Italian Cuisine',
 			description:
 				'From Michelin-starred restaurants to hidden family trattorias, discover the best places to experience authentic Sorrentine cuisine, fresh seafood, and the famous limoncello.',
-			image: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=800&q=80',
+			image: '',
 			link: '/sorrento/eat',
-			icon: Utensils,
-			number: '01',
-			accent: 'terracotta',
 			features: ['Traditional Trattorias', 'Fine Dining Experiences', 'Street Food & Markets']
 		},
 		{
@@ -27,11 +72,8 @@
 			subtitle: 'Elegant Accommodations',
 			description:
 				"Find your perfect home away from home. Whether you prefer luxury hotels with infinity pools, charming B&Bs, or private villas, we've curated the finest accommodations in Sorrento.",
-			image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80',
+			image: '',
 			link: '/sorrento/stay',
-			icon: Hotel,
-			number: '02',
-			accent: 'azure',
 			features: ['5-Star Luxury Hotels', 'Boutique B&Bs', 'Private Villas']
 		},
 		{
@@ -39,16 +81,29 @@
 			subtitle: 'Unforgettable Experiences',
 			description:
 				'Create memories that last a lifetime. From boat tours and cooking classes to historical sites and scenic walks, discover activities that showcase the best of Sorrento.',
-			image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&q=80',
+			image: '',
 			link: '/sorrento/do',
-			icon: Sparkles,
-			number: '03',
-			accent: 'olive',
 			features: ['Boat Tours & Beaches', 'Cooking Classes', 'Historical Tours']
 		}
 	];
 
-	const tips = [
+	const sections =
+		pageData?.sections && pageData.sections.length > 0
+			? pageData.sections.map((s, i) => ({
+					...s,
+					icon: [Utensils, Hotel, Sparkles][i % 3],
+					number: String(i + 1).padStart(2, '0'),
+					accent: accentColors[i % 3]
+				}))
+			: defaultSections.map((s, i) => ({
+					...s,
+					icon: [Utensils, Hotel, Sparkles][i],
+					number: String(i + 1).padStart(2, '0'),
+					accent: accentColors[i]
+				}));
+
+	// Tips from CMS or defaults
+	const defaultTips = [
 		{
 			title: 'Best Time to Visit',
 			description:
@@ -70,28 +125,31 @@
 				"Don't leave without trying authentic limoncello, fresh seafood pasta, and delizia al limone (lemon delight dessert)."
 		}
 	];
+
+	const tips =
+		pageData?.insiderTips && pageData.insiderTips.length > 0 ? pageData.insiderTips : defaultTips;
 </script>
 
+<SEO title={seoTitle} description={seoDescription} keywords={seoKeywords} />
+
 <svelte:head>
-	<title>Sorrento Guide - Eat, Stay & Do | Welcome2Sorrento</title>
-	<meta
-		name="description"
-		content="Complete guide to Sorrento - discover the best restaurants, accommodations, and activities in this stunning Italian coastal town."
-	/>
+	<title>{seoTitle}</title>
 </svelte:head>
 
 <div class="-mt-24">
-	<PageHeader
-		title="Experience Sorrento"
-		subtitle="Your comprehensive guide to the jewel of the Amalfi Coast"
-		image="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=1920&q=80"
-		label="La Dolce Vita"
-	/>
+	{#if headerImage}
+		<PageHeader
+			title={headerTitle}
+			subtitle={headerSubtitle}
+			image={headerImage}
+			label="La Dolce Vita"
+		/>
+	{/if}
 
 	<!-- Introduction -->
 	<section class="texture-grain relative bg-[var(--warm-white)] py-24">
 		<!-- Decorative tile border -->
-		<div class="absolute top-0 right-0 left-0">
+		<div class="absolute left-0 right-0 top-0">
 			<div class="mx-auto max-w-5xl px-4">
 				<div class="border-tile-decorative"></div>
 			</div>
@@ -102,41 +160,41 @@
 				<div class="mb-12 text-center">
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase"
+						<span class="font-serif text-sm uppercase tracking-[0.2em] text-[var(--terracotta)]"
 							>Welcome</span
 						>
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
 					</div>
 					<h2 class="heading-serif mb-4 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
-						Discover <span class="text-[var(--azure)]">Sorrento</span>
+						{@html introHeading.includes('Sorrento')
+							? introHeading.replace(
+									'Sorrento',
+									'<span class="text-[var(--azure)]">Sorrento</span>'
+								)
+							: `Discover <span class="text-[var(--azure)]">Sorrento</span>`}
 					</h2>
 				</div>
 
 				<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-					<PostcardFrame showStamp stampText="SORRENTO">
-						<div class="group relative overflow-hidden rounded-lg">
-							<img
-								src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80"
-								alt="Sorrento coastline"
-								class="h-[400px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-							/>
-						</div>
-					</PostcardFrame>
+					{#if introImage}
+						<PostcardFrame showStamp stampText="SORRENTO">
+							<div class="group relative overflow-hidden rounded-lg">
+								<img
+									src={introImage}
+									alt="Sorrento coastline"
+									class="h-[400px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								/>
+							</div>
+						</PostcardFrame>
+					{/if}
 
-					<div class="space-y-6 text-lg leading-relaxed text-[var(--stone)]">
-						<p>
-							Perched on clifftops overlooking the Bay of Naples with Mount Vesuvius in the
-							distance, Sorrento is a town that captivates all who visit. Known for its dramatic
-							coastline, fragrant lemon groves, and elegant piazzas, this enchanting destination
-							offers the perfect blend of natural beauty, rich history, and authentic Italian
-							culture.
-						</p>
-						<p>
-							Whether you're savoring fresh seafood at a family-run trattoria, relaxing in a
-							boutique hotel with sweeping coastal views, or exploring ancient ruins and artisan
-							workshops, Sorrento promises unforgettable moments at every turn.
-						</p>
-					</div>
+					{#if introDescription}
+						<div class="space-y-6 text-lg leading-relaxed text-[var(--stone)]">
+							{#each introDescription.split('\n\n') as paragraph}
+								<p>{paragraph}</p>
+							{/each}
+						</div>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -156,11 +214,11 @@
 			</svg>
 		</div>
 
-		<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mb-16 text-center" use:reveal>
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-[var(--azure)]"></div>
-					<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase"
+					<span class="font-serif text-sm uppercase tracking-[0.2em] text-[var(--azure)]"
 						>Explore</span
 					>
 					<div class="h-px w-8 bg-[var(--azure)]"></div>
@@ -183,22 +241,24 @@
 							>
 								<!-- Vintage number badge -->
 								<div
-									class="pointer-events-none absolute -top-2 -left-2 z-20 font-serif text-7xl font-bold select-none text-[var(--{section.accent})] opacity-10"
+									class="pointer-events-none absolute -left-2 -top-2 z-20 select-none font-serif text-7xl font-bold text-[var(--{section.accent})] opacity-10"
 								>
 									{section.number}
 								</div>
 
-								<div class="relative h-72 overflow-hidden">
-									<img
-										src={section.image}
-										alt={section.title}
-										class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-									/>
-									<!-- Gradient overlay -->
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"
-									></div>
-								</div>
+								{#if section.image?.asset?.url || section.image}
+									<div class="relative h-72 overflow-hidden">
+										<img
+											src={section.image?.asset?.url || section.image}
+											alt={section.title}
+											class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+										/>
+										<!-- Gradient overlay -->
+										<div
+											class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"
+										></div>
+									</div>
+								{/if}
 
 								<CardHeader class="relative">
 									<!-- Icon badge -->
@@ -224,14 +284,16 @@
 									<p class="mb-6 grow leading-relaxed text-[var(--stone)]">
 										{section.description}
 									</p>
-									<div class="mb-6 space-y-2">
-										{#each section.features as feature}
-											<div class="flex items-center space-x-2 text-sm text-[var(--stone)]">
-												<div class="h-1.5 w-1.5 rounded-full bg-[var(--{section.accent})]"></div>
-												<span>{feature}</span>
-											</div>
-										{/each}
-									</div>
+									{#if section.features && section.features.length > 0}
+										<div class="mb-6 space-y-2">
+											{#each section.features as feature}
+												<div class="flex items-center space-x-2 text-sm text-[var(--stone)]">
+													<div class="h-1.5 w-1.5 rounded-full bg-[var(--{section.accent})]"></div>
+													<span>{feature}</span>
+												</div>
+											{/each}
+										</div>
+									{/if}
 									<div
 										class="flex items-center font-serif tracking-wide text-[var(--azure)] transition-all duration-200 group-hover:translate-x-2"
 									>
@@ -244,7 +306,7 @@
 
 								<!-- Decorative corner -->
 								<div
-									class="absolute right-0 bottom-0 h-16 w-16 opacity-10 transition-opacity duration-300 group-hover:opacity-20"
+									class="absolute bottom-0 right-0 h-16 w-16 opacity-10 transition-opacity duration-300 group-hover:opacity-20"
 									style="background: linear-gradient(135deg, transparent 50%, var(--{section.accent}) 50%);"
 								></div>
 							</Card>
@@ -258,7 +320,7 @@
 	<!-- Insider Tips -->
 	<section class="relative bg-[var(--cream)] py-24">
 		<!-- Wave decoration at top -->
-		<div class="absolute top-0 right-0 left-0">
+		<div class="absolute left-0 right-0 top-0">
 			<svg
 				class="h-12 w-full"
 				viewBox="0 0 1200 60"
@@ -275,7 +337,7 @@
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
-						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase"
+						<span class="font-serif text-sm uppercase tracking-[0.2em] text-[var(--olive)]"
 							>Tips</span
 						>
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
@@ -317,37 +379,38 @@
 		<!-- Background -->
 		<div class="absolute inset-0">
 			<div class="animate-ken-burns h-full w-full">
-				<img
-					src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=1920&q=80"
-					alt="Sorrento coastline"
-					class="h-full w-full object-cover"
-				/>
+				{#if ctaBackgroundImage}
+					<img
+						src={ctaBackgroundImage}
+						alt="Sorrento coastline"
+						class="h-full w-full object-cover"
+					/>
+				{/if}
 			</div>
 			<div
-				class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"
+				class="from-[var(--azure)]/95 to-[var(--deep-azure)]/90 absolute inset-0 bg-gradient-to-r"
 			></div>
 			<div class="film-grain pointer-events-none absolute inset-0"></div>
 		</div>
 
 		<div
-			class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8"
+			class="scroll-reveal container relative z-10 mx-auto px-4 text-center sm:px-6 lg:px-8"
 			use:reveal
 		>
 			<div class="mx-auto max-w-3xl text-white">
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-white/50"></div>
-					<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase">Get Help</span>
+					<span class="font-serif text-sm uppercase tracking-[0.3em] text-white/80">Get Help</span>
 					<div class="h-px w-8 bg-white/50"></div>
 				</div>
 				<h2 class="heading-serif mb-6 text-4xl font-semibold sm:text-5xl">
-					Need Help Planning Your Visit?
+					{ctaHeading}
 				</h2>
 				<p class="mb-10 text-xl text-white/90">
-					Our personalized WhatsApp booking service makes planning your perfect Sorrento experience
-					easy
+					{ctaDescription}
 				</p>
-				<VintageButton href="/contact" variant="coral" size="lg">
-					<span>Get in Touch</span>
+				<VintageButton href={ctaButtonLink} variant="coral" size="lg">
+					<span>{ctaButtonText}</span>
 					<ArrowRight class="h-5 w-5" />
 				</VintageButton>
 			</div>

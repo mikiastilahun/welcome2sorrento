@@ -1,12 +1,17 @@
 <script lang="ts">
-	import type { Testimonial } from '$lib/sanity/queries';
+	import type { Testimonial, SiteSettings } from '$lib/sanity/queries';
 	import { reveal } from '$lib/actions/reveal';
 
 	interface Props {
 		testimonials: Testimonial[];
+		siteSettings: SiteSettings | null;
 	}
 
-	let { testimonials }: Props = $props();
+	let { testimonials, siteSettings }: Props = $props();
+
+	// Get section content from CMS
+	const sectionHeading = siteSettings?.testimonialsSection?.heading || 'What Travelers Say';
+	const sectionSubheading = siteSettings?.testimonialsSection?.subheading || '';
 
 	const displayTestimonials =
 		testimonials.length > 0
@@ -26,8 +31,13 @@
 				<h2
 					class="heading-serif mb-4 text-3xl font-semibold text-[var(--charcoal)] sm:text-4xl lg:text-5xl"
 				>
-					What Travelers Say
+					{sectionHeading}
 				</h2>
+				{#if sectionSubheading}
+					<p class="mx-auto max-w-2xl text-lg text-[var(--stone)]">
+						{sectionSubheading}
+					</p>
+				{/if}
 			</div>
 
 			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -35,7 +45,7 @@
 					<div class="scroll-reveal" style="transition-delay: {index * 100}ms" use:reveal>
 						<div class="h-full rounded-xl bg-white p-6 shadow-md">
 							<blockquote>
-								<p class="mb-6 text-lg leading-relaxed text-[var(--charcoal)] italic">
+								<p class="mb-6 text-lg italic leading-relaxed text-[var(--charcoal)]">
 									"{testimonial.text}"
 								</p>
 
@@ -54,7 +64,7 @@
 										</div>
 									{/if}
 									<div>
-										<cite class="font-semibold text-[var(--charcoal)] not-italic">
+										<cite class="font-semibold not-italic text-[var(--charcoal)]">
 											{testimonial.name}
 										</cite>
 										{#if testimonial.location}

@@ -5,32 +5,73 @@
 		Twitter,
 		Mail,
 		Phone,
-		MapPin,
 		Heart,
 		ExternalLink,
 		Send
 	} from '@lucide/svelte';
 	import Logo from '$lib/components/Logo.svelte';
+	import type { SiteSettings } from '$lib/sanity/queries';
+
+	interface Props {
+		siteSettings?: SiteSettings | null;
+	}
+
+	let { siteSettings = null }: Props = $props();
 
 	let currentYear = new Date().getFullYear();
 	let email = $state('');
 	let isHovering = $state(false);
 
-	const quickLinks = [
-		{ name: 'Home', href: '/' },
-		{ name: 'Sorrento Guide', href: '/sorrento' },
-		{ name: 'Destinations', href: '/surrounding' },
-		{ name: 'Blog', href: '/blog' },
-		{ name: 'About Us', href: '/about' }
-	];
+	// Get footer content from CMS with fallbacks
+	const greeting = siteSettings?.footer?.greeting || 'Ciao!';
+	const description =
+		siteSettings?.footer?.description ||
+		'Your ultimate guide to discovering the magic of Sorrento and the breathtaking Amalfi Coast. Created with passion by locals who know every hidden gem.';
+	const madeWithLove = siteSettings?.footer?.madeWithLove || 'in Italia';
+	const copyrightText = siteSettings?.footer?.copyrightText || 'Welcome2Sorrento';
+	const quickLinksTitle = siteSettings?.footer?.quickLinksTitle || 'Quick Links';
+	const servicesTitle = siteSettings?.footer?.servicesTitle || 'Our Services';
+	const subscribeTitle = siteSettings?.footer?.subscribeTitle || 'Quick Subscribe';
 
-	const services = [
-		{ name: 'WhatsApp Booking', href: '/about#services' },
-		{ name: 'Accommodations', href: '/sorrento/stay' },
-		{ name: 'Restaurants', href: '/sorrento/eat' },
-		{ name: 'Activities', href: '/sorrento/do' },
-		{ name: 'Contact Us', href: '/contact' }
-	];
+	// Get contact info from CMS
+	const contactEmail = siteSettings?.contactInfo?.email || 'hello@welcome2sorrento.com';
+	const contactPhone = siteSettings?.contactInfo?.phone || '+39 123 456 789';
+	const contactAvailability = siteSettings?.contactInfo?.availability || 'Available 24/7';
+
+	// Get social links from CMS
+	const facebookUrl = siteSettings?.socialMedia?.facebook || '#facebook';
+	const instagramUrl = siteSettings?.socialMedia?.instagram || '#instagram';
+	const twitterUrl = siteSettings?.socialMedia?.twitter || '#twitter';
+
+	// Get quick links from CMS or use defaults
+	const quickLinks =
+		siteSettings?.footer?.quickLinks && siteSettings.footer.quickLinks.length > 0
+			? siteSettings.footer.quickLinks.map((link) => ({
+					name: link.label,
+					href: link.href
+				}))
+			: [
+					{ name: 'Home', href: '/' },
+					{ name: 'Sorrento Guide', href: '/sorrento' },
+					{ name: 'Destinations', href: '/surrounding' },
+					{ name: 'Blog', href: '/blog' },
+					{ name: 'About Us', href: '/about' }
+				];
+
+	// Get services links from CMS or use defaults
+	const services =
+		siteSettings?.footer?.services && siteSettings.footer.services.length > 0
+			? siteSettings.footer.services.map((link) => ({
+					name: link.label,
+					href: link.href
+				}))
+			: [
+					{ name: 'WhatsApp Booking', href: '/about#services' },
+					{ name: 'Accommodations', href: '/sorrento/stay' },
+					{ name: 'Restaurants', href: '/sorrento/eat' },
+					{ name: 'Activities', href: '/sorrento/do' },
+					{ name: 'Contact Us', href: '/contact' }
+				];
 
 	function handleQuickSubscribe(e: Event) {
 		e.preventDefault();
@@ -41,7 +82,7 @@
 
 <footer class="relative bg-[var(--charcoal)]">
 	<!-- Decorative wave top border -->
-	<div class="absolute -top-px right-0 left-0">
+	<div class="absolute -top-px left-0 right-0">
 		<svg
 			class="h-8 w-full"
 			viewBox="0 0 1200 32"
@@ -86,7 +127,7 @@
 								? 'animate-ciao'
 								: ''}"
 						>
-							Ciao!
+							{greeting}
 						</span>
 						<span class="text-lg {isHovering ? 'animate-wave' : ''}" role="img" aria-label="wave"
 							>👋</span
@@ -94,15 +135,14 @@
 					</div>
 
 					<p class="max-w-md text-lg leading-relaxed text-white/70">
-						Your ultimate guide to discovering the magic of Sorrento and the breathtaking Amalfi
-						Coast. Created with passion by locals who know every hidden gem.
+						{description}
 					</p>
 
 					<!-- Contact Info Cards -->
 					<div class="space-y-3">
 						<a
-							href="mailto:margheroba@email.com"
-							class="group flex items-center space-x-3 rounded-xl border border-white/10 p-4 transition-all duration-300 ease-out hover:border-[var(--azure)]/30 hover:bg-white/5"
+							href="mailto:{contactEmail}"
+							class="hover:border-[var(--azure)]/30 group flex items-center space-x-3 rounded-xl border border-white/10 p-4 transition-all duration-300 ease-out hover:bg-white/5"
 						>
 							<div
 								class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] transition-transform duration-300 ease-out group-hover:scale-110"
@@ -111,7 +151,7 @@
 							</div>
 							<div class="flex-1">
 								<div class="mb-0.5 text-xs text-white/50">Email Us</div>
-								<div class="font-medium text-white/90">margheroba@email.com</div>
+								<div class="font-medium text-white/90">{contactEmail}</div>
 							</div>
 							<ExternalLink
 								class="h-4 w-4 text-white/50 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white/90"
@@ -119,8 +159,8 @@
 						</a>
 
 						<a
-							href="tel:+39123456789"
-							class="group flex items-center space-x-3 rounded-xl border border-white/10 p-4 transition-all duration-300 ease-out hover:border-[var(--terracotta)]/30 hover:bg-white/5"
+							href="tel:{contactPhone.replace(/\s/g, '')}"
+							class="hover:border-[var(--terracotta)]/30 group flex items-center space-x-3 rounded-xl border border-white/10 p-4 transition-all duration-300 ease-out hover:bg-white/5"
 						>
 							<div
 								class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--terracotta)] to-[oklch(0.55_0.15_35)] transition-transform duration-300 ease-out group-hover:scale-110"
@@ -129,7 +169,7 @@
 							</div>
 							<div class="flex-1">
 								<div class="mb-0.5 text-xs text-white/50">WhatsApp</div>
-								<div class="font-medium text-white/90">Available 24/7</div>
+								<div class="font-medium text-white/90">{contactAvailability}</div>
 							</div>
 							<ExternalLink
 								class="h-4 w-4 text-white/50 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white/90"
@@ -140,21 +180,21 @@
 					<!-- Social Links with Italian hover animations -->
 					<div class="flex space-x-3 pt-4">
 						<a
-							href="#facebook"
+							href={facebookUrl}
 							class="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] transition-all duration-300 ease-out hover:scale-110 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							aria-label="Facebook"
 						>
 							<Facebook class="h-5 w-5 text-white transition-transform group-hover:scale-110" />
 						</a>
 						<a
-							href="#instagram"
+							href={instagramUrl}
 							class="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-[var(--coral)] to-[var(--terracotta)] transition-all duration-300 ease-out hover:scale-110 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							aria-label="Instagram"
 						>
 							<Instagram class="h-5 w-5 text-white transition-transform group-hover:scale-110" />
 						</a>
 						<a
-							href="#twitter"
+							href={twitterUrl}
 							class="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-[var(--olive)] to-[oklch(0.45_0.1_125)] transition-all duration-300 ease-out hover:scale-110 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 							aria-label="Twitter"
 						>
@@ -165,7 +205,7 @@
 
 				<!-- Quick Links -->
 				<div class="space-y-6 lg:col-span-2">
-					<h4 class="font-serif text-lg font-bold tracking-wider text-white">Quick Links</h4>
+					<h4 class="font-serif text-lg font-bold tracking-wider text-white">{quickLinksTitle}</h4>
 					<ul class="space-y-3">
 						{#each quickLinks as link}
 							<li>
@@ -185,7 +225,7 @@
 
 				<!-- Our Services -->
 				<div class="space-y-6 lg:col-span-2">
-					<h4 class="font-serif text-lg font-bold tracking-wider text-white">Our Services</h4>
+					<h4 class="font-serif text-lg font-bold tracking-wider text-white">{servicesTitle}</h4>
 					<ul class="space-y-3">
 						{#each services as service}
 							<li>
@@ -203,12 +243,11 @@
 					</ul>
 				</div>
 
-				<!-- Popular Destinations -->
+				<!-- Quick Subscribe -->
 				<div class="space-y-6 lg:col-span-3">
-					<!-- Quick Subscribe with vintage style -->
 					<div class="pt-6">
 						<h5 class="mb-3 font-serif text-sm font-semibold tracking-wider text-white/80">
-							Quick Subscribe
+							{subscribeTitle}
 						</h5>
 						<form onsubmit={handleQuickSubscribe} class="space-y-3">
 							<div class="relative">
@@ -217,11 +256,11 @@
 									placeholder="Your email"
 									bind:value={email}
 									required
-									class="h-12 w-full rounded-xl border border-white/10 bg-white/5 px-4 pr-12 text-white transition-all outline-none placeholder:text-white/40 focus:border-[var(--azure)]/50 focus:bg-white/10"
+									class="focus:border-[var(--azure)]/50 h-12 w-full rounded-xl border border-white/10 bg-white/5 px-4 pr-12 text-white outline-none transition-all placeholder:text-white/40 focus:bg-white/10"
 								/>
 								<button
 									type="submit"
-									class="absolute top-1 right-1 bottom-1 flex items-center justify-center rounded-lg bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] px-3 transition-all duration-200 ease-out hover:scale-105 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-white"
+									class="absolute bottom-1 right-1 top-1 flex items-center justify-center rounded-lg bg-gradient-to-br from-[var(--azure)] to-[var(--deep-azure)] px-3 transition-all duration-200 ease-out hover:scale-105 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-white"
 									aria-label="Subscribe"
 								>
 									<Send class="h-4 w-4 text-white" />
@@ -250,12 +289,12 @@
 			<!-- Bottom Bar -->
 			<div class="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
 				<div class="flex items-center space-x-2 text-sm text-white/60">
-					<span>© {currentYear} Welcome2Sorrento.</span>
+					<span>© {currentYear} {copyrightText}.</span>
 					<span class="hidden sm:inline">Made with</span>
 					<Heart
 						class="h-4 w-4 fill-[var(--terracotta)] text-[var(--terracotta)] transition-transform hover:scale-125"
 					/>
-					<span class="hidden sm:inline">in Italia</span>
+					<span class="hidden sm:inline">{madeWithLove}</span>
 				</div>
 
 				<div class="flex items-center space-x-6">
@@ -284,7 +323,7 @@
 		</div>
 
 		<!-- Decorative Sorrento coastline silhouette -->
-		<div class="pointer-events-none absolute right-0 bottom-0 left-0 h-24 opacity-[0.03]">
+		<div class="pointer-events-none absolute bottom-0 left-0 right-0 h-24 opacity-[0.03]">
 			<svg class="h-full w-full" viewBox="0 0 1200 100" preserveAspectRatio="none" fill="white">
 				<path
 					d="M0,100 L0,80 C50,75 100,85 150,70 C200,55 250,60 300,50 C350,40 400,45 450,35 C500,25 550,30 600,20 C650,10 700,15 750,25 C800,35 850,30 900,40 C950,50 1000,45 1050,55 C1100,65 1150,60 1200,70 L1200,100 Z"

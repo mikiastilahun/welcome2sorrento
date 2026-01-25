@@ -4,15 +4,34 @@
 	import CategoryFilter from '$lib/components/eat/CategoryFilter.svelte';
 	import RestaurantGrid from '$lib/components/eat/RestaurantGrid.svelte';
 	import CTA from '$lib/components/eat/CTA.svelte';
-	import type { Restaurant } from '$lib/sanity/queries';
+	import SEO from '$lib/components/SEO.svelte';
+	import type { Restaurant, EatPage } from '$lib/sanity/queries';
 
 	interface Props {
 		data: {
 			restaurants: Restaurant[];
+			pageData: EatPage | null;
 		};
 	}
 
 	let { data }: Props = $props();
+	const pageData = data.pageData;
+
+	// SEO from CMS
+	const seoTitle =
+		pageData?.seo?.metaTitle ||
+		'Where to Eat in Sorrento - Best Restaurants & Trattorias | Welcome2Sorrento';
+	const seoDescription =
+		pageData?.seo?.metaDescription ||
+		'Discover the best restaurants in Sorrento - from Michelin-starred fine dining to authentic family trattorias and fresh seafood.';
+	const seoKeywords = pageData?.seo?.keywords || '';
+
+	// Header from CMS
+	const headerTitle = pageData?.header?.heading || 'Where to Eat in Sorrento';
+	const headerSubtitle =
+		pageData?.header?.subheading ||
+		'From Michelin stars to family trattorias, discover culinary excellence';
+	const headerImage = pageData?.header?.heroImage?.asset?.url || '';
 
 	// Get unique categories from restaurants
 	const allCategories = $derived(
@@ -29,26 +48,22 @@
 	);
 </script>
 
+<SEO title={seoTitle} description={seoDescription} keywords={seoKeywords} />
+
 <svelte:head>
-	<title>Where to Eat in Sorrento - Best Restaurants & Trattorias | Welcome2Sorrento</title>
-	<meta
-		name="description"
-		content="Discover the best restaurants in Sorrento - from Michelin-starred fine dining to authentic family trattorias and fresh seafood."
-	/>
+	<title>{seoTitle}</title>
 </svelte:head>
 
 <div class="-mt-24">
-	<PageHeader
-		title="Where to Eat in Sorrento"
-		subtitle="From Michelin stars to family trattorias, discover culinary excellence"
-		image="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80"
-	/>
+	{#if headerImage}
+		<PageHeader title={headerTitle} subtitle={headerSubtitle} image={headerImage} />
+	{/if}
 
-	<Intro />
+	<Intro {pageData} />
 
 	<CategoryFilter {categories} bind:selectedCategory />
 
 	<RestaurantGrid {filteredRestaurants} {selectedCategory} />
 
-	<CTA />
+	<CTA {pageData} />
 </div>

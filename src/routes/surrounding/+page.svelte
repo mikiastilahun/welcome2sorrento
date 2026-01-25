@@ -1,18 +1,37 @@
 <script lang="ts">
-	import type { Destination } from '$lib/sanity/queries';
+	import type { Destination, SurroundingPage } from '$lib/sanity/queries';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Intro from '$lib/components/surrounding/Intro.svelte';
 	import DestinationsGrid from '$lib/components/surrounding/DestinationsGrid.svelte';
 	import CTA from '$lib/components/surrounding/CTA.svelte';
+	import SEO from '$lib/components/SEO.svelte';
 	import { Waves } from '@lucide/svelte';
 
 	interface Props {
 		data: {
 			destinations: Destination[];
+			pageData: SurroundingPage | null;
 		};
 	}
 
 	let { data }: Props = $props();
+	const pageData = data.pageData;
+
+	// SEO from CMS
+	const seoTitle =
+		pageData?.seo?.metaTitle ||
+		'Surrounding Area - Capri, Amalfi Coast, Naples & More | Welcome2Sorrento';
+	const seoDescription =
+		pageData?.seo?.metaDescription ||
+		'Explore destinations near Sorrento - Capri, the Amalfi Coast, Naples, Procida, Ischia, and Salerno. Complete travel guides for day trips.';
+	const seoKeywords = pageData?.seo?.keywords || '';
+
+	// Header from CMS
+	const headerTitle = pageData?.header?.heading || 'Explore the Surrounding Area';
+	const headerSubtitle =
+		pageData?.header?.subheading ||
+		'World-renowned destinations just a short journey from Sorrento';
+	const headerImage = pageData?.header?.heroImage?.asset?.url || '';
 
 	// Map CMS destinations to display format
 	const cmsDestinations = data.destinations.map((dest) => ({
@@ -31,24 +50,20 @@
 	const destinations = cmsDestinations;
 </script>
 
+<SEO title={seoTitle} description={seoDescription} keywords={seoKeywords} />
+
 <svelte:head>
-	<title>Surrounding Area - Capri, Amalfi Coast, Naples & More | Welcome2Sorrento</title>
-	<meta
-		name="description"
-		content="Explore destinations near Sorrento - Capri, the Amalfi Coast, Naples, Procida, Ischia, and Salerno. Complete travel guides for day trips."
-	/>
+	<title>{seoTitle}</title>
 </svelte:head>
 
 <div class="-mt-24">
-	<PageHeader
-		title="Explore the Surrounding Area"
-		subtitle="World-renowned destinations just a short journey from Sorrento"
-		image="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80"
-	/>
+	{#if headerImage}
+		<PageHeader title={headerTitle} subtitle={headerSubtitle} image={headerImage} />
+	{/if}
 
-	<Intro />
+	<Intro {pageData} />
 
 	<DestinationsGrid {destinations} />
 
-	<CTA />
+	<CTA {pageData} />
 </div>

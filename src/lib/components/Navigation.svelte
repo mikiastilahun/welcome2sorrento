@@ -4,13 +4,14 @@
 	import Logo from '$lib/components/Logo.svelte';
 	import { Menu, X, ChevronDown } from '@lucide/svelte';
 	import { onMount } from 'svelte';
-	import type { Destination } from '$lib/sanity/queries';
+	import type { Destination, SiteSettings } from '$lib/sanity/queries';
 
 	interface Props {
 		destinations?: Destination[];
+		siteSettings?: SiteSettings | null;
 	}
 
-	let { destinations = [] }: Props = $props();
+	let { destinations = [], siteSettings = null }: Props = $props();
 
 	let mobileMenuOpen = $state(false);
 	let scrolled = $state(false);
@@ -38,35 +39,59 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
+	// Get CTA button text from CMS
+	const ctaButtonText = siteSettings?.navigation?.ctaButtonText || 'Get in Touch';
+	const ctaButtonLink = siteSettings?.navigation?.ctaButtonLink || '/contact';
+
+	// Build surrounding submenu from destinations
 	const surroundingSubmenu = destinations.map((dest) => ({
 		name: dest.name,
 		href: `/surrounding/${dest.slug.current}`
 	}));
 
-	const navLinks = $derived([
-		{ name: 'Home', href: '/' },
-		{
-			name: 'Sorrento',
-			href: '/sorrento',
-			submenu: [
-				{ name: 'Eat', href: '/sorrento/eat' },
-				{ name: 'Stay', href: '/sorrento/stay' },
-				{ name: 'Do', href: '/sorrento/do' }
-			]
-		},
-		{
-			name: 'Surrounding',
-			href: '/surrounding',
-			submenu: surroundingSubmenu.length > 0 ? surroundingSubmenu : []
-		},
-		{ name: 'Blog', href: '/blog' },
-		{ name: 'About', href: '/about' },
-		{ name: 'Contact', href: '/contact' }
-	]);
+	// Build navigation from CMS or use defaults
+	const cmsNavItems = siteSettings?.navigation?.mainMenu;
+
+	const navLinks = $derived(
+		cmsNavItems && cmsNavItems.length > 0
+			? cmsNavItems.map((item) => ({
+					name: item.label,
+					href: item.href,
+					submenu:
+						item.submenu && item.submenu.length > 0
+							? item.submenu.map((sub) => ({
+									name: sub.label,
+									href: sub.href
+								}))
+							: item.href === '/surrounding' && surroundingSubmenu.length > 0
+								? surroundingSubmenu
+								: undefined
+				}))
+			: [
+					{ name: 'Home', href: '/' },
+					{
+						name: 'Sorrento',
+						href: '/sorrento',
+						submenu: [
+							{ name: 'Eat', href: '/sorrento/eat' },
+							{ name: 'Stay', href: '/sorrento/stay' },
+							{ name: 'Do', href: '/sorrento/do' }
+						]
+					},
+					{
+						name: 'Surrounding',
+						href: '/surrounding',
+						submenu: surroundingSubmenu.length > 0 ? surroundingSubmenu : []
+					},
+					{ name: 'Blog', href: '/blog' },
+					{ name: 'About', href: '/about' },
+					{ name: 'Contact', href: '/contact' }
+				]
+	);
 </script>
 
 <nav
-	class="fixed top-0 right-0 left-0 z-50 transition-all duration-500 {hidden
+	class="fixed left-0 right-0 top-0 z-50 transition-all duration-500 {hidden
 		? '-translate-y-full'
 		: 'translate-y-0'} {scrolled
 		? 'nav-scrolled shadow-mediterranean'
@@ -76,7 +101,7 @@
 >
 	<!-- Decorative top border - only visible when scrolled -->
 	{#if scrolled}
-		<div class="border-tile-decorative absolute top-0 right-0 left-0"></div>
+		<div class="border-tile-decorative absolute left-0 right-0 top-0"></div>
 	{/if}
 
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,7 +160,7 @@
 								{/if}
 							</a>
 							<div
-								class="invisible absolute top-full left-0 mt-2 w-56 translate-y-2 opacity-0 transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+								class="invisible absolute left-0 top-full mt-2 w-56 translate-y-2 opacity-0 transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
 							>
 								<div
 									class="shadow-mediterranean overflow-hidden rounded-xl border border-[var(--sand)] bg-white/95 p-2 backdrop-blur-lg"
@@ -177,14 +202,14 @@
 				{/each}
 
 				<!-- CTA Button -->
-				<a href="/contact" class="ml-4">
+				<a href={ctaButtonLink} class="ml-4">
 					<Button
 						class="btn-nav rounded-lg px-8 py-3 transition-all duration-200 hover:shadow-md {scrolled ||
 						!isHeroSection
 							? 'bg-[var(--azure)] text-white hover:brightness-110'
 							: 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30'}"
 					>
-						Get in Touch
+						{ctaButtonText}
 					</Button>
 				</a>
 			</div>
@@ -210,7 +235,7 @@
 	<!-- Mobile Menu -->
 	{#if mobileMenuOpen}
 		<div
-			class="shadow-mediterranean animate-in border-t border-[var(--sand)] bg-white/95 backdrop-blur-lg duration-200 fade-in-0 slide-in-from-top-2 lg:hidden"
+			class="shadow-mediterranean animate-in fade-in-0 slide-in-from-top-2 border-t border-[var(--sand)] bg-white/95 backdrop-blur-lg duration-200 lg:hidden"
 		>
 			<div class="container mx-auto px-4 py-4">
 				<div class="space-y-1">
@@ -254,11 +279,11 @@
 					{/each}
 
 					<div class="border-t border-[var(--sand)] pt-4">
-						<a href="/contact" class="block" onclick={() => (mobileMenuOpen = false)}>
+						<a href={ctaButtonLink} class="block" onclick={() => (mobileMenuOpen = false)}>
 							<Button
 								class="w-full rounded-lg bg-[var(--azure)] px-8 py-3 text-white transition-all duration-200"
 							>
-								Get in Touch
+								{ctaButtonText}
 							</Button>
 						</a>
 					</div>

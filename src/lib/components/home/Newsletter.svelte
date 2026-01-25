@@ -2,6 +2,23 @@
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { Send } from '@lucide/svelte';
 	import { reveal } from '$lib/actions/reveal';
+	import type { SiteSettings } from '$lib/sanity/queries';
+
+	interface Props {
+		siteSettings: SiteSettings | null;
+	}
+
+	let { siteSettings }: Props = $props();
+
+	// Get newsletter content from CMS
+	const heading = siteSettings?.newsletter?.heading || 'Stay Connected';
+	const description =
+		siteSettings?.newsletter?.description ||
+		'Get travel tips and special offers delivered to your inbox';
+	const buttonText = siteSettings?.newsletter?.buttonText || 'Subscribe';
+	const successMessage =
+		siteSettings?.newsletter?.successMessage || "You're now part of our travel community.";
+	const placeholderText = siteSettings?.newsletter?.placeholderText || 'Enter your email';
 
 	let email = $state('');
 	let isSubmitting = $state(false);
@@ -32,15 +49,15 @@
 				{#if isSuccess}
 					<span class="text-[var(--olive)]">Thank You!</span>
 				{:else}
-					Stay Connected
+					{heading}
 				{/if}
 			</h2>
 
 			<p class="mb-8 text-lg text-[var(--stone)]">
 				{#if isSuccess}
-					You're now part of our travel community.
+					{successMessage}
 				{:else}
-					Get travel tips and special offers delivered to your inbox
+					{description}
 				{/if}
 			</p>
 
@@ -48,7 +65,7 @@
 				<form onsubmit={handleNewsletter} class="flex flex-col gap-4 sm:flex-row">
 					<Input
 						type="email"
-						placeholder="Enter your email"
+						placeholder={placeholderText}
 						bind:value={email}
 						required
 						disabled={isSubmitting}
@@ -63,7 +80,7 @@
 						{#if isSubmitting}
 							<span>Sending...</span>
 						{:else}
-							<span>Subscribe</span>
+							<span>{buttonText}</span>
 							<Send class="h-4 w-4" />
 						{/if}
 					</button>

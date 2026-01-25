@@ -1,17 +1,26 @@
 import { client } from '$lib/sanity/client';
-import { accommodationsQuery, type Accommodation } from '$lib/sanity/queries';
+import {
+	accommodationsQuery,
+	stayPageQuery,
+	type Accommodation,
+	type StayPage
+} from '$lib/sanity/queries';
 
 export async function load() {
 	try {
-		const accommodations = await client.fetch<Accommodation[]>(accommodationsQuery);
+		const [accommodations, pageData] = await Promise.all([
+			client.fetch<Accommodation[]>(accommodationsQuery),
+			client.fetch<StayPage>(stayPageQuery)
+		]);
 		return {
-			accommodations
+			accommodations,
+			pageData
 		};
 	} catch (error) {
-		console.error('Error fetching accommodations:', error);
-		// Return empty array if Sanity is not configured yet
+		console.error('Error fetching stay page data:', error);
 		return {
-			accommodations: []
+			accommodations: [],
+			pageData: null
 		};
 	}
 }

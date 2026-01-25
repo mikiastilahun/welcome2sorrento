@@ -1,17 +1,21 @@
 import { client } from '$lib/sanity/client';
-import { activitiesQuery, type Activity } from '$lib/sanity/queries';
+import { activitiesQuery, doPageQuery, type Activity, type DoPage } from '$lib/sanity/queries';
 
 export async function load() {
 	try {
-		const activities = await client.fetch<Activity[]>(activitiesQuery);
+		const [activities, pageData] = await Promise.all([
+			client.fetch<Activity[]>(activitiesQuery),
+			client.fetch<DoPage>(doPageQuery)
+		]);
 		return {
-			activities
+			activities,
+			pageData
 		};
 	} catch (error) {
-		console.error('Error fetching activities:', error);
-		// Return empty array if Sanity is not configured yet
+		console.error('Error fetching do page data:', error);
 		return {
-			activities: []
+			activities: [],
+			pageData: null
 		};
 	}
 }

@@ -1,18 +1,27 @@
 import { client } from '$lib/sanity/client';
-import { destinationsQuery, type Destination } from '$lib/sanity/queries';
+import {
+	destinationsQuery,
+	surroundingPageQuery,
+	type Destination,
+	type SurroundingPage
+} from '$lib/sanity/queries';
 
 export async function load() {
 	try {
-		const destinations = await client.fetch<Destination[]>(destinationsQuery);
+		const [destinations, pageData] = await Promise.all([
+			client.fetch<Destination[]>(destinationsQuery),
+			client.fetch<SurroundingPage>(surroundingPageQuery)
+		]);
 
 		return {
-			destinations
+			destinations,
+			pageData
 		};
 	} catch (error) {
-		console.error('Error fetching destinations:', error);
-		// Return empty array if Sanity is not configured yet
+		console.error('Error fetching surrounding page data:', error);
 		return {
-			destinations: []
+			destinations: [],
+			pageData: null
 		};
 	}
 }

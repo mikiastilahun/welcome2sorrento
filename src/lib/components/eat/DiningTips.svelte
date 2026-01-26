@@ -68,7 +68,7 @@
 		<div class="mx-auto max-w-5xl">
 			<div class="scroll-reveal mb-20 text-center" use:reveal>
 				<h2 class="heading-serif mb-6 text-4xl font-bold text-(--charcoal) sm:text-5xl">
-					Dining Tips
+					{sectionTitle || 'Dining Tips'}
 				</h2>
 			</div>
 

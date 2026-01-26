@@ -15,18 +15,28 @@
 		siteSettings?: SiteSettings | null;
 	}
 
-	let {
-		siteSettings = null,
-		title = siteSettings?.seo?.metaTitle ||
-			`${siteConfig.name} - Your Ultimate Guide to Sorrento and the Amalfi Coast`,
-		description = siteSettings?.seo?.metaDescription || siteConfig.description,
-		keywords = siteSettings?.seo?.keywords || siteConfig.keywords,
-		image = siteSettings?.seo?.ogImage?.asset?.url || siteConfig.ogImage,
-		type = 'website',
-		author = siteSettings?.title || siteConfig.name,
-		publishedTime,
-		modifiedTime
-	}: Props = $props();
+	const props = $props();
+
+	const siteSettings = $derived.by(() => props.siteSettings || null);
+	const title = $derived.by(
+		() =>
+			props.title ||
+			siteSettings?.seo?.metaTitle ||
+			`${siteConfig.name} - Your Ultimate Guide to Sorrento and the Amalfi Coast`
+	);
+	const description = $derived.by(
+		() => props.description || siteSettings?.seo?.metaDescription || siteConfig.description
+	);
+	const keywords = $derived.by(
+		() => props.keywords || siteSettings?.seo?.keywords || siteConfig.keywords
+	);
+	const image = $derived.by(
+		() => props.image || siteSettings?.seo?.ogImage?.asset?.url || siteConfig.ogImage
+	);
+	const author = $derived.by(() => props.author || siteSettings?.title || siteConfig.name);
+	const type = $derived.by(() => props.type || 'website');
+	const publishedTime = $derived.by(() => props.publishedTime);
+	const modifiedTime = $derived.by(() => props.modifiedTime);
 
 	const siteName = author || siteConfig.name;
 	const twitterHandle = siteSettings?.seo?.twitterHandle || '@welcome2sorrento';

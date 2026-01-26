@@ -45,10 +45,10 @@
 				<div class="h-px w-8 bg-[var(--azure)]"></div>
 			</div>
 			<h2 class="heading-serif mb-4 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
-				Destinations Near Sorrento
+				{heading || 'Destinations Near Sorrento'}
 			</h2>
 			<p class="mx-auto max-w-2xl text-lg text-[var(--stone)]">
-				World-renowned locations just a short journey away
+				{subheading || 'World-renowned locations just a short journey away'}
 			</p>
 		</div>
 

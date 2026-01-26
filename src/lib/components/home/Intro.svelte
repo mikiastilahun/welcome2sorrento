@@ -146,7 +146,7 @@
 					class="mt-20 grid grid-cols-2 gap-8 border-t border-[var(--sand)] pt-16 md:grid-cols-4"
 				>
 					{#each [{ label: 'Happy Travelers', value: siteSettings.homepageStats.happyTravelers }, { label: 'Partner Hotels', value: siteSettings.homepageStats.partnerHotels }, { label: 'Local Guides', value: siteSettings.homepageStats.localGuides }, { label: 'Years Experience', value: siteSettings.homepageStats.yearsExperience }] as stat, index}
-						{#if stat.value}
+						{#if stat.value != null}
 							<div
 								class="scroll-reveal text-center"
 								style="transition-delay: {(index + 1) * 100}ms;"

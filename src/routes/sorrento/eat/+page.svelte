@@ -35,18 +35,26 @@
 		'From Michelin stars to family trattorias, discover culinary excellence';
 	const headerImage = pageData?.header?.heroImage?.asset?.url || '';
 
-	// Get unique categories from restaurants
+	// Get unique categories and locations from restaurants
 	const allCategories = $derived(
 		Array.from(new Set(data.restaurants.map((r) => r.category))).sort()
 	);
 	const categories = $derived(['All', ...allCategories]);
 
+	const allLocations = $derived(
+		Array.from(new Set(data.restaurants.map((r) => r.location).filter(Boolean))).sort()
+	);
+
 	let selectedCategory = $state('All');
+	let selectedLocation = $state('All');
 
 	const filteredRestaurants = $derived(
-		selectedCategory === 'All'
-			? data.restaurants
-			: data.restaurants.filter((r) => r.category === selectedCategory)
+		data.restaurants.filter((r) => {
+			const matchesCategory = selectedCategory === 'All' || r.category === selectedCategory;
+			const matchesLocation =
+				selectedLocation === 'All' || (r.location && r.location === selectedLocation);
+			return matchesCategory && matchesLocation;
+		})
 	);
 </script>
 
@@ -65,7 +73,12 @@
 
 	<LocalSpecialties {pageData} />
 
-	<CategoryFilter {categories} bind:selectedCategory />
+	<CategoryFilter
+		{categories}
+		bind:selectedCategory
+		locations={allLocations}
+		bind:selectedLocation
+	/>
 
 	<RestaurantGrid {filteredRestaurants} {selectedCategory} />
 

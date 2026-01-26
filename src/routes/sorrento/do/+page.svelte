@@ -36,18 +36,26 @@
 	// Use CMS activities
 	const displayActivities = data.activities;
 
-	// Extract unique categories from activities
+	// Extract unique categories and locations from activities
 	const categoriesFromData = Array.from(
 		new Set(displayActivities.map((a) => a.category).filter(Boolean))
 	).sort();
 
+	const allLocations = Array.from(
+		new Set(displayActivities.map((a) => a.location).filter(Boolean))
+	).sort();
+
 	const categories = ['All', ...categoriesFromData];
 	let selectedCategory = $state('All');
+	let selectedLocation = $state('All');
 
 	const filteredActivities = $derived(
-		selectedCategory === 'All'
-			? displayActivities
-			: displayActivities.filter((a) => a.category === selectedCategory)
+		displayActivities.filter((a) => {
+			const matchesCategory = selectedCategory === 'All' || a.category === selectedCategory;
+			const matchesLocation =
+				selectedLocation === 'All' || (a.location && a.location === selectedLocation);
+			return matchesCategory && matchesLocation;
+		})
 	);
 </script>
 
@@ -66,7 +74,12 @@
 
 	<QuickGuide {pageData} />
 
-	<CategoryFilter {categories} bind:selectedCategory />
+	<CategoryFilter
+		{categories}
+		bind:selectedCategory
+		locations={allLocations}
+		bind:selectedLocation
+	/>
 
 	<ActivityGrid {filteredActivities} />
 

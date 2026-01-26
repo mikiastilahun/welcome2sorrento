@@ -34,16 +34,24 @@
 		pageData?.header?.subheading || 'From luxury clifftop hotels to charming family-run B&Bs';
 	const headerImage = pageData?.header?.heroImage?.asset?.url || '';
 
-	// Get unique types from accommodations
+	// Get unique types and locations from accommodations
 	const allTypes = $derived(Array.from(new Set(data.accommodations.map((a) => a.type))).sort());
 	const types = $derived(['All', ...allTypes]);
 
+	const allLocations = $derived(
+		Array.from(new Set(data.accommodations.map((a) => a.location).filter(Boolean))).sort()
+	);
+
 	let selectedType = $state('All');
+	let selectedLocation = $state('All');
 
 	const filteredAccommodations = $derived(
-		selectedType === 'All'
-			? data.accommodations
-			: data.accommodations.filter((a) => a.type === selectedType)
+		data.accommodations.filter((a) => {
+			const matchesType = selectedType === 'All' || a.type === selectedType;
+			const matchesLocation =
+				selectedLocation === 'All' || (a.location && a.location === selectedLocation);
+			return matchesType && matchesLocation;
+		})
 	);
 </script>
 
@@ -62,7 +70,7 @@
 
 	<NeighborhoodGuide {pageData} />
 
-	<CategoryFilter {types} bind:selectedType />
+	<CategoryFilter {types} bind:selectedType locations={allLocations} bind:selectedLocation />
 
 	<AccommodationGrid {filteredAccommodations} {selectedType} />
 

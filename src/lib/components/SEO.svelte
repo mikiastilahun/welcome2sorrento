@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { siteConfig } from '$lib/config';
+	import type { SiteSettings } from '$lib/sanity/queries';
 
 	interface Props {
 		title?: string;
@@ -11,21 +12,24 @@
 		author?: string;
 		publishedTime?: string;
 		modifiedTime?: string;
+		siteSettings?: SiteSettings | null;
 	}
 
 	let {
-		title = `${siteConfig.name} - Your Ultimate Guide to Sorrento and the Amalfi Coast`,
-		description = siteConfig.description,
-		keywords = siteConfig.keywords,
-		image = siteConfig.ogImage,
+		siteSettings = null,
+		title = siteSettings?.seo?.metaTitle ||
+			`${siteConfig.name} - Your Ultimate Guide to Sorrento and the Amalfi Coast`,
+		description = siteSettings?.seo?.metaDescription || siteConfig.description,
+		keywords = siteSettings?.seo?.keywords || siteConfig.keywords,
+		image = siteSettings?.seo?.ogImage?.asset?.url || siteConfig.ogImage,
 		type = 'website',
-		author = siteConfig.name,
+		author = siteSettings?.title || siteConfig.name,
 		publishedTime,
 		modifiedTime
 	}: Props = $props();
 
-	const siteName = siteConfig.name;
-	const twitterHandle = '@welcome2sorrento';
+	const siteName = author || siteConfig.name;
+	const twitterHandle = siteSettings?.seo?.twitterHandle || '@welcome2sorrento';
 
 	// Get current URL
 	const url = $derived($page.url.href);
@@ -33,7 +37,7 @@
 
 	// Ensure image is absolute URL
 	const absoluteImageUrl = $derived(
-		image.startsWith('http') ? image : `${$page.url.origin}${image}`
+		image?.startsWith('http') ? image : `${$page.url.origin}${image}`
 	);
 </script>
 

@@ -3,6 +3,8 @@
 	import Intro from '$lib/components/stay/Intro.svelte';
 	import CategoryFilter from '$lib/components/stay/CategoryFilter.svelte';
 	import AccommodationGrid from '$lib/components/stay/AccommodationGrid.svelte';
+	import NeighborhoodGuide from '$lib/components/stay/NeighborhoodGuide.svelte';
+	import BookingTips from '$lib/components/stay/BookingTips.svelte';
 	import CTA from '$lib/components/stay/CTA.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import type { Accommodation, StayPage } from '$lib/sanity/queries';
@@ -58,9 +60,13 @@
 
 	<Intro {pageData} />
 
+	<NeighborhoodGuide {pageData} />
+
 	<CategoryFilter {types} bind:selectedType />
 
 	<AccommodationGrid {filteredAccommodations} {selectedType} />
+
+	<BookingTips {pageData} />
 
 	<CTA {pageData} />
 </div>

@@ -667,6 +667,8 @@ export const sorrentoPageQuery = groq`*[_type == "sorrentoPage"][0] {
       alt
     }
   },
+  sectionsHeading,
+  sectionsSubheading,
   sections[] {
     title,
     subtitle,
@@ -681,6 +683,7 @@ export const sorrentoPageQuery = groq`*[_type == "sorrentoPage"][0] {
     link,
     features
   },
+  tipsHeading,
   insiderTips[] {
     title,
     description,
@@ -861,6 +864,8 @@ export const surroundingPageQuery = groq`*[_type == "surroundingPage"][0] {
     }
   },
   introText,
+  gridHeading,
+  gridSubheading,
   cta {
     heading,
     description,
@@ -1470,6 +1475,8 @@ export interface SorrentoPage {
 		description?: string;
 		image?: SanityImage;
 	};
+	sectionsHeading?: string;
+	sectionsSubheading?: string;
 	sections?: Array<{
 		title: string;
 		subtitle?: string;
@@ -1478,6 +1485,7 @@ export interface SorrentoPage {
 		link?: string;
 		features?: string[];
 	}>;
+	tipsHeading?: string;
 	insiderTips?: Array<{
 		title: string;
 		description: string;
@@ -1558,6 +1566,8 @@ export interface SurroundingPage {
 	title: string;
 	header?: PageHeader;
 	introText?: string;
+	gridHeading?: string;
+	gridSubheading?: string;
 	cta?: CTASection;
 	seo?: SEOFields;
 }

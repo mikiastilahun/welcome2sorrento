@@ -4,6 +4,7 @@
 	import Intro from '$lib/components/do/Intro.svelte';
 	import CategoryFilter from '$lib/components/do/CategoryFilter.svelte';
 	import ActivityGrid from '$lib/components/do/ActivityGrid.svelte';
+	import QuickGuide from '$lib/components/do/QuickGuide.svelte';
 	import CTA from '$lib/components/do/CTA.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 
@@ -62,6 +63,8 @@
 	{/if}
 
 	<Intro {pageData} />
+
+	<QuickGuide {pageData} />
 
 	<CategoryFilter {categories} bind:selectedCategory />
 

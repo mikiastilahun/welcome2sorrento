@@ -149,7 +149,7 @@
 	<!-- Introduction -->
 	<section class="texture-grain relative bg-[var(--warm-white)] py-24">
 		<!-- Decorative tile border -->
-		<div class="absolute left-0 right-0 top-0">
+		<div class="absolute top-0 right-0 left-0">
 			<div class="mx-auto max-w-5xl px-4">
 				<div class="border-tile-decorative"></div>
 			</div>
@@ -160,7 +160,7 @@
 				<div class="mb-12 text-center">
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
-						<span class="font-serif text-sm uppercase tracking-[0.2em] text-[var(--terracotta)]"
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--terracotta)] uppercase"
 							>Welcome</span
 						>
 						<div class="h-px w-8 bg-[var(--terracotta)]"></div>
@@ -214,21 +214,27 @@
 			</svg>
 		</div>
 
-		<div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="scroll-reveal mb-16 text-center" use:reveal>
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-[var(--azure)]"></div>
-					<span class="font-serif text-sm uppercase tracking-[0.2em] text-[var(--azure)]"
+					<span class="font-serif text-sm tracking-[0.2em] text-[var(--azure)] uppercase"
 						>Explore</span
 					>
 					<div class="h-px w-8 bg-[var(--azure)]"></div>
 				</div>
 				<h2 class="heading-serif mb-4 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
-					Plan Your Perfect Visit
+					{pageData?.sectionsHeading || 'Plan Your Perfect Visit'}
 				</h2>
-				<p class="mx-auto max-w-2xl text-xl text-[var(--stone)]">
-					Everything you need for an unforgettable Sorrento experience
-				</p>
+				{#if pageData?.sectionsSubheading}
+					<p class="mx-auto max-w-2xl text-xl text-[var(--stone)]">
+						{pageData.sectionsSubheading}
+					</p>
+				{:else}
+					<p class="mx-auto max-w-2xl text-xl text-[var(--stone)]">
+						Everything you need for an unforgettable Sorrento experience
+					</p>
+				{/if}
 			</div>
 
 			<div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
@@ -241,7 +247,7 @@
 							>
 								<!-- Vintage number badge -->
 								<div
-									class="pointer-events-none absolute -left-2 -top-2 z-20 select-none font-serif text-7xl font-bold text-[var(--{section.accent})] opacity-10"
+									class="pointer-events-none absolute -top-2 -left-2 z-20 font-serif text-7xl font-bold select-none text-[var(--{section.accent})] opacity-10"
 								>
 									{section.number}
 								</div>
@@ -306,7 +312,7 @@
 
 								<!-- Decorative corner -->
 								<div
-									class="absolute bottom-0 right-0 h-16 w-16 opacity-10 transition-opacity duration-300 group-hover:opacity-20"
+									class="absolute right-0 bottom-0 h-16 w-16 opacity-10 transition-opacity duration-300 group-hover:opacity-20"
 									style="background: linear-gradient(135deg, transparent 50%, var(--{section.accent}) 50%);"
 								></div>
 							</Card>
@@ -320,7 +326,7 @@
 	<!-- Insider Tips -->
 	<section class="relative bg-[var(--cream)] py-24">
 		<!-- Wave decoration at top -->
-		<div class="absolute left-0 right-0 top-0">
+		<div class="absolute top-0 right-0 left-0">
 			<svg
 				class="h-12 w-full"
 				viewBox="0 0 1200 60"
@@ -337,13 +343,13 @@
 				<div class="scroll-reveal mb-12 text-center" use:reveal>
 					<div class="mb-4 flex items-center justify-center gap-3">
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
-						<span class="font-serif text-sm uppercase tracking-[0.2em] text-[var(--olive)]"
+						<span class="font-serif text-sm tracking-[0.2em] text-[var(--olive)] uppercase"
 							>Tips</span
 						>
 						<div class="h-px w-8 bg-[var(--olive)]"></div>
 					</div>
 					<h2 class="heading-serif mb-4 text-4xl font-semibold text-[var(--charcoal)] sm:text-5xl">
-						Insider Tips
+						{pageData?.tipsHeading || 'Insider Tips'}
 					</h2>
 				</div>
 
@@ -388,19 +394,19 @@
 				{/if}
 			</div>
 			<div
-				class="from-[var(--azure)]/95 to-[var(--deep-azure)]/90 absolute inset-0 bg-gradient-to-r"
+				class="absolute inset-0 bg-gradient-to-r from-[var(--azure)]/95 to-[var(--deep-azure)]/90"
 			></div>
 			<div class="film-grain pointer-events-none absolute inset-0"></div>
 		</div>
 
 		<div
-			class="scroll-reveal container relative z-10 mx-auto px-4 text-center sm:px-6 lg:px-8"
+			class="scroll-reveal relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8"
 			use:reveal
 		>
 			<div class="mx-auto max-w-3xl text-white">
 				<div class="mb-4 flex items-center justify-center gap-3">
 					<div class="h-px w-8 bg-white/50"></div>
-					<span class="font-serif text-sm uppercase tracking-[0.3em] text-white/80">Get Help</span>
+					<span class="font-serif text-sm tracking-[0.3em] text-white/80 uppercase">Get Help</span>
 					<div class="h-px w-8 bg-white/50"></div>
 				</div>
 				<h2 class="heading-serif mb-6 text-4xl font-semibold sm:text-5xl">

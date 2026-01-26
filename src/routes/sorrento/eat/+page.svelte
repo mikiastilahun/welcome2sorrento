@@ -3,6 +3,8 @@
 	import Intro from '$lib/components/eat/Intro.svelte';
 	import CategoryFilter from '$lib/components/eat/CategoryFilter.svelte';
 	import RestaurantGrid from '$lib/components/eat/RestaurantGrid.svelte';
+	import LocalSpecialties from '$lib/components/eat/LocalSpecialties.svelte';
+	import DiningTips from '$lib/components/eat/DiningTips.svelte';
 	import CTA from '$lib/components/eat/CTA.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import type { Restaurant, EatPage } from '$lib/sanity/queries';
@@ -61,9 +63,13 @@
 
 	<Intro {pageData} />
 
+	<LocalSpecialties {pageData} />
+
 	<CategoryFilter {categories} bind:selectedCategory />
 
 	<RestaurantGrid {filteredRestaurants} {selectedCategory} />
+
+	<DiningTips {pageData} />
 
 	<CTA {pageData} />
 </div>

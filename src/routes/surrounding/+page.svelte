@@ -63,7 +63,11 @@
 
 	<Intro {pageData} />
 
-	<DestinationsGrid {destinations} />
+	<DestinationsGrid
+		{destinations}
+		heading={pageData?.gridHeading}
+		subheading={pageData?.gridSubheading}
+	/>
 
 	<CTA {pageData} />
 </div>

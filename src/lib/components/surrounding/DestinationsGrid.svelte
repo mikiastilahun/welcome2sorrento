@@ -7,9 +7,15 @@
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	interface Props {
 		destinations: any[];
+		heading?: string;
+		subheading?: string;
 	}
 
-	let { destinations }: Props = $props();
+	let {
+		destinations,
+		heading = 'Destinations Near Sorrento',
+		subheading = 'World-renowned locations just a short journey away'
+	}: Props = $props();
 
 	// Color accents for variety
 	const accentColors = ['azure', 'terracotta', 'olive', 'coral', 'azure', 'terracotta'];

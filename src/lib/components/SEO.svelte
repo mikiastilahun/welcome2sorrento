@@ -38,8 +38,8 @@
 	const publishedTime = $derived.by(() => props.publishedTime);
 	const modifiedTime = $derived.by(() => props.modifiedTime);
 
-	const siteName = author || siteConfig.name;
-	const twitterHandle = siteSettings?.seo?.twitterHandle || '@welcome2sorrento';
+	const siteName = $derived.by(() => author || siteConfig.name);
+	const twitterHandle = $derived.by(() => siteSettings?.seo?.twitterHandle || '@welcome2sorrento');
 
 	// Get current URL
 	const url = $derived($page.url.href);

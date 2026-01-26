@@ -9,7 +9,7 @@
 
 	let { pageData = null }: Props = $props();
 
-	const sectionTitle = pageData?.tipsHeading || 'Dining Tips';
+	const sectionTitle = $derived.by(() => pageData?.tipsHeading || 'Dining Tips');
 
 	// Icon mapping
 	const iconMap: Record<string, typeof Clock> = {
@@ -50,7 +50,7 @@
 
 	const accentColors = ['bg-(--azure)', 'bg-(--olive)', 'bg-(--terracotta)', 'bg-(--coral)'];
 
-	const tips =
+	const tips = $derived.by(() =>
 		pageData?.diningTips && pageData.diningTips.length > 0
 			? pageData.diningTips.map((tip, i) => ({
 					...tip,
@@ -60,7 +60,8 @@
 			: defaultTips.map((tip) => ({
 					...tip,
 					iconComponent: iconMap[tip.icon] || Award
-				}));
+				}))
+	);
 </script>
 
 <section class="relative bg-white py-32">

@@ -1,14 +1,30 @@
 <script lang="ts">
-	import { MapPin, Waves, Heart } from '@lucide/svelte';
+	import { MapPin, Waves, Heart, type Icon } from '@lucide/svelte';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import { reveal } from '$lib/actions/reveal';
+	import type { StayPage } from '$lib/sanity/queries';
 
-	const neighborhoods = [
+	interface Props {
+		pageData?: StayPage | null;
+	}
+
+	let { pageData = null }: Props = $props();
+
+	const sectionTitle = pageData?.neighborhoodsHeading || 'Where to Stay';
+
+	// Icon mapping
+	const iconMap: Record<string, typeof MapPin> = {
+		MapPin,
+		Waves,
+		Heart
+	};
+
+	const defaultNeighborhoods = [
 		{
 			title: 'City Center',
 			description:
 				'Heart of Sorrento with easy access to Piazza Tasso, shops, and restaurants. Perfect for first-time visitors.',
-			icon: MapPin,
+			icon: 'MapPin',
 			badge: 'Most Popular',
 			color: 'bg-(--azure)'
 		},
@@ -16,7 +32,7 @@
 			title: 'Marina Grande',
 			description:
 				'Charming fishing village atmosphere with beachfront restaurants and authentic local character.',
-			icon: Waves,
+			icon: 'Waves',
 			badge: 'Authentic',
 			color: 'bg-(--olive)'
 		},
@@ -24,18 +40,32 @@
 			title: 'Via Capo',
 			description:
 				'Clifftop location with spectacular views and quieter atmosphere. Ideal for romantic getaways.',
-			icon: Heart,
+			icon: 'Heart',
 			badge: 'Scenic',
 			color: 'bg-(--terracotta)'
 		}
 	];
+
+	const accentColors = ['bg-(--azure)', 'bg-(--olive)', 'bg-(--terracotta)'];
+
+	const neighborhoods =
+		pageData?.neighborhoods && pageData.neighborhoods.length > 0
+			? pageData.neighborhoods.map((area, i) => ({
+					...area,
+					iconComponent: iconMap[area.icon || ''] || MapPin,
+					color: accentColors[i % accentColors.length]
+				}))
+			: defaultNeighborhoods.map((area) => ({
+					...area,
+					iconComponent: iconMap[area.icon] || MapPin
+				}));
 </script>
 
 <section class="relative bg-(--cream) py-32">
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="scroll-reveal mb-20 text-center" use:reveal>
 			<h2 class="heading-serif mb-6 text-4xl font-bold text-(--charcoal) sm:text-5xl">
-				Where to Stay
+				{sectionTitle || 'Where to Stay'}
 			</h2>
 		</div>
 
@@ -49,13 +79,7 @@
 							<div
 								class="{area.color} flex h-12 w-12 items-center justify-center rounded-lg shadow-sm"
 							>
-								{#if area.icon === MapPin}
-									<MapPin class="h-6 w-6 text-white" />
-								{:else if area.icon === Waves}
-									<Waves class="h-6 w-6 text-white" />
-								{:else if area.icon === Heart}
-									<Heart class="h-6 w-6 text-white" />
-								{/if}
+								<area.iconComponent class="h-6 w-6 text-white" />
 							</div>
 							<h3 class="text-xl font-bold text-(--charcoal)">{area.title}</h3>
 						</div>

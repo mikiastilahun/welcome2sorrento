@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { siteConfig } from '$lib/config';
+	import type { SiteSettings } from '$lib/sanity/queries';
 
 	interface Props {
 		title?: string;
@@ -11,21 +12,34 @@
 		author?: string;
 		publishedTime?: string;
 		modifiedTime?: string;
+		siteSettings?: SiteSettings | null;
 	}
 
-	let {
-		title = `${siteConfig.name} - Your Ultimate Guide to Sorrento and the Amalfi Coast`,
-		description = siteConfig.description,
-		keywords = siteConfig.keywords,
-		image = siteConfig.ogImage,
-		type = 'website',
-		author = siteConfig.name,
-		publishedTime,
-		modifiedTime
-	}: Props = $props();
+	const props = $props();
 
-	const siteName = siteConfig.name;
-	const twitterHandle = '@welcome2sorrento';
+	const siteSettings = $derived.by(() => props.siteSettings || null);
+	const title = $derived.by(
+		() =>
+			props.title ||
+			siteSettings?.seo?.metaTitle ||
+			`${siteConfig.name} - Your Ultimate Guide to Sorrento and the Amalfi Coast`
+	);
+	const description = $derived.by(
+		() => props.description || siteSettings?.seo?.metaDescription || siteConfig.description
+	);
+	const keywords = $derived.by(
+		() => props.keywords || siteSettings?.seo?.keywords || siteConfig.keywords
+	);
+	const image = $derived.by(
+		() => props.image || siteSettings?.seo?.ogImage?.asset?.url || siteConfig.ogImage
+	);
+	const author = $derived.by(() => props.author || siteSettings?.title || siteConfig.name);
+	const type = $derived.by(() => props.type || 'website');
+	const publishedTime = $derived.by(() => props.publishedTime);
+	const modifiedTime = $derived.by(() => props.modifiedTime);
+
+	const siteName = $derived.by(() => author || siteConfig.name);
+	const twitterHandle = $derived.by(() => siteSettings?.seo?.twitterHandle || '@welcome2sorrento');
 
 	// Get current URL
 	const url = $derived($page.url.href);
@@ -33,7 +47,7 @@
 
 	// Ensure image is absolute URL
 	const absoluteImageUrl = $derived(
-		image.startsWith('http') ? image : `${$page.url.origin}${image}`
+		image?.startsWith('http') ? image : `${$page.url.origin}${image}`
 	);
 </script>
 

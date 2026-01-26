@@ -69,7 +69,7 @@
 
 <section class="texture-grain relative bg-[var(--warm-white)] py-24" id="explore">
 	<!-- Decorative tile pattern border at top -->
-	<div class="absolute left-0 right-0 top-0">
+	<div class="absolute top-0 right-0 left-0">
 		<div class="mx-auto max-w-5xl px-4">
 			<div class="border-tile-decorative"></div>
 		</div>
@@ -140,13 +140,37 @@
 				{/each}
 			</div>
 
+			<!-- Stats Section -->
+			{#if siteSettings?.homepageStats}
+				<div
+					class="mt-20 grid grid-cols-2 gap-8 border-t border-[var(--sand)] pt-16 md:grid-cols-4"
+				>
+					{#each [{ label: 'Happy Travelers', value: siteSettings.homepageStats.happyTravelers }, { label: 'Partner Hotels', value: siteSettings.homepageStats.partnerHotels }, { label: 'Local Guides', value: siteSettings.homepageStats.localGuides }, { label: 'Years Experience', value: siteSettings.homepageStats.yearsExperience }] as stat, index}
+						{#if stat.value != null}
+							<div
+								class="scroll-reveal text-center"
+								style="transition-delay: {(index + 1) * 100}ms;"
+								use:reveal
+							>
+								<div class="heading-serif mb-2 text-4xl font-bold text-[var(--azure)]">
+									{stat.value}
+								</div>
+								<div class="text-sm font-medium tracking-wider text-[var(--stone)] uppercase">
+									{stat.label}
+								</div>
+							</div>
+						{/if}
+					{/each}
+				</div>
+			{/if}
+
 			<!-- Ambient decorative elements -->
-			<div class="pointer-events-none absolute left-10 top-20 opacity-10">
+			<div class="pointer-events-none absolute top-20 left-10 opacity-10">
 				<svg class="h-24 w-24 text-[var(--azure)]" viewBox="0 0 100 100" fill="currentColor">
 					<circle cx="50" cy="50" r="40" />
 				</svg>
 			</div>
-			<div class="pointer-events-none absolute bottom-20 right-10 opacity-10">
+			<div class="pointer-events-none absolute right-10 bottom-20 opacity-10">
 				<svg class="h-32 w-32 text-[var(--terracotta)]" viewBox="0 0 100 100" fill="currentColor">
 					<polygon points="50,10 90,90 10,90" />
 				</svg>
@@ -155,7 +179,7 @@
 	</div>
 
 	<!-- Bottom wave divider -->
-	<div class="absolute bottom-0 left-0 right-0">
+	<div class="absolute right-0 bottom-0 left-0">
 		<svg
 			class="h-12 w-full"
 			viewBox="0 0 1200 60"

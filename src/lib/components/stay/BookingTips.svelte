@@ -1,7 +1,17 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
+	import type { StayPage } from '$lib/sanity/queries';
+	import { Lightbulb, type Icon } from '@lucide/svelte';
 
-	const tips = [
+	interface Props {
+		pageData?: StayPage | null;
+	}
+
+	let { pageData = null }: Props = $props();
+
+	const sectionTitle = pageData?.tipsHeading || 'Booking Tips';
+
+	const defaultTips = [
 		{
 			title: 'Best Time to Book',
 			description:
@@ -23,6 +33,9 @@
 				'€ = €50-100/night, €€ = €100-200/night, €€€ = €200-400/night, €€€€ = €400+/night. Prices vary by season.'
 		}
 	];
+
+	const tips =
+		pageData?.bookingTips && pageData.bookingTips.length > 0 ? pageData.bookingTips : defaultTips;
 </script>
 
 <section class="relative bg-white py-32">
@@ -30,7 +43,7 @@
 		<div class="mx-auto max-w-5xl">
 			<div class="scroll-reveal mb-20 text-center" use:reveal>
 				<h2 class="heading-serif mb-6 text-4xl font-bold text-(--charcoal) sm:text-5xl">
-					Booking Tips
+					{sectionTitle || "Booking Tips"}
 				</h2>
 			</div>
 

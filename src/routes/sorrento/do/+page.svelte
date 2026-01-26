@@ -4,6 +4,7 @@
 	import Intro from '$lib/components/do/Intro.svelte';
 	import CategoryFilter from '$lib/components/do/CategoryFilter.svelte';
 	import ActivityGrid from '$lib/components/do/ActivityGrid.svelte';
+	import QuickGuide from '$lib/components/do/QuickGuide.svelte';
 	import CTA from '$lib/components/do/CTA.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 
@@ -35,18 +36,26 @@
 	// Use CMS activities
 	const displayActivities = data.activities;
 
-	// Extract unique categories from activities
+	// Extract unique categories and locations from activities
 	const categoriesFromData = Array.from(
 		new Set(displayActivities.map((a) => a.category).filter(Boolean))
 	).sort();
 
+	const allLocations = Array.from(
+		new Set(displayActivities.map((a) => a.location).filter(Boolean))
+	).sort();
+
 	const categories = ['All', ...categoriesFromData];
 	let selectedCategory = $state('All');
+	let selectedLocation = $state('All');
 
 	const filteredActivities = $derived(
-		selectedCategory === 'All'
-			? displayActivities
-			: displayActivities.filter((a) => a.category === selectedCategory)
+		displayActivities.filter((a) => {
+			const matchesCategory = selectedCategory === 'All' || a.category === selectedCategory;
+			const matchesLocation =
+				selectedLocation === 'All' || (a.location && a.location === selectedLocation);
+			return matchesCategory && matchesLocation;
+		})
 	);
 </script>
 
@@ -63,7 +72,14 @@
 
 	<Intro {pageData} />
 
-	<CategoryFilter {categories} bind:selectedCategory />
+	<QuickGuide {pageData} />
+
+	<CategoryFilter
+		{categories}
+		bind:selectedCategory
+		locations={allLocations}
+		bind:selectedLocation
+	/>
 
 	<ActivityGrid {filteredActivities} />
 

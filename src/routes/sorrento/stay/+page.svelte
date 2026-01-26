@@ -3,6 +3,8 @@
 	import Intro from '$lib/components/stay/Intro.svelte';
 	import CategoryFilter from '$lib/components/stay/CategoryFilter.svelte';
 	import AccommodationGrid from '$lib/components/stay/AccommodationGrid.svelte';
+	import NeighborhoodGuide from '$lib/components/stay/NeighborhoodGuide.svelte';
+	import BookingTips from '$lib/components/stay/BookingTips.svelte';
 	import CTA from '$lib/components/stay/CTA.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import type { Accommodation, StayPage } from '$lib/sanity/queries';
@@ -32,16 +34,24 @@
 		pageData?.header?.subheading || 'From luxury clifftop hotels to charming family-run B&Bs';
 	const headerImage = pageData?.header?.heroImage?.asset?.url || '';
 
-	// Get unique types from accommodations
+	// Get unique types and locations from accommodations
 	const allTypes = $derived(Array.from(new Set(data.accommodations.map((a) => a.type))).sort());
 	const types = $derived(['All', ...allTypes]);
 
+	const allLocations = $derived(
+		Array.from(new Set(data.accommodations.map((a) => a.location).filter(Boolean))).sort()
+	);
+
 	let selectedType = $state('All');
+	let selectedLocation = $state('All');
 
 	const filteredAccommodations = $derived(
-		selectedType === 'All'
-			? data.accommodations
-			: data.accommodations.filter((a) => a.type === selectedType)
+		data.accommodations.filter((a) => {
+			const matchesType = selectedType === 'All' || a.type === selectedType;
+			const matchesLocation =
+				selectedLocation === 'All' || (a.location && a.location === selectedLocation);
+			return matchesType && matchesLocation;
+		})
 	);
 </script>
 
@@ -58,9 +68,13 @@
 
 	<Intro {pageData} />
 
-	<CategoryFilter {types} bind:selectedType />
+	<NeighborhoodGuide {pageData} />
+
+	<CategoryFilter {types} bind:selectedType locations={allLocations} bind:selectedLocation />
 
 	<AccommodationGrid {filteredAccommodations} {selectedType} />
+
+	<BookingTips {pageData} />
 
 	<CTA {pageData} />
 </div>

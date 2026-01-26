@@ -1,35 +1,67 @@
 <script lang="ts">
-	import { Clock, Euro, MapPin, Award } from '@lucide/svelte';
+	import { Clock, Euro, MapPin, Award, type Icon } from '@lucide/svelte';
 	import { reveal } from '$lib/actions/reveal';
+	import type { EatPage } from '$lib/sanity/queries';
 
-	const tips = [
+	interface Props {
+		pageData?: EatPage | null;
+	}
+
+	let { pageData = null }: Props = $props();
+
+	const sectionTitle = $derived.by(() => pageData?.tipsHeading || 'Dining Tips');
+
+	// Icon mapping
+	const iconMap: Record<string, typeof Clock> = {
+		Clock,
+		Euro,
+		MapPin,
+		Award
+	};
+
+	const defaultTips = [
 		{
 			title: 'Meal Times',
 			description: 'Lunch: 12:30-3pm, Dinner: 7:30pm onwards. Many places close between meals.',
-			icon: Clock,
+			icon: 'Clock',
 			color: 'bg-(--azure)'
 		},
 		{
 			title: 'Pricing',
 			description:
 				'€ = Budget (€10-20), €€ = Moderate (€20-40), €€€ = Upscale (€40-70), €€€€ = Fine Dining (€70+)',
-			icon: Euro,
+			icon: 'Euro',
 			color: 'bg-(--olive)'
 		},
 		{
 			title: 'Reservations',
 			description: 'Book ahead for fine dining and popular spots, especially in peak season.',
-			icon: MapPin,
+			icon: 'MapPin',
 			color: 'bg-(--terracotta)'
 		},
 		{
 			title: 'Local Etiquette',
 			description:
 				"Service charge is usually included. Round up for good service, but tipping isn't mandatory.",
-			icon: Award,
+			icon: 'Award',
 			color: 'bg-(--coral)'
 		}
 	];
+
+	const accentColors = ['bg-(--azure)', 'bg-(--olive)', 'bg-(--terracotta)', 'bg-(--coral)'];
+
+	const tips = $derived.by(() =>
+		pageData?.diningTips && pageData.diningTips.length > 0
+			? pageData.diningTips.map((tip, i) => ({
+					...tip,
+					iconComponent: iconMap[tip.icon || ''] || Award,
+					color: accentColors[i % accentColors.length]
+				}))
+			: defaultTips.map((tip) => ({
+					...tip,
+					iconComponent: iconMap[tip.icon] || Award
+				}))
+	);
 </script>
 
 <section class="relative bg-white py-32">
@@ -37,7 +69,7 @@
 		<div class="mx-auto max-w-5xl">
 			<div class="scroll-reveal mb-20 text-center" use:reveal>
 				<h2 class="heading-serif mb-6 text-4xl font-bold text-(--charcoal) sm:text-5xl">
-					Dining Tips
+					{sectionTitle || 'Dining Tips'}
 				</h2>
 			</div>
 
@@ -51,15 +83,7 @@
 								<div
 									class="{tip.color} flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg shadow-sm"
 								>
-									{#if tip.icon === Clock}
-										<Clock class="h-6 w-6 text-white" />
-									{:else if tip.icon === Euro}
-										<Euro class="h-6 w-6 text-white" />
-									{:else if tip.icon === MapPin}
-										<MapPin class="h-6 w-6 text-white" />
-									{:else if tip.icon === Award}
-										<Award class="h-6 w-6 text-white" />
-									{/if}
+									<tip.iconComponent class="h-6 w-6 text-white" />
 								</div>
 								<div>
 									<h3 class="mb-2 text-lg font-bold text-(--charcoal)">{tip.title}</h3>

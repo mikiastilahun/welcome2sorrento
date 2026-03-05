@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "sveltekit-app",
+    "sorrento-web",
     "studio"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace=sveltekit-app\" \"npm run dev --workspace=studio\"",
+    "dev": "concurrently \"pnpm --filter sorrento run dev\" \"pnpm --filter studio run dev\"",
+    "build": "pnpm --filter sorrento run build",
     "format": "prettier --cache --write ."
   },
   "prettier": {

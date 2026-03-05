@@ -1,4 +1,3 @@
 packages:
-  - 'sveltekit-app'
+  - 'sorrento-web'
   - 'studio'
-  - 'cms-tutorial-video'

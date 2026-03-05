@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Button from '$lib/components/ui/button/button.svelte';
 	import Logo from '$lib/components/Logo.svelte';
-	import { Menu, X, ChevronDown } from '@lucide/svelte';
+	import { Menu, X, ChevronDown, Instagram, Facebook, Youtube } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import type { Destination, SiteSettings } from '$lib/sanity/queries';
 
@@ -39,9 +38,11 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 
-	// Get CTA button text from CMS
-	const ctaButtonText = siteSettings?.navigation?.ctaButtonText || 'Get in Touch';
-	const ctaButtonLink = siteSettings?.navigation?.ctaButtonLink || '/contact';
+	// Social media links from CMS
+	const instagramUrl = siteSettings?.socialMedia?.instagram || 'https://instagram.com';
+	const facebookUrl = siteSettings?.socialMedia?.facebook || 'https://facebook.com';
+	const youtubeUrl = siteSettings?.socialMedia?.youtube || 'https://youtube.com';
+	const tiktokUrl = siteSettings?.socialMedia?.tiktok || 'https://tiktok.com';
 
 	// Build surrounding submenu from destinations
 	const surroundingSubmenu = destinations.map((dest) => ({
@@ -201,17 +202,55 @@
 					{/if}
 				{/each}
 
-				<!-- CTA Button -->
-				<a href={ctaButtonLink} class="ml-4">
-					<Button
-						class="btn-nav rounded-lg px-8 py-3 transition-all duration-200 hover:shadow-md {scrolled ||
-						!isHeroSection
-							? 'bg-[var(--azure)] text-white hover:brightness-110'
-							: 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30'}"
-					>
-						{ctaButtonText}
-					</Button>
+			<!-- Social Icons -->
+			<div class="ml-4 flex items-center gap-1.5">
+				<a
+					href={instagramUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex h-9 w-9 items-center justify-center rounded-full transition-all duration-200 hover:scale-110 {scrolled || !isHeroSection
+						? 'text-[var(--charcoal)] hover:bg-[var(--cream)] hover:text-[#E1306C]'
+						: 'text-white/80 hover:bg-white/15 hover:text-white'}"
+					aria-label="Instagram"
+				>
+					<Instagram class="h-[18px] w-[18px]" />
 				</a>
+				<a
+					href={tiktokUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex h-9 w-9 items-center justify-center rounded-full transition-all duration-200 hover:scale-110 {scrolled || !isHeroSection
+						? 'text-[var(--charcoal)] hover:bg-[var(--cream)] hover:text-black'
+						: 'text-white/80 hover:bg-white/15 hover:text-white'}"
+					aria-label="TikTok"
+				>
+					<svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+					</svg>
+				</a>
+				<a
+					href={facebookUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex h-9 w-9 items-center justify-center rounded-full transition-all duration-200 hover:scale-110 {scrolled || !isHeroSection
+						? 'text-[var(--charcoal)] hover:bg-[var(--cream)] hover:text-[#1877F2]'
+						: 'text-white/80 hover:bg-white/15 hover:text-white'}"
+					aria-label="Facebook"
+				>
+					<Facebook class="h-[18px] w-[18px]" />
+				</a>
+				<a
+					href={youtubeUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex h-9 w-9 items-center justify-center rounded-full transition-all duration-200 hover:scale-110 {scrolled || !isHeroSection
+						? 'text-[var(--charcoal)] hover:bg-[var(--cream)] hover:text-[#FF0000]'
+						: 'text-white/80 hover:bg-white/15 hover:text-white'}"
+					aria-label="YouTube"
+				>
+					<Youtube class="h-[18px] w-[18px]" />
+				</a>
+			</div>
 			</div>
 
 			<!-- Mobile Menu Button -->
@@ -278,15 +317,46 @@
 						{/if}
 					{/each}
 
-					<div class="border-t border-[var(--sand)] pt-4">
-						<a href={ctaButtonLink} class="block" onclick={() => (mobileMenuOpen = false)}>
-							<Button
-								class="w-full rounded-lg bg-[var(--azure)] px-8 py-3 text-white transition-all duration-200"
-							>
-								{ctaButtonText}
-							</Button>
-						</a>
-					</div>
+				<div class="flex items-center justify-center gap-3 border-t border-[var(--sand)] pt-4">
+					<a
+						href={instagramUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="flex h-10 w-10 items-center justify-center rounded-full text-[var(--charcoal)] transition-all duration-200 hover:scale-110 hover:bg-gradient-to-br hover:from-[#833AB4] hover:via-[#FD1D1D] hover:to-[#F77737] hover:text-white"
+						aria-label="Instagram"
+					>
+						<Instagram class="h-5 w-5" />
+					</a>
+					<a
+						href={tiktokUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="flex h-10 w-10 items-center justify-center rounded-full text-[var(--charcoal)] transition-all duration-200 hover:scale-110 hover:bg-black hover:text-white"
+						aria-label="TikTok"
+					>
+						<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+						</svg>
+					</a>
+					<a
+						href={facebookUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="flex h-10 w-10 items-center justify-center rounded-full text-[var(--charcoal)] transition-all duration-200 hover:scale-110 hover:bg-[#1877F2] hover:text-white"
+						aria-label="Facebook"
+					>
+						<Facebook class="h-5 w-5" />
+					</a>
+					<a
+						href={youtubeUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="flex h-10 w-10 items-center justify-center rounded-full text-[var(--charcoal)] transition-all duration-200 hover:scale-110 hover:bg-[#FF0000] hover:text-white"
+						aria-label="YouTube"
+					>
+						<Youtube class="h-5 w-5" />
+					</a>
+				</div>
 				</div>
 			</div>
 		</div>

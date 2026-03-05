@@ -1,0 +1,31 @@
+# Cursor Rules for Sorrento Web Project
+
+## Documentation Guidelines
+
+**NEVER proactively create documentation files (*.md) unless explicitly requested by the user.**
+
+This includes but is not limited to:
+- Progress reports (e.g., REDESIGN_PROGRESS.md, CMS_MIGRATION_STATUS.md)
+- Completion summaries (e.g., INTEGRATION_COMPLETE.md, PRODUCTION_READY.md)
+- Implementation guides (e.g., SEO_IMPLEMENTATION.md, SANITY_SETUP.md)
+- Status updates (e.g., DEPLOYMENT_SUCCESS.md, REMAINING_PAGES.md)
+- Any other agent-generated documentation files
+
+Instead:
+- Provide summaries and reports directly in the conversation
+- Only create documentation files when the user explicitly asks for them
+- Keep the repository clean and focused on actual code
+
+## Project Context
+
+This is a SvelteKit-based web application for Sorrento tourism with:
+- Internationalization support (en, it)
+- Sanity CMS integration
+- TailwindCSS styling
+- Shadcn-svelte UI components
+
+When working on this project:
+- Follow existing code patterns and conventions
+- Test changes before considering them complete
+- Update existing files rather than creating new ones unnecessarily
+

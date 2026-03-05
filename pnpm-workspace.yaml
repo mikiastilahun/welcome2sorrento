@@ -1,0 +1,4 @@
+packages:
+  - 'sveltekit-app'
+  - 'studio'
+  - 'cms-tutorial-video'

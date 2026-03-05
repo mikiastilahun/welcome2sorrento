@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+pnpm-lock.yaml
+
+# Build outputs
+.svelte-kit
+build
+.output
+.vercel
+.netlify
+
+# Generated files
+src/lib/paraglide
+
+# Misc
+.DS_Store
+*.log

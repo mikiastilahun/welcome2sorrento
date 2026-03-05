@@ -1,3 +1,7 @@
 packages:
   - 'sorrento-web'
   - 'studio'
+
+onlyBuiltDependencies:
+  - esbuild
+  - '@tailwindcss/oxide'
